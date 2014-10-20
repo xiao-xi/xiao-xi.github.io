@@ -67,6 +67,76 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-hexo搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/20/hexo搭建/" class="article-date">
+  <time datetime="2014-10-20T13:52:07.000Z" itemprop="datePublished">Oct 20 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: hexo搭建<br>date: 2014-10-20 21:37:23</p>
+<p><img src="http://www.zkedu.com/images/upfiles/2014/02/14/20140214560901-387.jpg" alt="mou icon"></p>
+<h2 id="tags:Mac上搭建hexo极简指南">tags:Mac上搭建hexo极简指南</h2>
+<ol>
+<li><p>安装nvm(node.js的版本管理工具）</p>
+<pre><code>          $ wget -qO- http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/creationix/nvm/master/install.<span class="keyword">sh</span> | <span class="keyword">sh</span>
+</code></pre></li>
+<li><p>添加如下内容到.zshrc配置文件</p>
+<pre><code>     [ -s <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> ] &amp;&amp; . <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> # This loads nvm
+</code></pre></li>
+<li><p>安装node.js(通过nvm安装)</p>
+<pre><code>     <span class="variable">$ </span>nvm install <span class="number">0</span>.<span class="number">10</span>
+</code></pre></li>
+<li><p>安装hexo（通过npm安装）</p>
+<pre><code>     <span class="variable">$ </span>npm install -g hexo
+</code></pre></li>
+<li><p>创建hexo文件夹，并安装hexo相关组件</p>
+<pre><code>     <span class="variable">$ </span>hexo init hexo
+     <span class="variable">$ </span>cd hexo
+     <span class="variable">$ </span>npm install
+</code></pre></li>
+<li><p>本地查看</p>
+</li>
+</ol>
+<p>输入如下命令后，打开浏览器，并输入localhost:4000来查看</p>
+<pre><code>        <span class="variable">$ </span>hexo g
+        <span class="variable">$ </span>hexo s
+</code></pre><ol>
+<li><p>注册github账号</p>
+<pre><code> 创建github账号同名repository
+ <span class="keyword">e</span><span class="variable">g:github</span>账号名位dorayox，则创建dorayox.github.io
+ 部署到github上
+</code></pre></li>
+<li><p>如下所示编辑_config.yml</p>
+<pre><code> deploy:
+   <span class="built_in">type</span>: github
+   repository: git@github.com:dorayox/dorayox.github.<span class="built_in">io</span>.git
+   branch: master
+</code></pre></li>
+<li><p>输入如下命令，完成到github得部署，之后打开浏览器并输入dorayox.github.io来查看</p>
+<pre><code> <span class="variable">$ </span>hexo g
+ <span class="variable">$ </span>hexo d
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/20/hexo搭建/" data-id="u731k33dp5t2a2km" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vim使用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/20/vim使用/" class="article-date">
@@ -409,7 +479,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -419,6 +489,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/10/20/hexo搭建/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2014/10/20/vim使用/">(no title)</a>
