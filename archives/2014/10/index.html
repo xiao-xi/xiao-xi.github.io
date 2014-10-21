@@ -67,76 +67,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hexo搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/21/hexo搭建/" class="article-date">
-  <time datetime="2014-10-21T11:13:08.000Z" itemprop="datePublished">Oct 21 2014</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>title: hexo搭建<br>date: 2014-10-20 21:37:23</p>
-<p><img src="http://www.zkedu.com/images/upfiles/2014/02/14/20140214560901-387.jpg" alt="mou icon"></p>
-<h2 id="tags:_Mac上搭建hexo极简指南">tags: Mac上搭建hexo极简指南</h2>
-<ol>
-<li><p>安装nvm(node.js的版本管理工具）</p>
-<pre><code>          $ wget -qO- http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/creationix/nvm/master/install.<span class="keyword">sh</span> | <span class="keyword">sh</span>
-</code></pre></li>
-<li><p>添加如下内容到.zshrc配置文件</p>
-<pre><code>     [ -s <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> ] &amp;&amp; . <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> # This loads nvm
-</code></pre></li>
-<li><p>安装node.js(通过nvm安装)</p>
-<pre><code>     <span class="variable">$ </span>nvm install <span class="number">0</span>.<span class="number">10</span>
-</code></pre></li>
-<li><p>安装hexo（通过npm安装）</p>
-<pre><code>     <span class="variable">$ </span>npm install -g hexo
-</code></pre></li>
-<li><p>创建hexo文件夹，并安装hexo相关组件</p>
-<pre><code>     <span class="variable">$ </span>hexo init hexo
-     <span class="variable">$ </span>cd hexo
-     <span class="variable">$ </span>npm install
-</code></pre></li>
-<li><p>本地查看</p>
-</li>
-</ol>
-<p>输入如下命令后，打开浏览器，并输入localhost:4000来查看</p>
-<pre><code>        <span class="variable">$ </span>hexo g
-        <span class="variable">$ </span>hexo s
-</code></pre><ol>
-<li><p>注册github账号</p>
-<pre><code> 创建github账号同名repository
- <span class="keyword">e</span><span class="variable">g:github</span>账号名位dorayox，则创建dorayox.github.io
- 部署到github上
-</code></pre></li>
-<li><p>如下所示编辑_config.yml</p>
-<pre><code> deploy:
-   <span class="built_in">type</span>: github
-   repository: git@github.com:dorayox/dorayox.github.<span class="built_in">io</span>.git
-   branch: master
-</code></pre></li>
-<li><p>输入如下命令，完成到github得部署，之后打开浏览器并输入dorayox.github.io来查看</p>
-<pre><code> <span class="variable">$ </span>hexo g
- <span class="variable">$ </span>hexo d
-</code></pre></li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/10/21/hexo搭建/" data-id="u731k33dp5t2a2km" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-cocoa内存管理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/20/cocoa内存管理/" class="article-date">
@@ -273,6 +203,86 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存管理/">内存管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hexo搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/20/hexo搭建/" class="article-date">
+  <time datetime="2014-10-20T13:37:23.000Z" itemprop="datePublished">Oct 20 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/10/20/hexo搭建/">hexo搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://www.zkedu.com/images/upfiles/2014/02/14/20140214560901-387.jpg" alt="mou icon"></p>
+<ol>
+<li><p>安装nvm(node.js的版本管理工具）</p>
+<pre><code>          $ wget -qO- http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/creationix/nvm/master/install.<span class="keyword">sh</span> | <span class="keyword">sh</span>
+</code></pre></li>
+<li><p>添加如下内容到.zshrc配置文件</p>
+<pre><code>     [ -s <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> ] &amp;&amp; . <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> # This loads nvm
+</code></pre></li>
+<li><p>安装node.js(通过nvm安装)</p>
+<pre><code>     <span class="variable">$ </span>nvm install <span class="number">0</span>.<span class="number">10</span>
+</code></pre></li>
+<li><p>安装hexo（通过npm安装）</p>
+<pre><code>     <span class="variable">$ </span>npm install -g hexo
+</code></pre></li>
+<li><p>创建hexo文件夹，并安装hexo相关组件</p>
+<pre><code>     <span class="variable">$ </span>hexo init hexo
+     <span class="variable">$ </span>cd hexo
+     <span class="variable">$ </span>npm install
+</code></pre></li>
+<li><p>本地查看</p>
+</li>
+</ol>
+<p>输入如下命令后，打开浏览器，并输入localhost:4000来查看</p>
+<pre><code>        <span class="variable">$ </span>hexo g
+        <span class="variable">$ </span>hexo s
+</code></pre><ol>
+<li><p>注册github账号</p>
+<pre><code> 创建github账号同名repository
+ <span class="keyword">e</span><span class="variable">g:github</span>账号名位dorayox，则创建dorayox.github.io
+ 部署到github上
+</code></pre></li>
+<li><p>如下所示编辑_config.yml</p>
+<pre><code> deploy:
+   <span class="built_in">type</span>: github
+   repository: git@github.com:dorayox/dorayox.github.<span class="built_in">io</span>.git
+   branch: master
+</code></pre></li>
+<li><p>输入如下命令，完成到github得部署，之后打开浏览器并输入dorayox.github.io来查看</p>
+<pre><code> <span class="variable">$ </span>hexo g
+ <span class="variable">$ </span>hexo d
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/20/hexo搭建/" data-id="u731k33dp5t2a2km" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a></li></ul>
 
     </footer>
   </div>
@@ -625,7 +635,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git-操作/">Git 操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-world/">Hello world !</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim的使用/">vim的使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存管理/">内存管理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git-操作/">Git 操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-world/">Hello world !</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim的使用/">vim的使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存管理/">内存管理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -634,7 +644,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Git-操作/" style="font-size: 20.00px;">Git 操作</a><a href="/tags/Hello-world/" style="font-size: 20.00px;">Hello world !</a><a href="/tags/first/" style="font-size: 10.00px;">first</a><a href="/tags/vim的使用/" style="font-size: 20.00px;">vim的使用</a><a href="/tags/内存管理/" style="font-size: 20.00px;">内存管理</a>
+      <a href="/tags/Git-操作/" style="font-size: 20.00px;">Git 操作</a><a href="/tags/Hello-world/" style="font-size: 20.00px;">Hello world !</a><a href="/tags/Mac上搭建hexo极简指南/" style="font-size: 20.00px;">Mac上搭建hexo极简指南</a><a href="/tags/first/" style="font-size: 10.00px;">first</a><a href="/tags/vim的使用/" style="font-size: 20.00px;">vim的使用</a><a href="/tags/内存管理/" style="font-size: 20.00px;">内存管理</a>
     </div>
   </div>
 
@@ -655,11 +665,11 @@
       <ul>
         
           <li>
-            <a href="/2014/10/21/hexo搭建/">(no title)</a>
+            <a href="/2014/10/20/cocoa内存管理/">cocoa内存管理</a>
           </li>
         
           <li>
-            <a href="/2014/10/20/cocoa内存管理/">cocoa内存管理</a>
+            <a href="/2014/10/20/hexo搭建/">hexo搭建</a>
           </li>
         
           <li>

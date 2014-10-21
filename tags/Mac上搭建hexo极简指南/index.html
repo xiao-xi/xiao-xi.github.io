@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: Git 操作 | xiao-xi</title>
+  <title>Tag: Mac上搭建hexo极简指南 | xiao-xi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="xiao-xi">
-<meta property="og:url" content="http://yoursite.com/tags/Git-操作/">
+<meta property="og:url" content="http://yoursite.com/tags/Mac上搭建hexo极简指南/">
 <meta property="og:site_name" content="xiao-xi">
 <meta property="og:description">
 <meta name="twitter:card" content="summary">
@@ -67,10 +67,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Git-操作" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-hexo搭建" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/10/20/Git-操作/" class="article-date">
-  <time datetime="2014-10-20T11:33:41.000Z" itemprop="datePublished">Oct 20 2014</time>
+    <a href="/2014/10/20/hexo搭建/" class="article-date">
+  <time datetime="2014-10-20T13:37:23.000Z" itemprop="datePublished">Oct 20 2014</time>
 </a>
     
   </div>
@@ -81,7 +81,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/20/Git-操作/">Git 操作</a>
+      <a class="article-title" href="/2014/10/20/hexo搭建/">hexo搭建</a>
     </h1>
   
 
@@ -89,128 +89,56 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Git_操作">Git 操作</h1>
-<h2 id="基本操作">基本操作</h2>
+        <p><img src="http://www.zkedu.com/images/upfiles/2014/02/14/20140214560901-387.jpg" alt="mou icon"></p>
 <ol>
-<li><p>初始化仓库</p>
-<p>   。git init</p>
-</li>
-<li><p>配置作者信息</p>
-<p>   。git config —global user.email”youremail@corp.com”</p>
-<p>   。git config —global user.email”youremail@corp.com”</p>
+<li><p>安装nvm(node.js的版本管理工具）</p>
+<pre><code>          $ wget -qO- http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/creationix/nvm/master/install.<span class="keyword">sh</span> | <span class="keyword">sh</span>
+</code></pre></li>
+<li><p>添加如下内容到.zshrc配置文件</p>
+<pre><code>     [ -s <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> ] &amp;&amp; . <span class="string">"/Users/<span class="escape">`u</span>sers<span class="escape">`/</span>.nvm/nvm.sh"</span> # This loads nvm
+</code></pre></li>
+<li><p>安装node.js(通过nvm安装)</p>
+<pre><code>     <span class="variable">$ </span>nvm install <span class="number">0</span>.<span class="number">10</span>
+</code></pre></li>
+<li><p>安装hexo（通过npm安装）</p>
+<pre><code>     <span class="variable">$ </span>npm install -g hexo
+</code></pre></li>
+<li><p>创建hexo文件夹，并安装hexo相关组件</p>
+<pre><code>     <span class="variable">$ </span>hexo init hexo
+     <span class="variable">$ </span>cd hexo
+     <span class="variable">$ </span>npm install
+</code></pre></li>
+<li><p>本地查看</p>
 </li>
 </ol>
-<ol>
-<li><p>添加文件到暂存区</p>
-<p>  。git add <filename><br>  。git add * (添加所有文件到暂存区)</filename></p>
-</li>
-<li><p>移除文件</p>
-<p>  。git rm <filename></filename></p>
-</li>
-<li><p>重命名一个文件</p>
-<p>  。 git rm <filename></filename></p>
-</li>
-<li><p>提交暂存区</p>
-<p>  。 git commit只会提交暂存区(staged)⾥面的⽂件</p>
-<p>  。 git commit -m “message”</p>
-</li>
-<li><p>查看工作目录的状态</p>
-<p>  。 git status</p>
-</li>
-<li><p>查看提交历史记录</p>
-<p>  。 git clone</p>
-</li>
-<li><p>查看文件改变</p>
-<p>  。 git diff</p>
-</li>
-</ol>
-<hr>
-<h2 id="撤销操作">撤销操作</h2>
-<ol>
-<li><p>撤销加入暂存区的操作</p>
-<p> 。git reset HEAD \<file></file></p>
-</li>
-</ol>
-<ol>
-<li><p>撤销修改的操作</p>
-<p> 。git checkout — \<file></file></p>
-</li>
-<li><p>将本地的修改放进回收站 </p>
-<p> 。git stash</p>
-</li>
-<li><p>从回收站中恢复本地的修改 </p>
-<p> 。git stash apply</p>
-</li>
-</ol>
-<p>￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼</p>
-<h2 id="￼Tag操作">￼Tag操作</h2>
-<ol>
-<li><p>查看tag</p>
-<p> 。git tag</p>
-</li>
-<li><p>创建tag</p>
-<p> 。git tag -a v1.0 -m “my version 1.0”</p>
-</li>
-<li><p>显示tag信息</p>
-<p> 。git show v1.0</p>
-</li>
-<li><p>对之前的提交打tag</p>
-<p> 。git tag -a v0.1 -m “version 0.1”</p>
-</li>
-</ol>
-<p>分支操作</p>
-<ol>
-<li><p>查看分支</p>
-<p> 。git branch</p>
-</li>
-<li><p>创建分支</p>
-<p> 。git branch <branchname></branchname></p>
-</li>
-<li><p>删除分支</p>
-<p> 。git branch -d <branchname></branchname></p>
-</li>
-<li><p>切换分支</p>
-<p> 。git checkout <branchname></branchname></p>
-</li>
-<li><p>合并分支</p>
-<p> 。git merge <branchname></branchname></p>
-</li>
-<li><p>rebase操作</p>
-<p> 。git rebase <basebranch> <newbranch></newbranch></basebranch></p>
-</li>
-</ol>
-<h2 id="远端仓库操作">远端仓库操作</h2>
-<ol>
-<li><p>克隆一个远端仓库</p>
-<p> 。git clone URL</p>
-</li>
-<li><p>添加远端仓库</p>
-<p> 。git remote add <name> <url></url></name></p>
-</li>
-<li><p>更新远端仓库的分支和数据 </p>
-<p> 。git fetch <name></name></p>
-</li>
-<li><p>获取并合并远端仓库的分支到当前分支</p>
-<p> 。git pull <reponame> <branchname></branchname></reponame></p>
-<p> 。eg: git pull origin master </p>
-</li>
-<li><p>上传本地分支和数据到远端仓库</p>
-<p> 。git push <reponame> <branchname></branchname></reponame></p>
-<p> 。eg: git push origin master </p>
-</li>
-<li><p>跟踪远端仓库上的分支</p>
-<p> 。git checkout —track origin/testbranch</p>
-<p> 。git checkout -b test origin/testbranch<br>￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼<br>￼     </p>
-</li>
+<p>输入如下命令后，打开浏览器，并输入localhost:4000来查看</p>
+<pre><code>        <span class="variable">$ </span>hexo g
+        <span class="variable">$ </span>hexo s
+</code></pre><ol>
+<li><p>注册github账号</p>
+<pre><code> 创建github账号同名repository
+ <span class="keyword">e</span><span class="variable">g:github</span>账号名位dorayox，则创建dorayox.github.io
+ 部署到github上
+</code></pre></li>
+<li><p>如下所示编辑_config.yml</p>
+<pre><code> deploy:
+   <span class="built_in">type</span>: github
+   repository: git@github.com:dorayox/dorayox.github.<span class="built_in">io</span>.git
+   branch: master
+</code></pre></li>
+<li><p>输入如下命令，完成到github得部署，之后打开浏览器并输入dorayox.github.io来查看</p>
+<pre><code> <span class="variable">$ </span>hexo g
+ <span class="variable">$ </span>hexo d
+</code></pre></li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/10/20/Git-操作/" data-id="m8xp3wvl23qyqwdn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/10/20/hexo搭建/" data-id="u731k33dp5t2a2km" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git-操作/">Git 操作</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a></li></ul>
 
     </footer>
   </div>
