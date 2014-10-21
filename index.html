@@ -176,25 +176,35 @@
 <blockquote>
 <p>__weak 修饰符</p>
 </blockquote>
-<p><em>循环引用容易发⽣内存泄露。所谓内存泄露就是应当废弃的对象在超出其⽣生存周期后继续存在。 Demo __weak修饰符在持有某对象的弱引用时,若该对象被废弃,则此弱引用将⾃动失效且处于nil被赋值的状态(空弱引用) <code>Demo</code>
+<p><em>循环引用容易发⽣内存泄露。所谓内存泄露就是应当废弃的对象在超出其生存周期后继续存在。 Demo __weak修饰符在持有某对象的弱引用时,若该对象被废弃,则此弱引用将⾃动失效且处于nil被赋值的状态(空弱引用) <code>Demo</code>
 </em></p>
 <blockquote>
 <p>__unsafe_unretained 修饰符</p>
 </blockquote>
-<p><em>附有<strong>unsafe_unretained 修饰符的变量不属于编译器的内存管理对象 <code>Demo</code> 赋值给附有</strong>unsafe_unretained修饰符变量的对象在通过该变量使⽤用时,如果没 有确保其确实存在,那么应⽤用程序就会崩溃 <code>Demo</code>
+<p><em>附有<strong>unsafe_unretained 修饰符的变量不属于编译器的内存管理对象 <code>Demo</code> 赋值给附有</strong>unsafe_unretained修饰符变量的对象在通过该变量使用时,如果没 有确保其确实存在,那么应用程序就会崩溃 <code>Demo</code>
 </em></p>
 <blockquote>
 <p>__autoreleasing 修饰符</p>
 </blockquote>
-<p>￼￼*在使⽤用ARC时,不能使⽤用autorelease⽅方法,也不能使⽤用NSAutoreleasePool类 </p>
-<p>指定”@autoreleasepool块”来替代”NSAutoreleasePool”类对象⽣生成、持有以及废弃 这⼀范围 </p>
-<p>另外,要通过将对象赋值给附加了__autoreleasing修饰符的变量来替代调⽤用autorelease⽅方法 <code>Demo</code>*</p>
+<p>￼￼*在使⽤ARC时,不能使用autorelease⽅方法,也不能使用NSAutoreleasePool类 </p>
+<p>指定”@autoreleasepool块”来替代”NSAutoreleasePool”类对象生成、持有以及废弃这⼀范围 </p>
+<p>另外,要通过将对象赋值给附加了__autoreleasing修饰符的变量来替代调用autorelease⽅方法 <code>Demo</code>*</p>
 <h5 id="显式的附加autoreleasing修饰符同显式地附加strong修饰符一样罕见,原因如下:">显式的附加autoreleasing修饰符同显式地附加strong修饰符一样罕见,原因如下:</h5>
 <p>( <code>考虑两种使⽤用autoreleasepool的场景</code> )</p>
 <p><strong>非自己生成并持有的对象</strong>:</p>
-<pre><code>        编译器会检查⽅方法名是否以alloc/<span class="keyword">new</span>/<span class="keyword">copy</span>/mytableCopy开始,如果不是就说明是⾮非⾃自⼰己⽣生成并持 有的对象,编译器会⾃自动将返回的对象注册到<span class="keyword">autoreleasepool</span>中
+<pre><code>        编译器会检查方法名是否以alloc/<span class="keyword">new</span>/<span class="keyword">copy</span>/mytableCopy开始,
+
+        如果不是就说明是⾮自己生成并持有的对象,
+
+        编译器会自动将返回的对象注册到<span class="keyword">autoreleasepool</span>中
 </code></pre><p><strong>￼￼自己生成并持有的对象,在函数中返回时:</strong></p>
-<pre><code>        由于<span class="keyword">return</span>使得对象变量超出其作⽤用域,所以强引⽤用对应     的⾃自⼰己⽣生成并持有的对象会被⾃自动释放,但该 对象如果作为函数的返回值,编译器会⾃自动将其注册到autoreleasepool中
+<pre><code>        由于<span class="keyword">return</span>使得对象变量超出其作用域,
+
+        所以强引⽤对应的⾃己⽣成并持有的对象会被自动释放,
+
+        但该对象如果作为函数的返回值,
+
+        编译器会自动将其注册到autoreleasepool中
 </code></pre>
       
     </div>
