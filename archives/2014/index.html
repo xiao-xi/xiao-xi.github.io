@@ -67,6 +67,153 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Foudation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/23/Foudation/" class="article-date">
+  <time datetime="2014-10-23T13:47:05.000Z" itemprop="datePublished">Oct 23 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: Foudation<br>date: 2014-10-23 21:20:00</p>
+<h2 id="tags:￼￼_Foundation_Kit_">tags:￼￼ Foundation Kit </h2>
+<p>  <strong>Foundation是UIKit和AppKit这两类UI框架的基础 </strong></p>
+<p>  <strong>因为它不包含UI对象,所以,其对象可以在iOS和Mac OS X应用中兼容</strong><br>  <strong>Foundation框架是以另一框架CoreFoundation为基础创建</strong>的</p>
+<p>￼￼￼￼￼</p>
+<h2 id="Foudation对象主要分类">Foudation对象主要分类</h2>
+<pre><code>值对象
+
+集合
+
+操作系统服务 包括三个方面: `⽂文件系统、<span class="keyword">URL</span>、进程间通讯` 。
+
+通知
+
+归档和序列化
+
+表达式和条件判断
+￼￼￼￼￼￼￼
+￼Objective-<span class="keyword">C</span>语言服务 
+</code></pre><h2 id="一些有用的数据类型">一些有用的数据类型</h2>
+<p>   <strong>范围(NSRange)</strong></p>
+<pre><code>￼￼￼￼￼<span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">NSRange</span>
+</span>{
+    ￼￼NSUInteger location;
+    ￼NSUinteger length;
+} NSRange;
+</code></pre><p>  创建NSRange的三种方式:</p>
+<pre><code>￼￼￼￼￼￼<span class="number">1</span>. 直接给字段赋值
+    <span class="type">NSRange</span> <span class="type">range</span>; 
+    <span class="type">range</span>.location = <span class="number">17</span>;
+      ￼￼<span class="type">range</span>.length = <span class="number">4</span>;
+
+￼<span class="number">2</span>. C语⾔言的聚合结构赋值机制(花括号)
+   ￼<span class="type">NSRange</span> <span class="type">range</span> = {<span class="number">17</span>, <span class="number">4</span>};
+
+￼<span class="number">3</span>. cocoa提供的<span class="type">NSMakeRange</span>()函数
+   <span class="type">NSRange</span> <span class="type">range</span> = <span class="type">NSMakeRange</span>(<span class="number">17</span>, <span class="number">4</span>);
+</code></pre><p><strong>￼￼￼几何数据类型 (这个属于CoreGraphics框架)</strong></p>
+<pre><code><span class="built_in">CGPoint</span>
+
+<span class="built_in">CGSize</span> 
+
+<span class="built_in">CGRect</span>
+</code></pre><h2 id="Foundation的一些常用类">Foundation的一些常用类</h2>
+<ol>
+<li><p>字符串</p>
+<p> NSString</p>
+</li>
+</ol>
+<p>创建字符串:</p>
+<pre><code>￼￼￼￼￼￼￼￼<span class="built_in">NSString</span> *str = <span class="string">@"Hello,world"</span>;
+￼<span class="built_in">NSString</span> *height = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"Your height is %d￼feet, %d  inches"</span>, <span class="number">5</span>, <span class="number">11</span>];
+</code></pre><p>￼￼￼实例方法:</p>
+<p>字符串长度:</p>
+<pre><code>￼- (NSUInteger) <span class="built_in">length</span>;
+</code></pre><p>字符串比较:</p>
+<pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span> isEqualToString:<span class="params">(<span class="variable">NSString</span> *)</span>aString;
+- <span class="params">(<span class="variable">NSComparisonResult</span>)</span>compare:<span class="params">(<span class="variable">NSString</span> *)</span>string;
+- <span class="params">(<span class="variable">NSComparisonResult</span>)</span>compare:<span class="params">(<span class="variable">NSString</span> *)</span>string options:<span class="params">(<span class="variable">NSStringCompareOptions</span>)</span>mask;</span>
+</code></pre><ol>
+<li><p>集合大家族</p>
+<p>NSArray、NSMutableArray</p>
+<p>NSEnumerator </p>
+<p>NSDictionary、NSMutableDictionary</p>
+</li>
+</ol>
+<p>创建字典:</p>
+<pre><code>￼￼￼￼￼￼￼￼￼￼￼<span class="number">1.</span> + (id) dictionaryWithObjectsAndKeys: (id) firstObject, <span class="keyword">...</span>;
+<span class="number">2.</span> @{key:value,<span class="keyword">...</span>};
+</code></pre><p>访问字典中的对象:</p>
+<pre><code>￼￼￼￼￼￼<span class="number">1.</span> - (<span class="keyword">id</span>) objectForKey: (<span class="keyword">id</span>) aKey;
+<span class="number">2.</span> dict[key];
+</code></pre><p>创建可变字典:</p>
+<pre><code>￼￼￼￼￼￼+(<span class="keyword">id</span>)dictionaryWithCapacity: (NSUInteger) numItems;
+</code></pre><p>添加元素:    </p>
+<pre><code>￼￼￼￼￼- (<span class="keyword">void</span>)setObject:(<span class="keyword">id</span>)anObject forKey:(<span class="keyword">id</span>)aKey;
+</code></pre><p>删除元素:</p>
+<pre><code>￼￼￼￼￼- (<span class="keyword">void</span>)removeObjectForKey: (<span class="keyword">id</span>) aKey;
+</code></pre><ol>
+<li><p>其他数值对象</p>
+<p>   NSNumber<br>￼</p>
+</li>
+</ol>
+<p><strong>装箱:</strong></p>
+<p><code>创建NSNumber对象(将基本数据类型封装成NSNumber对象)</code></p>
+<pre><code>￼￼￼￼<span class="number">1.</span>
+   + (<span class="built_in">NSNumber</span> *) numberWithChar: (<span class="keyword">char</span>) value;
+   + (<span class="built_in">NSNumber</span> *) numberWithBool: (<span class="built_in">BOOL</span>) value;
+   number = @YES; <span class="comment">//布尔值</span>
+   ￼￼+ (<span class="built_in">NSNumber</span> *) numberWithInt: (<span class="keyword">int</span>) value;
+￼   + (<span class="built_in">NSNumber</span> *) numberWithFloat: (<span class="keyword">float</span>) value;
+￼￼<span class="number">2.</span>
+    ￼<span class="built_in">NSNumber</span> *number;
+    ￼number = @<span class="string">'X'</span>; <span class="comment">//字符型</span>
+    ￼number = @<span class="number">12345</span>; <span class="comment">//整型</span>
+    ￼number = @<span class="number">12345</span>ul; <span class="comment">//⽆无符号整型</span>
+    ￼number = @<span class="number">123.45</span>f; <span class="comment">//浮点型</span>
+</code></pre><p><strong>开箱:</strong> </p>
+<p><code>从NSNumber对象中取出基本数据类型</code></p>
+<pre><code>Cocoa提供的将常用<span class="keyword">struct</span>型数据与NSValue互相转换的便捷方法
+￼￼￼￼- (<span class="keyword">char</span>) charValue;
+- (<span class="keyword">int</span>) intValue;
+- (<span class="built_in">NSString</span> *)stringValue;
+￼￼- (<span class="keyword">float</span>) floatValue;
+￼- (<span class="built_in">BOOL</span>) boolValue;
+</code></pre><p><strong>NSValue</strong></p>
+<p>创建NSValue对象,即装箱</p>
+<pre><code>￼￼￼￼￼￼￼ + (NSValue *) valueWithBytes: (<span class="keyword">const</span> <span class="keyword">void</span> *)<span class="keyword">value</span> objType:(<span class="keyword">const</span> <span class="keyword">char</span>*)type;
+</code></pre><p>提取NSValue中的数值,即开箱</p>
+<pre><code>￼￼￼￼￼￼- (<span class="keyword">void</span>)getValue:(<span class="keyword">void</span> *)buffer;
+</code></pre><p><strong>Cocoa提供的将常用struct型数据与NSValue互相转换的便捷方法</strong></p>
+<pre><code>+ (NSValue *)valueWithPoint:(NSPoint)aPoint;
+-<span class="ruby"> (<span class="constant">NSPoint</span>)pointValue;
+</span>-<span class="ruby"> (<span class="constant">NSSize</span>)sizeValue;
+</span>-<span class="ruby"> (<span class="constant">NSRect</span>)rectValue;
+</span>￼+ (NSValue *)valueWithSize:(NSSize)size;
+￼+ (NSValue *)valueWithRect:(NSRect)rect;
+</code></pre><p>￼￼￼￼￼<br>￼￼<br><strong>￼NSNull</strong></p>
+<p>创建NSNull对象</p>
+<pre><code>￼￼￼￼+ (NSNull *) <span class="literal">null</span>;
+</code></pre><p>￼￼￼￼￼</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/23/Foudation/" data-id="osstxxqax040h19k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-cocoa内存管理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/20/cocoa内存管理/" class="article-date">
@@ -665,7 +812,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -675,6 +822,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/10/23/Foudation/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2014/10/20/cocoa内存管理/">cocoa内存管理</a>
@@ -690,10 +841,6 @@
         
           <li>
             <a href="/2014/10/20/Git-操作/">Git 操作</a>
-          </li>
-        
-          <li>
-            <a href="/2014/10/14/hello-world/">Hello World</a>
           </li>
         
       </ul>
