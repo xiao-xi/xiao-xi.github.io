@@ -252,10 +252,10 @@
 <p>￼￼</p>
 <pre><code>        取得非⾃⼰⽣成的对象但⾃⼰不持有对象 <span class="keyword">id</span> obj =  [<span class="built_in">NSMutableArray</span> array];
         ￼￼
-        取得⾮非⾃自⼰己⽣生成的对象但⾃自⼰己持有对象 <span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> array];
-        ⾃自⼰己持有对象 [obj retain];
+        取得⾮自⼰⽣成的对象但⾃己持有对象 <span class="keyword">id</span> obj = [<span class="built_in">NSMutableArray</span> array];
+        ⾃己持有对象 [obj retain];
 </code></pre><p>￼￼<br>￼</p>
-<h3 id="不再需要自己_持有_的对象时_释放">不再需要自己 持有 的对象时 释放</h3>
+<h3 id="不再需要自己持有的对象时释放">不再需要自己持有的对象时释放</h3>
 <pre><code>        ￼￼￼ ⾃⼰⽣成并持有对象
         <span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];
 
@@ -281,7 +281,7 @@
         ￼
 </code></pre><h3 id="非自己持有的对象无法释放">非自己持有的对象无法释放</h3>
 <p>￼￼<br>            ￼自己生成并持有对象<br>            id obj = [[NSObject alloc] init];</p>
-<pre><code>        /释放之后再次释放已⾮非⾃自⼰己持有的对象,应⽤用程序会崩溃 [obj <span class="operator"><span class="keyword">release</span>];</span>
+<pre><code>        /释放之后再次释放已⾮自己持有的对象,应⽤用程序会崩溃 [obj <span class="operator"><span class="keyword">release</span>];</span>
 
 
         ￼ 释放对象
@@ -310,10 +310,10 @@
 </code></pre><p>￼</p>
 <h2 id="ARC规则">ARC规则</h2>
 <h3 id="所有权修饰符">所有权修饰符</h3>
-<pre><code>         __<span class="keyword">strong</span>修饰符    
-￼           __<span class="keyword">weak</span> 修饰符
-        ￼__unsafe_unretained修饰符
-        __autoreleasing
+<pre><code>__<span class="keyword">strong</span>修饰符    
+￼__<span class="keyword">weak</span> 修饰符
+￼__unsafe_unretained修饰符
+__autoreleasing
 </code></pre><p><strong>__strong 修饰符</strong></p>
 <blockquote>
 <p>__strong修饰符表示对象的“强引用”。持有强引用的变量在超出其作用域时被废弃,随着强引用的失效,引⽤的对象会随之释放。 <code>Demo</code></p>
@@ -337,7 +337,7 @@
 <p>指定”@autoreleasepool块”来替代”NSAutoreleasePool”类对象生成、持有以及废弃这⼀范围 </p>
 <p>另外,要通过将对象赋值给附加了__autoreleasing修饰符的变量来替代调用autorelease⽅方法 <code>Demo</code>*</p>
 <h5 id="显式的附加autoreleasing修饰符同显式地附加strong修饰符一样罕见,原因如下:">显式的附加autoreleasing修饰符同显式地附加strong修饰符一样罕见,原因如下:</h5>
-<p>( <code>考虑两种使⽤用autoreleasepool的场景</code> )</p>
+<p>( <code>考虑两种使用autoreleasepool的场景</code> )</p>
 <p><strong>非自己生成并持有的对象</strong>:</p>
 <pre><code>        编译器会检查方法名是否以alloc/<span class="keyword">new</span>/<span class="keyword">copy</span>/mytableCopy开始,
 
