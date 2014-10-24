@@ -67,6 +67,90 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Block-代码块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/24/Block-代码块/" class="article-date">
+  <time datetime="2014-10-24T13:36:17.000Z" itemprop="datePublished">Oct 24 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/10/24/Block-代码块/">Block(代码块)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述">概述</h2>
+<pre><code>- 代码块对象简称为“代码块”，是对<span class="keyword">C</span>语言中函数的扩展。运行在iOS4。<span class="number">0</span>和OS  X10<span class="number">.6</span>版本以上
+- 代码块实际上是由<span class="keyword">C</span>语言实现的，所以在各种以<span class="keyword">C</span>作为基础的语言内都是有效的包括：Objective－<span class="keyword">C</span>，<span class="keyword">C</span>＋＋以及Objective－<span class="keyword">C</span>++
+- 代码块本质上是和其他变量类似，不同的是，代码块存储的数据是一个函数体，使用代码块时，可以像调用其他标准函数一样，传入参数数，并得到返回值。
+-  代码块不属于ANSI的<span class="keyword">C</span>语言标准。关于代码块的提议已经提交给了<span class="keyword">C</span>程序语言标准团体。
+</code></pre><h2 id="函数指针_VS_代码块">函数指针 VS 代码块</h2>
+<p><strong>函数指针的语法格式</strong></p>
+<pre><code> 返回值类型（*函数名）（参数列表）；
+
+ eg: <span class="keyword">void</span> (*myFunction) (<span class="keyword">void</span>);
+</code></pre><p><strong>代码块的语法格式</strong></p>
+<pre><code>返回值类型（^代码块名）(参数列表) ＝ ^返回值类型(参数列表){表达式；}；
+
+eg: <span class="type">void</span> (^myBlock)() = ^{printf(<span class="string">"Hello, Block\n"</span>);};
+</code></pre><p><code>说明：</code></p>
+<pre><code>返回值类型和参数列表都可以有条件省略
+
+省略返回值类型，若表达式中有<span class="keyword">return</span>语句就使用该返回值的类型，若没有，则为<span class="keyword">void</span>    
+
+省略返回值类型时，若表达式中有多个<span class="keyword">return</span>语句，则所有<span class="keyword">return</span>语句返回值类型必须相同
+
+如果不使用参数，则参数列表也可以省略
+</code></pre><h2 id="代码块的使用">代码块的使用</h2>
+<p>直接使用</p>
+<pre><code><span class="type">void</span>(^myBlock)() = ^{printf(<span class="string">"Hello,Block\n"</span>);};
+
+myBlock();
+</code></pre><p>代码块内联</p>
+<pre><code>￼<span class="built_in">NSArray</span> *array = @[<span class="string">@"One"</span>, <span class="string">@"Two"</span>, <span class="string">@"Three"</span>, <span class="string">@"Four"</span>];
+
+￼<span class="built_in">NSLog</span>(<span class="string">@"Unsorted array: %@"</span>, array);
+
+￼<span class="built_in">NSArray</span> *sortedArray = [array
+
+￼sortedArrayUsingComparator:^NSComparisonResult(<span class="keyword">id</span> obj1, <span class="keyword">id</span> obj2) {<span class="keyword">return</span> [obj1 compare:obj2];
+￼}];
+
+<span class="built_in">NSLog</span>(<span class="string">@"Sorted array: %@"</span>, sortedArray);
+</code></pre><h2 id="使用typedef定义相同类型的代码块">使用typedef定义相同类型的代码块</h2>
+<pre><code><span class="keyword">typedef</span> NSComparisonResult(^NSComparator)(<span class="keyword">id</span> obj1,<span class="keyword">id</span> obj2);
+</code></pre><h2 id="代码块的变量">代码块的变量</h2>
+<pre><code>全局变量和静态变量在代码块内部可以正常使用(可以修改其值) 
+
+局部变量在代码块内部无法修改其值,原因是代码块的局部变量在编译阶段被看做为常量
+
+如果需要在代码块中修改局部变量,需要在局部变量前面加__block修饰符
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/24/Block-代码块/" data-id="z4ydlaxwvc10q85s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Block/">Block</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Foudation" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/24/Foudation/" class="article-date">
@@ -872,7 +956,7 @@ __autoreleasing
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git-操作/">Git 操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-world/">Hello world !</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KVC/">KVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim的使用/">vim的使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存管理/">内存管理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git-操作/">Git 操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-world/">Hello world !</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KVC/">KVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim的使用/">vim的使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存管理/">内存管理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -881,7 +965,7 @@ __autoreleasing
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Git-操作/" style="font-size: 20.00px;">Git 操作</a><a href="/tags/Hello-world/" style="font-size: 20.00px;">Hello world !</a><a href="/tags/KVC/" style="font-size: 20.00px;">KVC</a><a href="/tags/Mac上搭建hexo极简指南/" style="font-size: 20.00px;">Mac上搭建hexo极简指南</a><a href="/tags/first/" style="font-size: 10.00px;">first</a><a href="/tags/vim的使用/" style="font-size: 20.00px;">vim的使用</a><a href="/tags/内存管理/" style="font-size: 20.00px;">内存管理</a>
+      <a href="/tags/Block/" style="font-size: 20.00px;">Block</a><a href="/tags/Git-操作/" style="font-size: 20.00px;">Git 操作</a><a href="/tags/Hello-world/" style="font-size: 20.00px;">Hello world !</a><a href="/tags/KVC/" style="font-size: 20.00px;">KVC</a><a href="/tags/Mac上搭建hexo极简指南/" style="font-size: 20.00px;">Mac上搭建hexo极简指南</a><a href="/tags/first/" style="font-size: 10.00px;">first</a><a href="/tags/vim的使用/" style="font-size: 20.00px;">vim的使用</a><a href="/tags/内存管理/" style="font-size: 20.00px;">内存管理</a>
     </div>
   </div>
 
@@ -890,7 +974,7 @@ __autoreleasing
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">9</span></li></ul>
     </div>
   </div>
 
@@ -900,6 +984,10 @@ __autoreleasing
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/10/24/Block-代码块/">Block(代码块)</a>
+          </li>
         
           <li>
             <a href="/2014/10/24/Foudation/">(no title)</a>
@@ -915,10 +1003,6 @@ __autoreleasing
         
           <li>
             <a href="/2014/10/20/hexo搭建/">hexo搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2014/10/20/vim使用/">vim使用</a>
           </li>
         
       </ul>
