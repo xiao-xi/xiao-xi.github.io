@@ -67,6 +67,84 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-KVC-NSKeyValueCoding非正式协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/24/KVC-NSKeyValueCoding非正式协议/" class="article-date">
+  <time datetime="2014-10-24T12:54:54.000Z" itemprop="datePublished">Oct 24 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/10/24/KVC-NSKeyValueCoding非正式协议/">KVC-NSKeyValueCoding非正式协议</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="什么是KVC_—-&gt;What">什么是KVC —-&gt;What</h1>
+<p>  KVC指的就是NSKeyValueCoding非正式协议。 </p>
+<p>  KVC是一种间接地访问对象的属性的机制。</p>
+<p>  这种间接表现在通过字符串来标识属性,而不是通过调用存取方法或直接地访问实例变量的方式,即不依赖域setter和getter方法。</p>
+<p>  KVC机制不仅支持对象,还支持标量和结构体类型,这些非对象的类型会被自动的装箱和开箱。</p>
+<h2 id="Key_&amp;_Key_Path">Key &amp; Key Path</h2>
+<p>  键(Key)是一个字符串用来标识对象里面的一个指定的属性。一般一个键对应对象的存取方法或 实例变量。键必须是ASCII码,一般以小写字母开始,不能包含空格。</p>
+<p><em>A key path is a string of dot separated keys that is used to specify a sequence of object properties to traverse. The property of the first key in the sequence is relative to the receiver, and each subsequent key is evaluated relative to the value of the previous property.</em></p>
+<p>  键路径(Key Path)是一个由点进行分割的一系列键组成的字符串</p>
+<h1 id="KVC的使用">KVC的使用</h1>
+<pre><code><span class="pp">-<span class="params">(void)</span>setValue:<span class="params">(id)</span>value forKey:<span class="params">(<span class="variable">NSString</span> *)</span>key
+
+-<span class="params">(id)</span>valueForKey:<span class="params">(<span class="variable">NSString</span> *)</span>key
+
+KVC的调用机制：
+
+setValue:forKey: 的机制跟valueForKey想死。它首先查找参数名命名的setter方法，如果找到的话则完成设置；如果没有找到setter方法，则直接在类中找到格式为_key或者key的实例变量，然后将value赋值给它。
+
+valueForKey: 会首先查找以参数命名（格式为_key或者isKey）的getter方法，如果找到的话则调用这个方法；如果没有找到这样的getter方法，它将会在对象内部寻找名称格式为_key或者key的实例变量，然后返回。</span>
+</code></pre><p>｀    </p>
+<pre><code>￼￼-(<span class="keyword">void</span>)setValue:(<span class="keyword">id</span>)value forKeyPath:(<span class="built_in">NSString</span> *)keyPath
+
+-(<span class="keyword">id</span>)valueForKeyPath:(<span class="built_in">NSString</span> *)keyPath
+
+注意：
+键路径的深度是任意的，具体取决于对象之间的关系的复杂度。
+</code></pre><p>｀</p>
+<pre><code><span class="pp">-<span class="params">(void)</span>setValue:<span class="params">(id)</span>value forUndefinedKey:<span class="params">(<span class="variable">NSString</span> *)</span>key
+
+￼-<span class="params">(id)</span>valueForUndefinedKey:<span class="params">(<span class="variable">NSString</span> *)</span>key
+
+处理未定义的键</span>
+</code></pre><p>｀        </p>
+<pre><code>-(<span class="keyword">void</span>)setNilValueForKey:(<span class="built_in">NSString</span> *)key
+
+设置<span class="literal">nil</span>    
+</code></pre><p>｀</p>
+<pre><code>￼KVC与点语法是正交的,也就是一点关系都没有
+
+The accessor patterns are written <span class="keyword">in</span> the form -<span class="keyword">set</span>&lt;<span class="keyword">Key</span>&gt;: <span class="keyword">or</span> -&lt;<span class="keyword">key</span>&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/24/KVC-NSKeyValueCoding非正式协议/" data-id="4envxilhlxhf7mrb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KVC/">KVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Foudation" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/23/Foudation/" class="article-date">
@@ -794,7 +872,7 @@ __autoreleasing
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git-操作/">Git 操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-world/">Hello world !</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim的使用/">vim的使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存管理/">内存管理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git-操作/">Git 操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-world/">Hello world !</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KVC/">KVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim的使用/">vim的使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存管理/">内存管理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -803,7 +881,7 @@ __autoreleasing
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Git-操作/" style="font-size: 20.00px;">Git 操作</a><a href="/tags/Hello-world/" style="font-size: 20.00px;">Hello world !</a><a href="/tags/Mac上搭建hexo极简指南/" style="font-size: 20.00px;">Mac上搭建hexo极简指南</a><a href="/tags/first/" style="font-size: 10.00px;">first</a><a href="/tags/vim的使用/" style="font-size: 20.00px;">vim的使用</a><a href="/tags/内存管理/" style="font-size: 20.00px;">内存管理</a>
+      <a href="/tags/Git-操作/" style="font-size: 20.00px;">Git 操作</a><a href="/tags/Hello-world/" style="font-size: 20.00px;">Hello world !</a><a href="/tags/KVC/" style="font-size: 20.00px;">KVC</a><a href="/tags/Mac上搭建hexo极简指南/" style="font-size: 20.00px;">Mac上搭建hexo极简指南</a><a href="/tags/first/" style="font-size: 10.00px;">first</a><a href="/tags/vim的使用/" style="font-size: 20.00px;">vim的使用</a><a href="/tags/内存管理/" style="font-size: 20.00px;">内存管理</a>
     </div>
   </div>
 
@@ -812,7 +890,7 @@ __autoreleasing
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -822,6 +900,10 @@ __autoreleasing
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/10/24/KVC-NSKeyValueCoding非正式协议/">KVC-NSKeyValueCoding非正式协议</a>
+          </li>
         
           <li>
             <a href="/2014/10/23/Foudation/">(no title)</a>
@@ -837,10 +919,6 @@ __autoreleasing
         
           <li>
             <a href="/2014/10/20/vim使用/">vim使用</a>
-          </li>
-        
-          <li>
-            <a href="/2014/10/20/Git-操作/">Git 操作</a>
           </li>
         
       </ul>
