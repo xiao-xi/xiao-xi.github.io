@@ -1184,6 +1184,176 @@ The accessor patterns are written in the form -set&lt;Key&gt;: or -&lt;key&gt;
 
 
   
+    <article id="post-Foudation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/10/23/Foudation/">Foudation</a>
+    </h1>
+  
+
+        <a href="/2014/10/23/Foudation/" class="archive-article-date">
+  	<time datetime="2014-10-23T13:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-23</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>  <strong>Foundation是UIKit和AppKit这两类UI框架的基础</strong></p>
+<p>  <strong>因为它不包含UI对象,所以,其对象可以在iOS和Mac OS X应用中兼容</strong><br>  <strong>Foundation框架是以另一框架CoreFoundation为基础创建</strong>的</p>
+<p>##Foudation对象主要分类</p>
+<pre><code>值对象
+
+集合
+
+操作系统服务 包括三个方面: `文件系统、URL、进程间通讯` 。
+
+通知
+
+归档和序列化
+
+表达式和条件判断
+
+Objective-C语言服务 
+</code></pre><p>##一些有用的数据类型</p>
+<p>   <strong>范围(NSRange)</strong></p>
+<pre><code>typedef struct _NSRange
+{
+    NSUInteger location;
+    NSUinteger length;
+} NSRange;
+</code></pre><p>  创建NSRange的三种方式:</p>
+<pre><code>1. 直接给字段赋值
+    NSRange range; 
+    range.location = 17;
+      range.length = 4;
+
+2. C语言的聚合结构赋值机制(花括号)
+   NSRange range = {17, 4};
+
+3. cocoa提供的NSMakeRange()函数
+   NSRange range = NSMakeRange(17, 4);
+</code></pre><p><strong>几何数据类型 (这个属于CoreGraphics框架)</strong></p>
+<pre><code>CGPoint
+
+CGSize 
+
+CGRect
+</code></pre><p>##Foundation的一些常用类 </p>
+<ol>
+<li><p>字符串</p>
+<p> NSString</p>
+</li>
+</ol>
+<p>创建字符串:</p>
+<pre><code>NSString *str = @&quot;Hello,world&quot;;
+NSString *height = [NSString stringWithFormat:@&quot;Your height is %dfeet, %d  inches&quot;, 5, 11];
+</code></pre><p>实例方法:</p>
+<p>字符串长度:</p>
+<pre><code>- (NSUInteger) length;
+</code></pre><p>字符串比较:</p>
+<pre><code>- (BOOL) isEqualToString:(NSString *)aString;
+- (NSComparisonResult)compare:(NSString *)string;
+- (NSComparisonResult)compare:(NSString *)string options:(NSStringCompareOptions)mask;
+</code></pre><ol>
+<li><p>集合大家族</p>
+<p>NSArray、NSMutableArray</p>
+<p>NSEnumerator </p>
+<p>NSDictionary、NSMutableDictionary</p>
+</li>
+</ol>
+<p>创建字典:</p>
+<pre><code>1. + (id) dictionaryWithObjectsAndKeys: (id) firstObject, ...;
+2. @{key:value,...};
+</code></pre><p>访问字典中的对象:</p>
+<pre><code>1. - (id) objectForKey: (id) aKey;
+2. dict[key];
+</code></pre><p>创建可变字典:</p>
+<pre><code>+(id)dictionaryWithCapacity: (NSUInteger) numItems;
+</code></pre><p>添加元素:    </p>
+<pre><code>- (void)setObject:(id)anObject forKey:(id)aKey;
+</code></pre><p>删除元素:</p>
+<pre><code>- (void)removeObjectForKey: (id) aKey;
+</code></pre><ol>
+<li><p>其他数值对象</p>
+<p>   NSNumber    </p>
+</li>
+</ol>
+<p><strong>装箱:</strong></p>
+<p><code>创建NSNumber对象(将基本数据类型封装成NSNumber对象)</code></p>
+<pre><code>1.
+   + (NSNumber *) numberWithChar: (char) value;
+   + (NSNumber *) numberWithBool: (BOOL) value;
+   number = @YES; //布尔值
+   + (NSNumber *) numberWithInt: (int) value;
+   + (NSNumber *) numberWithFloat: (float) value;
+2.
+    NSNumber *number;
+    number = @&apos;X&apos;; //字符型
+    number = @12345; //整型
+    number = @12345ul; //⽆无符号整型
+    number = @123.45f; //浮点型
+</code></pre><p><strong>开箱:</strong> </p>
+<p><code>从NSNumber对象中取出基本数据类型</code></p>
+<pre><code>Cocoa提供的将常用struct型数据与NSValue互相转换的便捷方法
+- (char) charValue;
+- (int) intValue;
+- (NSString *)stringValue;
+- (float) floatValue;
+- (BOOL) boolValue;
+</code></pre><p><strong>NSValue</strong></p>
+<p>创建NSValue对象,即装箱</p>
+<pre><code>+ (NSValue *) valueWithBytes: (const void *)value objType:(const char*)type;
+</code></pre><p>提取NSValue中的数值,即开箱</p>
+<pre><code>- (void)getValue:(void *)buffer;
+</code></pre><p><strong>Cocoa提供的将常用struct型数据与NSValue互相转换的便捷方法</strong></p>
+<pre><code>+ (NSValue *)valueWithPoint:(NSPoint)aPoint;
+- (NSPoint)pointValue;
+- (NSSize)sizeValue;
+- (NSRect)rectValue;
++ (NSValue *)valueWithSize:(NSSize)size;
++ (NSValue *)valueWithRect:(NSRect)rect;
+</code></pre><p><strong>NSNull</strong></p>
+<p>创建NSNull对象</p>
+<pre><code>+ (NSNull *) null;
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Foundation-Kit/">Foundation Kit</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2014/10/23/Foudation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-C笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2309,103 +2479,6 @@ __autoreleasing
 
 
   
-    <article id="post-hexo搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/20/hexo搭建/">hexo搭建</a>
-    </h1>
-  
-
-        <a href="/2014/10/20/hexo搭建/" class="archive-article-date">
-  	<time datetime="2014-10-20T13:37:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-20</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://www.zkedu.com/images/upfiles/2014/02/14/20140214560901-387.jpg" alt="mou icon"></p>
-<p>1.安装nvm(node.js的版本管理工具）</p>
-<pre><code>$ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
-</code></pre><p>2.添加如下内容到.zshrc配置文件</p>
-<pre><code>[ -s &quot;/Users/`users`/.nvm/nvm.sh&quot; ] &amp;&amp; . &quot;/Users/`users`/.nvm/nvm.sh&quot; # This loads nvm
-</code></pre><p>3.安装node.js(通过nvm安装)</p>
-<pre><code>$ nvm install 0.10
-</code></pre><p>4.安装hexo（通过npm安装）</p>
-<pre><code>$ npm install -g hexo
-</code></pre><p>5.创建hexo文件夹，并安装hexo相关组件</p>
-<pre><code>$ hexo init hexo
-$ cd hexo
-$ npm install
-</code></pre><p>6.本地查看</p>
-<p>输入如下命令后，打开浏览器，并输入localhost:4000来查看</p>
-<pre><code>$ hexo g
-$ hexo s
-</code></pre><p>7.注册github账号</p>
-<pre><code>创建github账号同名repository
-eg:github账号名位dorayox，则创建dorayox.github.io
-部署到github上
-</code></pre><p>8.如下所示编辑_config.yml</p>
-<pre><code>deploy:
-  type: github
-  repository: git@github.com:dorayox/dorayox.github.io.git
-  branch: master
-</code></pre><p>9.输入如下命令，完成到github得部署，之后打开浏览器并输入dorayox.github.io来查看</p>
-<pre><code>$ hexo g
-$ hexo d
-</code></pre><blockquote>
-<p>若hexo仍不能用则进行下面操作：</p>
-</blockquote>
-<ol>
-<li><p>检查 ～ 目录下 <code>.nvm</code> 是否 git 化，若是则删除其中 <code>.git</code> 删除，</p>
-</li>
-<li><p>进入 <code>.nvm/v0.10.32/bin</code> 目录下复制 <code>Users/qingyun/.nvm/v0.10.32/bin</code> 目录，</p>
-</li>
-<li><p>再次进入 ～目录下，<code>vi .zshrc</code><br>设置路径   <code>export PATH=$PATH:/Users/qingyun/.nvm/v0.10.32/bin</code> </p>
-</li>
-<li><p>退出iterm重新进入，<code>cd hexo</code> ，</p>
-</li>
-<li><p>再次运行hexo命令如：<code>hexo s</code> </p>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/10/20/hexo搭建/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -2476,11 +2549,11 @@ $ hexo d
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hello world !</a>
+                <a href="javascript:void(0)">Git 操作</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Git 操作</a>
+                <a href="javascript:void(0)">Hello world !</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2508,15 +2581,15 @@ $ hexo d
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">cocoaPods</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">accelerator-key</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">UI_Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">cocoaPods</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2557,6 +2630,10 @@ $ hexo d
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">certificate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Foundation Kit</a>
               </li>
             
             <div class="clearfix"></div>
