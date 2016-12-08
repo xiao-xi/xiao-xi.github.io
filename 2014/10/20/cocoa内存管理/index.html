@@ -6,14 +6,54 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/xiao-xi">
-  <title>Archives | chenxiaoxiang</title>
+  <title>cocoa内存管理 | chenxiaoxiang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="chenxiaoxiang">
-<meta property="og:url" content="https://github.com/xiao-xi/archives/index.html">
+  <meta name="description" content="##引用计数的概念以办公室开灯关灯举例
+##内存管理的思考方式
+###自己⽣成的对象,自己持有 
+    * alloc
+    * mutableCopy
+    ￼* new
+    ￼* copy
+
+自⼰生成并持有对象
+id obj = [[NSObject alloc] init];
+￼￼
+###非自己生成的对象,自己也能持有￼￼
+取得非⾃⼰⽣成的对象但⾃⼰不持有对象 id obj =">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cocoa内存管理">
+<meta property="og:url" content="https://github.com/xiao-xi/2014/10/20/cocoa内存管理/index.html">
 <meta property="og:site_name" content="chenxiaoxiang">
+<meta property="og:description" content="##引用计数的概念以办公室开灯关灯举例
+##内存管理的思考方式
+###自己⽣成的对象,自己持有 
+    * alloc
+    * mutableCopy
+    ￼* new
+    ￼* copy
+
+自⼰生成并持有对象
+id obj = [[NSObject alloc] init];
+￼￼
+###非自己生成的对象,自己也能持有￼￼
+取得非⾃⼰⽣成的对象但⾃⼰不持有对象 id obj =">
+<meta property="og:updated_time" content="2014-10-23T14:02:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chenxiaoxiang">
+<meta name="twitter:title" content="cocoa内存管理">
+<meta name="twitter:description" content="##引用计数的概念以办公室开灯关灯举例
+##内存管理的思考方式
+###自己⽣成的对象,自己持有 
+    * alloc
+    * mutableCopy
+    ￼* new
+    ￼* copy
+
+自⼰生成并持有对象
+id obj = [[NSObject alloc] init];
+￼￼
+###非自己生成的对象,自己也能持有￼￼
+取得非⾃⼰⽣成的对象但⾃⼰不持有对象 id obj =">
   
     <link rel="alternative" href="/atom.xml" title="chenxiaoxiang" type="application/atom+xml">
   
@@ -130,351 +170,254 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-cocoa内存管理" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cocoa内存管理
+    </h1>
+  
+
+        <a href="/2014/10/20/cocoa内存管理/" class="archive-article-date">
+  	<time datetime="2014-10-20T14:02:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-20</time>
+</a>
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##引用计数的概念<br><code>以办公室开灯关灯举例</code></p>
+<p>##内存管理的思考方式</p>
+<p>###自己⽣成的对象,自己持有 </p>
+<pre><code>    * alloc
+    * mutableCopy
+    ￼* new
+    ￼* copy
+
+自⼰生成并持有对象
+id obj = [[NSObject alloc] init];
+￼￼
+</code></pre><p>###非自己生成的对象,自己也能持有<br>￼￼</p>
+<pre><code>取得非⾃⼰⽣成的对象但⾃⼰不持有对象 id obj =  [NSMutableArray array];
+￼￼
+取得⾮自⼰⽣成的对象但⾃己持有对象 id obj = [NSMutableArray array];
+⾃己持有对象 [obj retain];
+</code></pre><p>￼￼<br>￼</p>
+<p>###不再需要自己持有的对象时释放<br>            ￼￼￼ ⾃⼰⽣成并持有对象<br>            id obj = [[NSObject alloc] init];</p>
+<pre><code>⼀一般会在release之后,将对象指针赋为nil,以避免指针悬空的情况       obj = nil;
+
+
+￼释放对象
+￼[obj release];
+
+取得非⾃己⽣成的对象但⾃⼰持有对象 
+
+id obj = [NSMutableArray array];
+
+
+￼￼⾃⼰持有对象
+￼[obj retain];
+
+
+￼释放对象
+￼[obj release];
+￼obj = nil;
+￼
+</code></pre><p>###非自己持有的对象无法释放<br>￼￼<br>            ￼自己生成并持有对象<br>            id obj = [[NSObject alloc] init];</p>
+<pre><code>/释放之后再次释放已⾮自己持有的对象,应⽤用程序会崩溃 [obj release];
+
+
+￼ 释放对象
+￼[j release];
+
+
+￼⼀一般会在release之后,将对象指针赋为nil,以避免指针悬空的情况
+￼ obj = nil;
+￼
+￼ 取得非自己生成的对象且自己不持有该对象 
+
+id obj = [NSMutableArray array];
+
+
+ 释放了⾮⾃己持有的对象,会导致应用程序崩溃 
+
+ [obj release];
+</code></pre><p>￼<br>￼<br>￼<br>            ￼ ⾃⼰生成并持有对象<br>            id obj = [[NSObject alloc] init];</p>
+<pre><code> ⼀一般会在release之后,将对象指针赋为nil,以避免指针悬空的情况 
+
+ obj = nil;
+
+
+￼释放对象
+￼[obj release];
+</code></pre><p>￼</p>
+<p>##ARC规则 </p>
+<p>###所有权修饰符</p>
+<pre><code>__strong修饰符    
+￼__weak 修饰符
+￼__unsafe_unretained修饰符
+__autoreleasing
+</code></pre><p><strong>__strong 修饰符</strong></p>
+<blockquote>
+<p>__strong修饰符表示对象的“强引用”。持有强引用的变量在超出其作用域时被废弃,随着强引用的失效,引⽤的对象会随之释放。 <code>Demo</code></p>
+</blockquote>
+<p><em>__strong修饰符修饰的变量,不仅只在变量作⽤域中,在赋值上也能正确地管理其对象的所有者。 <code>Demo</code></em></p>
+<p><em><strong>strong修饰符同后面要讲的_weak修饰符和</strong>autoreleasing修饰符⼀一起,可以保证将附有这些修饰符的自动变量初始化为nil。 <code>Demo</code></em></p>
+<blockquote>
+<p>__weak 修饰符</p>
+</blockquote>
+<p><em>循环引用容易发⽣内存泄露。所谓内存泄露就是应当废弃的对象在超出其生存周期后继续存在。 Demo __weak修饰符在持有某对象的弱引用时,若该对象被废弃,则此弱引用将⾃动失效且处于nil被赋值的状态(空弱引用) <code>Demo</code>
+</em></p>
+<blockquote>
+<p>__unsafe_unretained 修饰符</p>
+</blockquote>
+<p><em>附有<strong>unsafe_unretained 修饰符的变量不属于编译器的内存管理对象 <code>Demo</code> 赋值给附有</strong>unsafe_unretained修饰符变量的对象在通过该变量使用时,如果没 有确保其确实存在,那么应用程序就会崩溃 <code>Demo</code>
+</em></p>
+<blockquote>
+<p>__autoreleasing 修饰符</p>
+</blockquote>
+<p>￼￼*在使⽤ARC时,不能使用autorelease⽅方法,也不能使用NSAutoreleasePool类 </p>
+<p>指定”@autoreleasepool块”来替代”NSAutoreleasePool”类对象生成、持有以及废弃这⼀范围 </p>
+<p>另外,要通过将对象赋值给附加了__autoreleasing修饰符的变量来替代调用autorelease⽅方法 <code>Demo</code>*</p>
+<p>#####显式的附加autoreleasing修饰符同显式地附加strong修饰符一样罕见,原因如下: </p>
+<p>( <code>考虑两种使用autoreleasepool的场景</code> )</p>
+<p><strong>非自己生成并持有的对象</strong>:</p>
+<pre><code>编译器会检查方法名是否以alloc/new/copy/mytableCopy开始,
+
+如果不是就说明是⾮自己生成并持有的对象,
+
+编译器会自动将返回的对象注册到autoreleasepool中
+</code></pre><p><strong>￼￼自己生成并持有的对象,在函数中返回时:</strong></p>
+<pre><code>由于return使得对象变量超出其作用域,
+
+所以强引⽤对应的⾃己⽣成并持有的对象会被自动释放,
+
+但该对象如果作为函数的返回值,
+
+编译器会自动将其注册到autoreleasepool中
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/02/03/vim命令-sed/" class="archive-article-date">
-  	<time datetime="2015-02-03T12:33:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-02-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/02/03/vim命令-sed/">vim_command_sed</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VIM-Sed/">VIM_Sed</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存管理/">内存管理</a></li></ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/02/01/证书相关/" class="archive-article-date">
-  	<time datetime="2015-02-01T12:05:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-02-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/02/01/证书相关/">create_certificate</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/31/本地通知和远程推送/" class="archive-article-date">
-  	<time datetime="2015-01-31T05:35:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/31/本地通知和远程推送/">Local/Romote_Notification</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Local-Romote-Notification/">Local/Romote Notification</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/30/LLDB－Xcode调试/" class="archive-article-date">
-  	<time datetime="2015-01-30T13:22:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/30/LLDB－Xcode调试/">LLDB</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode调试/">Xcode调试</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/30/后台任务/" class="archive-article-date">
-  	<time datetime="2015-01-30T12:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/30/后台任务/">background_task</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background-task/">background_task</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/27/SVN使用/" class="archive-article-date">
-  	<time datetime="2015-01-27T12:44:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/27/SVN使用/">SVN</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVN/">SVN</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/17/cocoapods使用/" class="archive-article-date">
-  	<time datetime="2015-01-17T10:55:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/17/cocoapods使用/">cocoapods</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cocoaPods/">cocoaPods</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/17/viewController试图控制器/" class="archive-article-date">
-  	<time datetime="2015-01-17T05:43:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/17/viewController试图控制器/">viewController</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kinds-of-viewControllers/">kinds of viewControllers</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/13/iOS打电话发短信/" class="archive-article-date">
-  	<time datetime="2015-01-13T04:58:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/13/iOS打电话发短信/">iOS打电话发短信</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2014/12/02/iOS数据持久化/" class="archive-article-date">
-  	<time datetime="2014-12-02T05:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/02/iOS数据持久化/">data-persistence</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Persistence/">Data Persistence</a></li></ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/xiao-xi/2014/10/20/cocoa内存管理/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
+<nav id="article-nav">
+  
+    <a href="/2014/10/23/OC笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/10/20/hexo搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hexo搭建</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
 
 
           </div>
@@ -497,8 +440,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

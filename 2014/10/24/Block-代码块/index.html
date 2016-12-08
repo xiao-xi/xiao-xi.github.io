@@ -6,14 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/xiao-xi">
-  <title>Archives | chenxiaoxiang</title>
+  <title>Block(代码块) | chenxiaoxiang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="chenxiaoxiang">
-<meta property="og:url" content="https://github.com/xiao-xi/archives/index.html">
+  <meta name="description" content="##概述
+- 代码块对象简称为“代码块”，是对C语言中函数的扩展。运行在iOS4。0和OS  X10.6版本以上
+- 代码块实际上是由C语言实现的，所以在各种以C作为基础的语言内都是有效的包括：Objective－C，C＋＋以及Objective－C++
+- 代码块本质上是和其他变量类似，不同的是，代码块存储的数据是一个函数体，使用代码块时，可以像调用其他标准函数一样，传入参数数，并得到返回值。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Block(代码块)">
+<meta property="og:url" content="https://github.com/xiao-xi/2014/10/24/Block-代码块/index.html">
 <meta property="og:site_name" content="chenxiaoxiang">
+<meta property="og:description" content="##概述
+- 代码块对象简称为“代码块”，是对C语言中函数的扩展。运行在iOS4。0和OS  X10.6版本以上
+- 代码块实际上是由C语言实现的，所以在各种以C作为基础的语言内都是有效的包括：Objective－C，C＋＋以及Objective－C++
+- 代码块本质上是和其他变量类似，不同的是，代码块存储的数据是一个函数体，使用代码块时，可以像调用其他标准函数一样，传入参数数，并得到返回值。">
+<meta property="og:updated_time" content="2015-02-13T03:49:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chenxiaoxiang">
+<meta name="twitter:title" content="Block(代码块)">
+<meta name="twitter:description" content="##概述
+- 代码块对象简称为“代码块”，是对C语言中函数的扩展。运行在iOS4。0和OS  X10.6版本以上
+- 代码块实际上是由C语言实现的，所以在各种以C作为基础的语言内都是有效的包括：Objective－C，C＋＋以及Objective－C++
+- 代码块本质上是和其他变量类似，不同的是，代码块存储的数据是一个函数体，使用代码块时，可以像调用其他标准函数一样，传入参数数，并得到返回值。">
   
     <link rel="alternative" href="/atom.xml" title="chenxiaoxiang" type="application/atom+xml">
   
@@ -130,351 +143,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Block-代码块" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Block(代码块)
+    </h1>
+  
+
+        <a href="/2014/10/24/Block-代码块/" class="archive-article-date">
+  	<time datetime="2014-10-24T13:36:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-24</time>
+</a>
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##概述</p>
+<pre><code>- 代码块对象简称为“代码块”，是对C语言中函数的扩展。运行在iOS4。0和OS  X10.6版本以上
+- 代码块实际上是由C语言实现的，所以在各种以C作为基础的语言内都是有效的包括：Objective－C，C＋＋以及Objective－C++
+- 代码块本质上是和其他变量类似，不同的是，代码块存储的数据是一个函数体，使用代码块时，可以像调用其他标准函数一样，传入参数数，并得到返回值。
+-  代码块不属于ANSI的C语言标准。关于代码块的提议已经提交给了C程序语言标准团体。
+</code></pre><p>##函数指针 VS 代码块<br><strong>函数指针的语法格式</strong></p>
+<pre><code>返回值类型（*函数名）（参数列表）；
+
+eg: void (*myFunction) (void);
+</code></pre><p><strong>代码块的语法格式</strong></p>
+<pre><code>返回值类型（^代码块名）(参数列表) ＝ ^返回值类型(参数列表){表达式；}；
+
+eg: void (^myBlock)() = ^{printf(&quot;Hello, Block\n&quot;);};
+</code></pre><p><code>说明：</code></p>
+<pre><code>返回值类型和参数列表都可以有条件省略
+
+省略返回值类型，若表达式中有return语句就使用该返回值的类型，若没有，则为void    
+
+省略返回值类型时，若表达式中有多个return语句，则所有return语句返回值类型必须相同
+
+如果不使用参数，则参数列表也可以省略
+</code></pre><p>##代码块的使用</p>
+<p>直接使用</p>
+<pre><code>void(^myBlock)() = ^{printf(&quot;Hello,Block\n&quot;);};
+
+myBlock();
+</code></pre><p>代码块内联</p>
+<pre><code>￼NSArray *array = @[@&quot;One&quot;, @&quot;Two&quot;, @&quot;Three&quot;, @&quot;Four&quot;];
+
+￼NSLog(@&quot;Unsorted array: %@&quot;, array);
+
+￼NSArray *sortedArray = [array
+
+￼sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {return [obj1 compare:obj2];
+￼}];
+
+NSLog(@&quot;Sorted array: %@&quot;, sortedArray);
+</code></pre><p>##使用typedef定义相同类型的代码块</p>
+<pre><code>typedef NSComparisonResult(^NSComparator)(id obj1,id obj2);
+</code></pre><p>##代码块的变量</p>
+<pre><code>全局变量和静态变量在代码块内部可以正常使用(可以修改其值) 
+
+局部变量在代码块内部无法修改其值,原因是代码块的局部变量在编译阶段被看做为常量
+
+如果需要在代码块中修改局部变量,需要在局部变量前面加__block修饰符
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/02/03/vim命令-sed/" class="archive-article-date">
-  	<time datetime="2015-02-03T12:33:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-02-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/02/03/vim命令-sed/">vim_command_sed</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VIM-Sed/">VIM_Sed</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Block/">Block</a></li></ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/02/01/证书相关/" class="archive-article-date">
-  	<time datetime="2015-02-01T12:05:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-02-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/02/01/证书相关/">create_certificate</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/31/本地通知和远程推送/" class="archive-article-date">
-  	<time datetime="2015-01-31T05:35:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/31/本地通知和远程推送/">Local/Romote_Notification</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Local-Romote-Notification/">Local/Romote Notification</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/30/LLDB－Xcode调试/" class="archive-article-date">
-  	<time datetime="2015-01-30T13:22:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/30/LLDB－Xcode调试/">LLDB</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode调试/">Xcode调试</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/30/后台任务/" class="archive-article-date">
-  	<time datetime="2015-01-30T12:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/30/后台任务/">background_task</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background-task/">background_task</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/27/SVN使用/" class="archive-article-date">
-  	<time datetime="2015-01-27T12:44:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/27/SVN使用/">SVN</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVN/">SVN</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/17/cocoapods使用/" class="archive-article-date">
-  	<time datetime="2015-01-17T10:55:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/17/cocoapods使用/">cocoapods</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cocoaPods/">cocoaPods</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/17/viewController试图控制器/" class="archive-article-date">
-  	<time datetime="2015-01-17T05:43:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/17/viewController试图控制器/">viewController</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kinds-of-viewControllers/">kinds of viewControllers</a></li></ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/13/iOS打电话发短信/" class="archive-article-date">
-  	<time datetime="2015-01-13T04:58:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/13/iOS打电话发短信/">iOS打电话发短信</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2014/12/02/iOS数据持久化/" class="archive-article-date">
-  	<time datetime="2014-12-02T05:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/12/02/iOS数据持久化/">data-persistence</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Persistence/">Data Persistence</a></li></ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/xiao-xi/2014/10/24/Block-代码块/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
+<nav id="article-nav">
+  
+    <a href="/2014/11/05/UINavigationController/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          UINavigationController
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/10/24/KVC-NSKeyValueCoding非正式协议/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">KVC-NSKeyValueCoding非正式协议</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
 
 
           </div>
@@ -497,8 +349,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

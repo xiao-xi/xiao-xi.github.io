@@ -132,16 +132,1352 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-vim命令-sed" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/02/03/vim命令-sed/">vim_command_sed</a>
+    </h1>
+  
+
+        <a href="/2015/02/03/vim命令-sed/" class="archive-article-date">
+  	<time datetime="2015-02-03T12:33:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-02-03</time>
+</a>
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h2><h1 id="Markdown-syntax-guide-and-writing-on-MWeb"><a href="#Markdown-syntax-guide-and-writing-on-MWeb" class="headerlink" title="Markdown syntax guide and writing on MWeb"></a>Markdown syntax guide and writing on MWeb</h1><h2 id="Philosophy"><a href="#Philosophy" class="headerlink" title="Philosophy"></a>Philosophy</h2><blockquote>
-<p>Markdown is intended to be as easy-to-read and easy-to-write as is feasible.<br>Readability, however, is emphasized above all else. A Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions.<br>Markdown’s syntax is intended for one purpose: to be used as a format for <em>writing</em> for the web.</p>
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>sed是非交互式的编辑器。它不会修改文件，除非使用shell重定向来保存结果。默认情况下，所有的输出行都被打印到屏幕上。</p>
+<p>sed编辑器逐行处理文件（或输入），并将结果发送到屏幕。具体过程如下：首先sed把当前正在处理的行保存在一个临时缓存区中（也称为模式空间），然后处理临时缓冲区中的行，完成后把该行发送到屏幕上。sed每处理完一行就将其从临时缓冲区删除，然后将下一行读入，进行处理和显示。处理完输入文件的最后一行后，sed便结束运行。sed把每一行都存在临时缓冲区中，对这个副本进行编辑，所以不会修改原文件。</p>
+<h1 id="定址"><a href="#定址" class="headerlink" title="定址"></a>定址</h1><p>定址用于决定对哪些行进行编辑。地址的形式可以是数字、正则表达式、或二者的结合。如果没有指定地址，sed将处理输入文件的所有行。</p>
+<p><strong>以下例子一下面的文件内容测试</strong></p>
+<p><code>test.vim</code></p>
+<pre><code>hello word ！
+this is a test ?
+asdfghjkl
+qwertyuiop
+zxcvbnm
+come on
+he he he he
+ha ha ha ha 
+</code></pre><ol>
+<li><p>地址是一个数字，则表示行号，是“$”符号，则表示最后一行。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sed -n &apos;4p&apos; test.vim</div><div class="line">终端只打印第四行，即：qwertyuiop</div><div class="line">sed -n &apos;$p&apos; test.vim</div><div class="line">终端只打印最后一行，即：ha ha ha ha</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>只显示指定行范围内的文件内容</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sed -n &apos;3,6p&apos; test.vim</div><div class="line">只查看文件的第3行到第6行的文件内容</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>逗号做分隔符，对行范围内的内容的做作</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">sed &apos;2,3d&apos; test.vim</div><div class="line">删除第二行到第五行的内容,执行命令后的结果</div><div class="line">  //hello word ！</div><div class="line">    qwertyuiop</div><div class="line">    zxcvbnm</div><div class="line">    come on</div><div class="line">    he he he he</div><div class="line">    ha ha ha ha</div><div class="line">sed &apos;/zx/,/he/d&apos; test.vim</div><div class="line">删除包含‘zx’的行到包含‘he’的行，执行命令后的结果</div><div class="line">  //hello word ！</div><div class="line">    this is a test ?</div><div class="line">    asdfghjkl</div><div class="line">    qwertyuiop</div><div class="line">    ha ha ha ha</div><div class="line">sed &apos;/is/,4d&apos; test.vim</div><div class="line">删除包含‘is’的行到第四行的内容</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="命令与选项"><a href="#命令与选项" class="headerlink" title="命令与选项"></a>命令与选项</h1><p>sed命令告诉sed如何处理由地址指定的各输入行，如果没有指定地址则处理所有的输入行。</p>
+<h3 id="1-sed命令"><a href="#1-sed命令" class="headerlink" title="1. sed命令"></a>1. sed命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> a\</td>
+<td>在当前行后添加一行或多行。多行时除最后一行外，每行末尾需用“\”续行</td>
+</tr>
+<tr>
+<td> c\</td>
+<td>用此符号后的新文本替换当前行中的文本。多行时除最后一行外，每行末尾需用”\”续行</td>
+</tr>
+<tr>
+<td> i\</td>
+<td>在当前行之前插入文本。多行时除最后一行外，每行末尾需用”\”续行</td>
+</tr>
+<tr>
+<td> d</td>
+<td>删除行</td>
+</tr>
+<tr>
+<td> h</td>
+<td>把模式空间里的内容复制到暂存缓冲区</td>
+</tr>
+<tr>
+<td> H</td>
+<td>把模式空间里的内容追加到暂存缓冲区</td>
+</tr>
+<tr>
+<td> g</td>
+<td>把暂存缓冲区里的内容复制到模式空间，覆盖原有的内容</td>
+</tr>
+<tr>
+<td> G</td>
+<td>把暂存缓冲区的内容追加到模式空间里，追加在原有内容的后面</td>
+</tr>
+<tr>
+<td> I</td>
+<td>列出非打印字符</td>
+</tr>
+<tr>
+<td> p</td>
+<td>打印行</td>
+</tr>
+<tr>
+<td> n</td>
+<td>读入下一输入行，并从下一条命令而不是第一条命令开始对其的处理</td>
+</tr>
+<tr>
+<td> q</td>
+<td>结束或退出sed</td>
+</tr>
+<tr>
+<td> r</td>
+<td>从文件中读取输入行</td>
+</tr>
+<tr>
+<td> !</td>
+<td>对所选行以外的所有行应用命令</td>
+</tr>
+<tr>
+<td> s</td>
+<td>用一个字符串替换另一个</td>
+</tr>
+<tr>
+<td> g</td>
+<td>在行内进行全局替换</td>
+</tr>
+<tr>
+<td> w</td>
+<td>将所选的行写入文件</td>
+</tr>
+<tr>
+<td> x</td>
+<td>交换暂存缓冲区与模式空间的内容</td>
+</tr>
+<tr>
+<td> y</td>
+<td>将字符替换为另一字符（不能对正则表达式使用y命令）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-sed选项"><a href="#2-sed选项" class="headerlink" title="2. sed选项"></a>2. sed选项</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-e</td>
+<td>进行多项编辑，即对输入行应用多条sed命令时使用</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>取消默认的输出</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>指定sed脚本的文件名</td>
+</tr>
+</tbody>
+</table>
+<h1 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h1><p><strong>sed不向grep一样，不管是否找到指定的模式，它的退出状态都是0。只有当命令存在语法错误时，sed的退出状态才不是0。</strong></p>
+<h1 id="正则表达式元字符"><a href="#正则表达式元字符" class="headerlink" title="正则表达式元字符"></a>正则表达式元字符</h1><p>与grep一样，sed也支持特殊元字符，来进行模式查找、替换。不同的是，sed使用的正则表达式是括在斜杠线”/“之间的模式。</p>
+<p>如果要把正则表达式分隔符”/“改为另一个字符，比如o，只要在这个字符前加一个反斜线，在字符后跟上正则表达式，再跟上这个字符即可。例如：sed -n ‘\o^Myop’ datafile</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>功能</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^</td>
+<td>行首定位符</td>
+<td>/^me/ 匹配所有以me开头的行</td>
+</tr>
+<tr>
+<td>$</td>
+<td>行尾定位符</td>
+<td>/me$/ 匹配所有以me结束的行</td>
+</tr>
+<tr>
+<td>.</td>
+<td>匹配换行符以外的单个字符</td>
+<td>/m..e/ 匹配包含字母m，后跟两个任意字符，再跟字母y的行</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配零个或多个前导字符</td>
+<td>/my\*/  匹配包含字母m,后跟零个或多个e字母的行</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>匹配指定字符组内的任一字符</td>
+<td>/[Mm]y/  匹配包含My或my的行</td>
+</tr>
+<tr>
+<td>[^]</td>
+<td>匹配不在指定字符组内的任一字符</td>
+<td>/[^Mm]y/  匹配包含y，但y之前的那个字符不是M或m的行</td>
+</tr>
+<tr>
+<td>\(..\)</td>
+<td>保存已匹配的字符</td>
+<td>1,20s/(you)self/\1r/  标记元字符之间的模式，并将其保存为标签1，之后可以使用\1来引用它。最多可以定义9个标签，从左边开始编号，最左边的是第一个。此例中，对第1到第20行进行处理，you被保存为标签1，如果发现youself，则替换为your。</td>
+</tr>
+<tr>
+<td>    &amp;</td>
+<td>保存查找串以便在替换串中引用</td>
+<td>s/my/<strong>&amp;</strong>/  符号&amp;代表查找串。my将被替换为(<strong>my</strong>)</td>
+</tr>
+<tr>
+<td>\&lt;</td>
+<td>词首定位符</td>
+<td>/\&lt;my/  匹配包含以my开头的单词的行</td>
+</tr>
+<tr>
+<td> \&gt;</td>
+<td>词尾定位符</td>
+<td>/my>/  匹配包含以my结尾的单词的行</td>
+</tr>
+<tr>
+<td>x\{m\}</td>
+<td>连续m个x</td>
+<td>/9{5}/ 匹配包含连续5个9的行</td>
+</tr>
+<tr>
+<td>x\{m,\}</td>
+<td>至少m个x</td>
+<td>/9{5,}/  匹配包含至少连续5个9的行</td>
+</tr>
+<tr>
+<td>x{m,n\}</td>
+<td>至少m个，但不超过n个</td>
+<td>/9{5,7}/  匹配包含连续5到7个9的行</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VIM-Sed/">VIM_Sed</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/02/03/vim命令-sed/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-证书相关" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/02/01/证书相关/">create_certificate</a>
+    </h1>
+  
+
+        <a href="/2015/02/01/证书相关/" class="archive-article-date">
+  	<time datetime="2015-02-01T12:05:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-02-01</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://zxs19861202.iteye.com/blog/1532460" target="_blank" rel="external">others’ blog</a></p>
+<h3 id="生成certSigningRequest文件"><a href="#生成certSigningRequest文件" class="headerlink" title="生成certSigningRequest文件"></a>生成certSigningRequest文件</h3><p>该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。</p>
+<pre><code>打开应“钥匙串访问”软件，菜单-&gt;钥匙串访问-&gt;证书助理-&gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
+</code></pre><h3 id="注册一个支持Push的app-id"><a href="#注册一个支持Push的app-id" class="headerlink" title="注册一个支持Push的app id"></a>注册一个支持Push的app id</h3><p>进入developer.apple.com，选择member center-certificates，Identifier &amp; profiles-identifiers-App ids，注册app id，设置app id名称。同时qpp id suffix一栏选择explicit app id，设置bundle id。勾选App Services中得Push Notifications，这样就可以注册一个支持push app id。</p>
+<h3 id="生成cer文件"><a href="#生成cer文件" class="headerlink" title="生成cer文件"></a>生成cer文件</h3><p>该文件用于生成服务端需要的文件。</p>
+<p>生成过程：进入developer.apple.com，选择member center-certificates，Identifier &amp; profiles-certificates，然后创建certificate，类型分为Development 和 Product。eg：Development，选择Apple Push Notification service SSL (Sandbox) ，选择之前生成的支持push的Appid，然后提交之前创建的CSR文件,生成cer文件，保存到本地。</p>
+<h3 id="生成服务器端的证书文件"><a href="#生成服务器端的证书文件" class="headerlink" title="生成服务器端的证书文件"></a>生成服务器端的证书文件</h3><p>如果使用网上的mac版PushMeBaby工具，在Mac机器上进行推送使用上面的cer就可以了，如果使用PHP、java/c#开发服务端，需要将cer转换生成pem或p12文件。</p>
+<p>在应用服务器采用php的方式将消息推送给APNS，</p>
+<pre><code>php连接APNS也是需要证书的，打开终端，对上面的证书做如下处理，
+
+cd  进入证书所在目录
+
+把.cer文件转换成.pem文件:
+
+$ openssl x509 -in aps_developer_identity.cer -inform der
+-out PushCert.pem
+把私钥Push.p12文件转换成.pem文件：
+
+$ openssl pkcs12 -nocerts -out PushKey.pem -in Push.p12
+Enter Import Password:
+MAC verified OK
+Enter PEM pass phrase:
+Verifying – Enter PEM pass phrase:
+你首先需要为.p12文件输入passphrase密码短语，这样OpenSSL可以读它。然后你需要键入一个新的密码短语来加密PEM文件。还是使用”pushchat”来作为PEM的密码短语。你需要选择一些更安全的密码短语。
+</code></pre><p><code>注意</code></p>
+<p>如果你没有键入一个PEM passphrase，OpenSSL将不会返回一个错误信息，但是产生的.pem文件里面将不会含有私钥。</p>
+<p>最后。把私钥和证书整合到一个.pem文件里：</p>
+<pre><code>$ cat PushCert.pem PushKey.pem &gt; ck.pem
+为了测试证书是否工作，执行下面的命令：
+
+$ telnet gateway.sandbox.push.apple.com 2195
+Trying 17.172.232.226…
+Connected to gateway.sandbox.push-apple.com.akadns.net.
+Escape character is ‘^]’.
+它将尝试发送一个规则的，不加密的连接到APNS服务。如果你看到上面的反馈，那说明你的MAC能够到达APNS。按下Ctrl+C 关闭连接。如果得到一个错误信息，那么你需要确保你的防火墙允许2195端口。
+
+然后再次连接，这次用我们的SSL证书和私钥来设置一个安全的连接：
+
+$ openssl s_client -connect gateway.sandbox.push.apple.com:2195
+-cert PushChatCert.pem -key PushChatKey.pem
+Enter pass phrase for PushChatKey.pem:
+你会看到一个完整的输出，让你明白OpenSSL在后台做什么。如果连接是成功的，你可以键入一些字符。当你按下回车后，服务就会断开连接。如果在建立连接时有问题，OpenSSL将会给你一个错误消息，
+
+ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.php放入同一目录上传到服务器。
+</code></pre><h3 id="生成Xcode使用的provisioning文件"><a href="#生成Xcode使用的provisioning文件" class="headerlink" title="生成Xcode使用的provisioning文件"></a>生成Xcode使用的provisioning文件</h3><p>该文件用于真机调试。</p>
+<p>生成过程：进入developer.apple.com，选择member center-certificates，Identifier &amp; profiles-provisioning profiles，然后创建provi file。选择iOS App Development-&gt;AppId-&gt;选中之前生成的支持push的appid-&gt;选中支持的push的certi-&gt;勾选支持的device id-&gt;设置provisioning文件的文件名，即完成provisioning文件的生成。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/certificate/">certificate</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/02/01/证书相关/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-本地通知和远程推送" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/31/本地通知和远程推送/">Local/Romote_Notification</a>
+    </h1>
+  
+
+        <a href="/2015/01/31/本地通知和远程推送/" class="archive-article-date">
+  	<time datetime="2015-01-31T05:35:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-31</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction.html#//apple_ref/doc/uid/TP40008194-CH103-SW1" target="_blank" rel="external">Apple 关于本地通知和远程通知的官方文档</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>远程通知（remote notification）和本地通知（local notification）是两种用户通知类型，远程通知又称为推送通知（push notification）。这两种通知都可以实现当不在前台运行的APP通知使用该APP的用户新信息，这消息可以是消息，临近的日历，或来自远端服务器的新数据等。当操作系统呈现这些通知时，可以显示一个alert提醒或是app icon提醒。在提醒的时候也可以有声音的提示。</p>
+<p>当用户点击通知时可以启动APP查看通知详情，也可选择不打开APP忽略通知。</p>
+<p><code>注意</code></p>
+<p>不管是远程通知合适本地通知都与广播通知（NSNotificationCenter）和KVO（key value observe）无关。</p>
+<h2 id="本地通知"><a href="#本地通知" class="headerlink" title="本地通知"></a>本地通知</h2><h3 id="Xcode-6本地通知接收不到"><a href="#Xcode-6本地通知接收不到" class="headerlink" title="Xcode 6本地通知接收不到"></a>Xcode 6本地通知接收不到</h3><p>出现提示信息：</p>
+<ol>
+<li>Attempting to schedule a local notification</li>
+<li>with an alert but haven’t received permission from the user to display alerts</li>
+<li>with a sound but haven’t received permission from the user to play sounds</li>
+</ol>
+<p>原因在于在iOS8系统上需要注册本地通知，这样才能正常使用</p>
+<p>iOS8注册本地通知</p>
+<pre><code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeSound | UIUserNotificationTypeBadge | UIUserNotificationTypeAlert categories:nil]];
+    }
+
+    return YES;
+}
+
+- (IBAction)registerLocationNotification:(id)sender {
+
+UILocalNotification *locationNotification = [[UILocalNotification alloc]init];
+NSDate *date = [NSDate dateWithTimeIntervalSinceNow:5];
+locationNotification.fireDate = date;
+locationNotification.timeZone = [NSTimeZone defaultTimeZone];
+locationNotification.repeatInterval = NSCalendarUnitSecond;
+locationNotification.alertBody = @&quot;通知来了。。。&quot;;
+locationNotification.alertAction = @&quot;通知&quot;;
+locationNotification.alertLaunchImage = @&quot;3.png&quot;;
+locationNotification.userInfo = @{@&quot;user&quot;:@&quot;lfx&quot;};
+locationNotification.soundName = @&quot;sound.caf&quot;;
+locationNotification.applicationIconBadgeNumber = 10;
+[[UIApplication sharedApplication] scheduleLocalNotification:locationNotification];
+}
+</code></pre><p>回调方法</p>
+<pre><code>- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
+    //取消通知的注册
+    [application cancelLocalNotification:notification];
+}
+</code></pre><h2 id="远程通知-Push通知"><a href="#远程通知-Push通知" class="headerlink" title="远程通知(Push通知)"></a>远程通知(Push通知)</h2><h3 id="APNS推送机制（Apple-Push-Notification-Service）"><a href="#APNS推送机制（Apple-Push-Notification-Service）" class="headerlink" title="APNS推送机制（Apple Push Notification Service）"></a>APNS推送机制（Apple Push Notification Service）</h3><p><img src="http://ww4.sinaimg.cn/mw690/bd64595dtw1eotzsizk0vj212i05qq46.jpg" alt="image"></p>
+<p>Provider：程序的后台服务器。</p>
+<p>上图分为三阶段：</p>
+<p>第一阶段：应用程序的服务器端把要发送的消息、目的iPhone的标识打包，发给APNS。</p>
+<p>第二阶段：APNS在自身的已注册Push服务的iPhone列表中，并把消息发送到iPhone。</p>
+<p>第三阶段：iPhone把发来的消息传递给应用程序，并按照规定弹出Push通知。</p>
+<h3 id="APNS推送通知的详细流程"><a href="#APNS推送通知的详细流程" class="headerlink" title="APNS推送通知的详细流程"></a>APNS推送通知的详细流程</h3><p><img src="http://ww1.sinaimg.cn/mw690/bd64595dtw1eotzsmltjmj20vw0yw78s.jpg" alt="image"></p>
+<ol>
+<li>APP注册APNS消息推送，iOS向APNS Server 请求获取device token</li>
+<li>APNS向APP发送device token ，APP接受device token</li>
+<li>APP向程序的服务器端发送device token </li>
+<li>程序服务器端发送Push通知到APNS</li>
+<li>APNS向APP发送Push通知</li>
+</ol>
+<h3 id="远程推送操作过程"><a href="#远程推送操作过程" class="headerlink" title="远程推送操作过程"></a>远程推送操作过程</h3><ol>
+<li>APP启动过程中，注册远程通知</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert| UIRemoteNotificationTypeSound];</div></pre></td></tr></table></figure>
+<ol>
+<li>若注册成功，回调方法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken&#123;</div><div class="line">NSLog(@&quot;%@&quot;, deviceToken);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>App获取device token 后，将device token 发送到自己的服务端。</li>
+<li>APNS服务器得到JSON串后，向App发送通知消息，App调用回调方法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">    -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo&#123;</div><div class="line">    NSLog(@&quot;%@&quot;, userInfo);//从userInfo获得推送信息内容</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="客户端的开发"><a href="#客户端的开发" class="headerlink" title="客户端的开发"></a>客户端的开发</h3><p><a href="http://lfxfengxia.github.io/tags/certificate/" target="_blank" rel="external">cer文件 provisioning文件的生成</a></p>
+<p>下载生成的cer文件和provi文件，双击导入Xcode，在build setting中code  signing一栏中选择这两个文件的名称，这样就可以将支持push的app部署到真机中。然后消息推送：</p>
+<h4 id="客户端对推送消息的处理分为两种情况"><a href="#客户端对推送消息的处理分为两种情况" class="headerlink" title="客户端对推送消息的处理分为两种情况"></a>客户端对推送消息的处理分为两种情况</h4><ol>
+<li><p>在App没有运行的情况下，系统受到推送消息，用户点击推送消息，启动App。此时，不会执行前面提到的<code>didReceiveRemoteNotification</code>方法，而是App的applicationDidFinishLaunching方法中进行推送处理，通过以下代码可以获取推送消息中数据：</p>
+<p> Dictionary *userInfo =[launchOptions objectForKey:UIApplicationLaunchOp<br>￼tionsRemoteNotificationKey];  </p>
+</li>
+<li><p>当App处于前台，系统受到推送消息，此时系统不会推送消息提示，会直接触发application:(UIApplication )application didReceiveRemoteNotification:(NSDictionary )userInfo方法，推送数据在userInfo中。<br> 当App处于后台时，如果系统收到推送消息时，当用户点击推送消息时，会执行application: (UIApplication )application didReceiveRemoteNotification:(NSDictionary )userInfo方法，此时AppDelegate中方法的执行顺序为：<code>applicationWillEnterForeground</code>，<code>applicationWillEnterForeground</code>，<code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Local-Romote-Notification/">Local/Romote Notification</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/31/本地通知和远程推送/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-LLDB－Xcode调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/30/LLDB－Xcode调试/">LLDB</a>
+    </h1>
+  
+
+        <a href="/2015/01/30/LLDB－Xcode调试/" class="archive-article-date">
+  	<time datetime="2015-01-30T13:22:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Xcode调试基础"><a href="#Xcode调试基础" class="headerlink" title="Xcode调试基础"></a>Xcode调试基础</h2><p>如下图：调试视图包括顶部调试命令栏，左边变量视图，右边控制台。<br>调试器工具栏从左到右功能分别是：断点是否有效，跳到下一个断点，单步执行，进入方法内部，跳出当前方法到上一个方法</p>
+<p><img src="http://ww1.sinaimg.cn/mw690/bd64595djw1eospp3drwvj21240d6776.jpg" alt="image"></p>
+<h3 id="定制断点"><a href="#定制断点" class="headerlink" title="定制断点"></a>定制断点</h3><h5 id="满足条件的断点"><a href="#满足条件的断点" class="headerlink" title="满足条件的断点"></a>满足条件的断点</h5><p><img src="http://ww2.sinaimg.cn/mw690/bd64595djw1eospignjulj210e0aomzv.jpg" alt="image"></p>
+<p>i == 500 时代码暂停执行</p>
+<p><img src="http://ww2.sinaimg.cn/mw690/bd64595djw1eospoyuzrhj20oa0980um.jpg" alt="image"></p>
+<p>根据以上选项可选择不同提示，Log Message 将消息写入日志，Sound 播放声音，若勾选Automatically continue after evaluating ，则会在播放声音或写入日志后不暂停执行代码</p>
+<h5 id="条件综合使用的断点"><a href="#条件综合使用的断点" class="headerlink" title="条件综合使用的断点"></a>条件综合使用的断点</h5><p><img src="http://ww1.sinaimg.cn/mw690/bd64595djw1eospow7z9uj20oq0p6n1e.jpg" alt="image"></p>
+<p>该断点的作用是：当 i == 500，打印self.view的信息，同时ls查看根路径下的目录,输出a的值，并且播放声音且不停止执行代码</p>
+<h3 id="断点类型"><a href="#断点类型" class="headerlink" title="断点类型"></a>断点类型</h3><p><img src="http://ww3.sinaimg.cn/mw690/bd64595djw1eospjm6vpyj20dw06wab5.jpg" alt="image"></p>
+<h4 id="符号断点（Symbolic-Breakpoint）"><a href="#符号断点（Symbolic-Breakpoint）" class="headerlink" title="符号断点（Symbolic Breakpoint）"></a>符号断点（Symbolic Breakpoint）</h4><p>该断点用于捕获特定方法或函数的所有方法</p>
+<p><img src="http://ww2.sinaimg.cn/mw690/bd64595djw1eospio3xgmj20pg0b6q53.jpg" alt="image"></p>
+<p><img src="http://ww1.sinaimg.cn/mw690/bd64595djw1eospist9msj20e603mq3n.jpg" alt="image"></p>
+<p>捕获viewDidLoad方法</p>
+<h4 id="异常断点-（All-Exceptions）"><a href="#异常断点-（All-Exceptions）" class="headerlink" title="异常断点 （All Exceptions）"></a>异常断点 （All Exceptions）</h4><p><img src="http://ww1.sinaimg.cn/mw690/bd64595djw1eospi7dlkij20e603qq3a.jpg" alt="image"></p>
+<p>异常断点，在发生异常时触发。通常会通过设置一个全局的异常断点，可提供比崩溃更详细的栈跟踪信息。有时候，异常断点能直接指出崩溃的根源。调试期间可以始终确保有一个全局的异常断点是一种最佳的实践。</p>
+<h3 id="LLDB调试"><a href="#LLDB调试" class="headerlink" title="LLDB调试"></a>LLDB调试</h3><ul>
+<li>p （printf）打印标量表达式（eg a+b）或结构（CGRect）的值。po （print object）打印对象及其描述，可以查看特定内存的地址，也可以指定对象名。</li>
+<li>list X：打印指定行后的10行代码。通过参数 -X可以指定断点前多少行代码</li>
+<li>step （S）下一行</li>
+<li>continue（C）越过断点继续执行</li>
+<li>fin 执行到当前方法末尾</li>
+<li>kill 终止执行程序</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/mw690/bd64595dtw1eotzv8mk0pj20l60n879o.jpg" alt="image"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode调试/">Xcode调试</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/30/LLDB－Xcode调试/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-后台任务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/30/后台任务/">background_task</a>
+    </h1>
+  
+
+        <a href="/2015/01/30/后台任务/" class="archive-article-date">
+  	<time datetime="2015-01-30T12:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>iOS于2008年⾯面世时,只能有⼀一个第三⽅方应⽤用处于活动状态(位于前台)。这意味着应⽤用需要执 ⾏行的任务都必须位于前台的时候完成,否则任务将暂停并在应⽤用下次启动的时候执⾏行。iOS4推 出后,向第三⽅方应⽤用提供了后台功能。鉴于iOS设备的系统资源有限,以及省电,对后台处理有 ⼀一些限制,就是不能干扰前台应⽤用,也不能消耗太多电量。</p>
+<h3 id="iOS支持后台任务处理方式："><a href="#iOS支持后台任务处理方式：" class="headerlink" title="iOS支持后台任务处理方式："></a>iOS支持后台任务处理方式：</h3><ol>
+<li>在后台完成耗时任务。这种方式适用于完成大量数据的下载或更新等任务，他们需要的时间超过了用户与应用交互的时间。</li>
+<li>执行iOS允许的后台活动，如播放音乐、与蓝牙设备互交、监测GPS数据以获得位置发生重大变化、位置永久性网络连接让VoIP型应用能够正常运行。</li>
+</ol>
+<h3 id="检查设备是否支持后台任务"><a href="#检查设备是否支持后台任务" class="headerlink" title="检查设备是否支持后台任务"></a>检查设备是否支持后台任务</h3><p>在编写使用多任务功能的代码时，必须检查设备是否支持多任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIDevice* device = [UIDevice currentDevice];if (! [device isMultitaskingSupported])&#123;</div><div class="line">    NSLog(@&quot;当前设备不⽀支持多任务.&quot;);    return;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="在后台完成任务"><a href="#在后台完成任务" class="headerlink" title="在后台完成任务"></a>在后台完成任务</h3><p>要在后台执⾏行任务,应告诉应⽤用这项任务需要能够在后台运⾏行。另外,还应考虑需要多少内存 以及多⻓长时间才能完成。如果任务完成需要的时间超过10-15分钟,很可能任务还未完成应⽤用就 被终⽌止了。所以任务应该包含处理提前终⽌止的逻辑,并能够在重新启动应⽤用后继续执⾏行。操作 系统给应⽤用指定⼀一段时间,供它完成后台任务,但如果如果操作系统发现资源紧缺,也可能提 早终⽌止应⽤用。</p>
+<h4 id="后台任务的通用执行过程："><a href="#后台任务的通用执行过程：" class="headerlink" title="后台任务的通用执行过程："></a>后台任务的通用执行过程：</h4><ol>
+<li>向应用请求后台任务标识符，并指定一个用来处理终止程序的快。</li>
+<li>仅当应⽤用完了后台时间,或系统发现资源使用率过⾼进⽽决定终⽌应⽤时,终⽌处理程序才会被调⽤用。</li>
+<li>执⾏后台任务逻辑。这包括从请求后台任务标识符到结束后台任务之间的所有代码。</li>
+<li>让应用结束后台任务，并让后台标识符失效。</li>
+</ol>
+<h5 id="获取后台任务标识符"><a href="#获取后台任务标识符" class="headerlink" title="获取后台任务标识符"></a>获取后台任务标识符</h5><p>获取后台任务标识符同时制定终止处理程序块，使用__block 是为了block内部要对其修饰的变量修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">__block NSInteger counter = 0;</div><div class="line">__block UIBackgroundTaskIndentifier bTaskIndentifier = [[UIApplication shareApplication] beginBackgroundTaskWithExpirationHandler:</div><div class="line">^&#123;</div><div class="line">    ...</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h5 id="终止处理程序"><a href="#终止处理程序" class="headerlink" title="终止处理程序"></a>终止处理程序</h5><p>系统在指定的时间或资源⽤完后,将调⽤后台任务的终止处理程序。应用即将关闭前,将在主程中调⽤用终处理程序。给终⽌止处理程序提供的时间不多(最多几秒),所以它执⾏行的操作应尽可能少。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">    __block UIBackgroundTaskIdentifier bTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^&#123;</div><div class="line">    [[UIApplication sharedApplication] endBackgroundTask:bTask];//让应用指导后台任务结束    bTask = UIBackgroundTaskInvalid;//让后台任务标识符失效&#125;];</div></pre></td></tr></table></figure>
+<h5 id="执行后台任务"><a href="#执行后台任务" class="headerlink" title="执行后台任务"></a>执行后台任务</h5><p>获取后台任务标⽰符后,就可以开始在后台执⾏行任务了。再执⾏行后台任务过程中,注意从应⽤那⾥获取后台任务余下的时间。可据此决定是否接着执⾏其他的代码。通常在余下的时间还有几秒时终⽌止后台任务,让它有时间执⾏行扫尾工作。后台任务完成后,还需要做两项重要⼯作: 1. 对共享应⽤用实例调用<code>endBackgroundTask</code> 让应⽤用知道后台任务已结束;2. 将变量bTask设置为<code>UIBackgroundTaskInvalid</code> ,<strong>让这个后台任务标⽰示符⽆无效。从获取后台任务标示符到结束后台任务之间的所有代码将在后台执行。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">__block UIBackgroundTaskIdentifier bTask =[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^&#123;</div><div class="line">    [[UIApplication sharedApplication] endBackgroundTask:bTask];//让应用指导后台任务结束    bTask = UIBackgroundTaskInvalid;//让后台任务标识符失效&#125;];NSInteger timeDuration = 1 * 60;</div><div class="line">NSLog (@&quot;Background task starting , task ID is %u&quot;,bTask);</div><div class="line">for (int counter = 0; counter &lt;= timeDuration;counter ++ )</div><div class="line">&#123;</div><div class="line">    [NSThread sleepForTimeInterval:1];</div><div class="line">    //剩余运行时间</div><div class="line">    NSTimerInterval remainingTime = [[UIApplication sharedApplication] backgroundTimeRemaining];</div><div class="line">    if (remainingTime == DBL_MA)&#123;</div><div class="line">        NSLog(@&quot;Background Processed %d. Still in foreground.&quot;,counter);</div><div class="line">    &#125;else &#123;</div><div class="line">        NSLog(@&quot;Background Processed %d. Time remaining is: %f&quot;,counter,remainingTime);</div><div class="line">    &#125;</div><div class="line">&#125;dispatch_sync(dispatch_get_main_queue()&#123;</div><div class="line">    [self.backgroundButton setEnabled:YES];    [self.backgroundButton setTitle:@&quot;Start Background Task&quot; forState:UIControlStateNorm];</div><div class="line">&#125;[[UIApplication sharedApplication] endBackgroundTask:bTask];bTask = UIBackgroundTaskInvalid;</div></pre></td></tr></table></figure>
+<h3 id="实现后台任务"><a href="#实现后台任务" class="headerlink" title="实现后台任务"></a>实现后台任务</h3><p>iOS⽀支持⼀组具体的后台任务,这些活动可不断地进⾏下去,不像使⽤后台任务标示符那样受到限制。这些活动不受时间上的限制,注意这些活动不应使用过多的系统资源,以避免被操作系统强⾏终⽌止。</p>
+<h5 id="后台活动类型"><a href="#后台活动类型" class="headerlink" title="后台活动类型"></a>后台活动类型</h5><ul>
+<li>后台播放音频</li>
+<li>跟踪设备位置</li>
+<li>支持ip语音应用</li>
+<li>现在‘报刊杂志’应用的新内容</li>
+<li>与外置或蓝牙配件通信</li>
+<li>在后台取回内容</li>
+<li>使用推送通知启动后台下载<br>￼<br>￼</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background-task/">background_task</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/30/后台任务/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-SVN使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/27/SVN使用/">SVN</a>
+    </h1>
+  
+
+        <a href="/2015/01/27/SVN使用/" class="archive-article-date">
+  	<time datetime="2015-01-27T12:44:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-27</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="svn-查看log"><a href="#svn-查看log" class="headerlink" title="svn 查看log"></a>svn 查看log</h3><p>$ svn log</p>
+<h3 id="查看SVN信息"><a href="#查看SVN信息" class="headerlink" title="查看SVN信息"></a>查看SVN信息</h3><p>$ svn info</p>
+<h3 id="查看当前SVN关联目录下的文件改动"><a href="#查看当前SVN关联目录下的文件改动" class="headerlink" title="查看当前SVN关联目录下的文件改动"></a>查看当前SVN关联目录下的文件改动</h3><p>$ svn st</p>
+<h3 id="提交代码"><a href="#提交代码" class="headerlink" title="提交代码"></a>提交代码</h3><p>$ svn ci file.m file2.m -m “提交file.m 和 file2.m”</p>
+<h3 id="比较某个文件与SVN上代码的改动"><a href="#比较某个文件与SVN上代码的改动" class="headerlink" title="比较某个文件与SVN上代码的改动"></a>比较某个文件与SVN上代码的改动</h3><p>$ svn diff file.m //查看file.m 的变化，此命令只显示代码段的不同</p>
+<p><strong>注释</strong> 比较两个文件或两个工程的差异，可使用Xcode工具filemerge<br>        打开方式：右击Xcode -&gt; open developer tool -&gt; filemerge</p>
+<h3 id="删除svn服务器代码的某个文件"><a href="#删除svn服务器代码的某个文件" class="headerlink" title="删除svn服务器代码的某个文件"></a>删除svn服务器代码的某个文件</h3><p>$ svn del file.m //删除file.m这个文件,之后需要svn ci -m “提交删除的文件”</p>
+<h3 id="增加一个新文件"><a href="#增加一个新文件" class="headerlink" title="增加一个新文件"></a>增加一个新文件</h3><p>$ svn add file.m //并提交</p>
+<p><code>注意</code><br>添加或删除某些名称中带@符号的文件，需要在其后面加个@，<br>eg：添加scree@2x.png的命令<br>    $ svn add screen@2x.png@</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVN/">SVN</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/27/SVN使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-cocoapods使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/17/cocoapods使用/">cocoapods</a>
+    </h1>
+  
+
+        <a href="/2015/01/17/cocoapods使用/" class="archive-article-date">
+  	<time datetime="2015-01-17T10:55:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-17</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p> <a href="http://cocoapods.org" target="_blank" rel="external">cocoapods</a></p>
+<p> <a href="http://github.com/CocoaPods/CocoaPods">CocoaPods项目源码</a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
+<li><p>使用MAC自带的ruby下的gem命令：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo gem install cocoapods</div><div class="line">$ pod setup</div></pre></td></tr></table></figure>
+<p> 在执行pod setup时，会输出Setting up CocoaPods master repo,但是会执行很长时间，在此期间CocoaPods将它的信息下载到~/.cocoapods目录下，此时可以cd到该目录，使用du -sh 命令查看下载进度。使用镜像索引可以提高下载速度（下面有介绍）。</p>
+</li>
+<li><p>将ruby源替换成国内淘宝源</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ gem sources --remove https://rubygems.org/</div><div class="line">$ gem sources -a http://ruby.taobao.org/</div><div class="line">查看源是否替换成功</div><div class="line">$ gem sources -l</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果安装的CocoaPods不能使用，可以尝试更新gem (sudo gem update –system),更新Iterm(删除原有的iterm,下载并安装新版本的iterm)。</p>
+</li>
+</ol>
+<h1 id="镜像索引"><a href="#镜像索引" class="headerlink" title="镜像索引"></a>镜像索引</h1><p>所有的项目的PodSpec文件都托管在<a href="http://github.com/CocoaPods/Specs">podSpec</a>。第一次执行pod setup时，将这些索引文件更新到本地~/.cocoapods/目录下。该文件比较大，所以第一次更新比较慢。</p>
+<p>akinkiu在<a href="http://gitcafe/com" target="_blank" rel="external">gitcafe</a>和<a href="http://www.oschina.net" target="_blank" rel="external">occhina</a>上建立了CocoaPods索引镜像。gitcafe和occhina都是国内服务器，在执行索引更新操作时会比较快。</p>
+<p>CoaoaPods设置成gitcafe镜像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ pod repo remove master</div><div class="line">$ pod repo add master https://gitcafe.com/akuandev/Specs.git</div><div class="line">$ pod repo update</div></pre></td></tr></table></figure>
+<p>将以上url改为<a href="http://git.oschina.net.akuandev/Specs.git即可使用occhina镜像。" target="_blank" rel="external">http://git.oschina.net.akuandev/Specs.git即可使用occhina镜像。</a></p>
+<h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><ol>
+<li><p>cd到以创建的项目的目录下执行以下命令</p>
+<ul>
+<li><p>pod init (生成Podfile文件，编辑该文件，添加所要加入的第三方库的名称版本（版本可以不用加）)</p>
+<p>  eg:</p>
+<p>  pod ‘AFNetworking’, ‘~&gt; 2.0’</p>
+<p>  pod ‘JSONKit’</p>
+</li>
+<li><p>pod install (自动将加入的第三方库源码下载下来，且为项目设置号好相应的系统依赖和编译参数)</p>
+<p><code>注意</code></p>
+</li>
+<li><p>使用CocoaPods生成的*.xcworkspace文件打开工程，而不是以前的*.xcodeproj文件。</p>
+</li>
+<li><p>每次修改了Podfile文件，都需要执行一次pod update命令。</p>
+</li>
+<li><p>pop install之后还生成的另一个文件Podfile.lock,该文件不能放在.gitignore文件中。该文件用来锁定当前各依赖库的版本，之后及时多次执行pod install也不会更改版本，只有执行pod update才会改变Podfile.lock文件。该文件可以在多人协作时，防止第三方库升级造成大家各自的第三方库的版本不一致。<a href="http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control" target="_blank" rel="external">Podfile.lock</a></p>
+</li>
+</ul>
+</li>
+<li><p>查找第三方库</p>
+</li>
+</ol>
+<p>查找CocoaPods管理是否有你想要的库，执行命令 pod search</p>
+<p>eg： pod search json 可查找与接送有关的所有库  </p>
+<ol>
+<li>生成第三方库帮助文档</li>
+</ol>
+<p>使用CocoaPods生成第三方库的帮助文档并集成到Xcode中，可使用brew安装appledoc即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install appledoc</div></pre></td></tr></table></figure>
+<p>其优点：将帮助文档集成到Xcode中，在敲代码时可以按住opt键查看相应帮助文档</p>
+<ol>
+<li>不更新podspec</li>
+</ol>
+<p>CocoaPods在执行pod install 和 pod update 时，会默认更新podspec索引。禁止更新podspec的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ pod install --no-repo-update</div><div class="line">$ pod update --no-repo-update</div></pre></td></tr></table></figure>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>CocoaPods的原理是将所有的依赖库都放到一个名为Pods的项目中，然互让主项目依赖Pods项目。</p>
+<ol>
+<li>Pods项目最终会编译成一个名为libPods.a的文件，主项目只需要依赖.a这个文件即可。</li>
+<li>对于资源文件，CocoaPods提供了一个名为Pods-resources.sh的bash脚本，该脚本在每次项目编译的时候都会执行，将第三方的各个资源文件复制到目标目录中。</li>
+<li>CocoaPods通过一个名为Pods.xcconfig的文件在编译的时候设置所有的参数和依赖。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cocoaPods/">cocoaPods</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/17/cocoapods使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-viewController试图控制器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/17/viewController试图控制器/">viewController</a>
+    </h1>
+  
+
+        <a href="/2015/01/17/viewController试图控制器/" class="archive-article-date">
+  	<time datetime="2015-01-17T05:43:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-17</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-UIViewController生命周期几种方法调用时机"><a href="#1-UIViewController生命周期几种方法调用时机" class="headerlink" title="1.UIViewController生命周期几种方法调用时机"></a>1.UIViewController生命周期几种方法调用时机</h2><ol>
+<li>- (id)initWithNibName:(NSString <em>)nibNameOrNil bundle:(NSBundle </em>)nibBundleOrNil;<br>当UIViewController在初始化加载xib文件时，该方法被调用。</li>
+<li>- (void)loadView;<br>当每次访问UIViewController的view(比如controller.view,self.view)并且view为nil，该方法就会被调用。</li>
+<li>- (void)viewWillUnload; </li>
+<li>- (void)viewDidUnload;</li>
+<li>- (void)viewDidLoad;<br>不管是通过xib文件还是重写loadView创建UIViewController的view，在view创建完毕后，最终都会调用该方法。</li>
+<li>- (void)viewWillAppear:(BOOL)animated;<br>当view将要呈现在UI界面上时会调用该方法。</li>
+<li>- (void)viewDidAppear:(BOOL)animated;<br>当view已经完全过渡到屏幕上时会调用该方法。</li>
+<li>- (void)viewWillDisappear:(BOOL)animated;<br>当view将要消失，或被覆盖、隐藏时会调用该方法。</li>
+<li>- (void)viewDidDisappear:(BOOL)animated;<br>当view已经完全消失，或被覆盖、隐藏时会调用该方法。</li>
+</ol>
+<h2 id="2-UIViewController-xib的加载过程"><a href="#2-UIViewController-xib的加载过程" class="headerlink" title="2.UIViewController xib的加载过程"></a>2.UIViewController xib的加载过程</h2><p>loadView默认实现就是在自定义的UIViewController类里不重写loadView方法，或者重写后只是在方法里简单实现[super loadView]。默认实现做了如下几个工作：</p>
+<ol>
+<li>它会先去查找与UIViewController相关联的xib文件，通过加载xib文件来创建UIViewController的view<br> 如果在初始化UIViewController指定了xib文件名，就会根据传入的xib文件名加载对应的xib文件<br> [[UIViewController alloc] initWithNibName:@”ViewController” bundle:nil];<br> 如果没有明显地传xib文件名，就会加载跟UIViewController同名的xib文件<br> [[UIViewController alloc] init]; // 加载UIViewController.xib </li>
+<li>如果没有找到相关联的xib文件，就会创建一个空白的UIView，然后赋值给UIViewController的view属性，大致如下：<br> self.view = [[[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame] autorelease];</li>
+</ol>
+<h2 id="3-几种控制器容器的优缺点"><a href="#3-几种控制器容器的优缺点" class="headerlink" title="3.几种控制器容器的优缺点"></a>3.几种控制器容器的优缺点</h2><h3 id="1-UITabBarController-Tabbar底部标签式-Instagram、微信、微博"><a href="#1-UITabBarController-Tabbar底部标签式-Instagram、微信、微博" class="headerlink" title="1.UITabBarController(Tabbar底部标签式:Instagram、微信、微博)"></a>1.UITabBarController(Tabbar底部标签式:Instagram、微信、微博)</h3><p>UITabBarController作为一种容器适合管理底部标签式（TabBar 如： Instagram、微信、微博）这种结构的APP</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>清楚当前所在的入口位置</li>
+<li>轻松在各入口间频繁跳转且不会迷失方向</li>
+<li>直接展现最重要入口的内容信息（默认首页）</li>
+</ol>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>功能入口过多时，该模式显得笨重不实用(超过5个的时候会将其他控制器添加到一个更多界面)</p>
+<h3 id="2-UINavigationController-Springboard跳板式-星巴克"><a href="#2-UINavigationController-Springboard跳板式-星巴克" class="headerlink" title="2.UINavigationController (Springboard跳板式:星巴克)"></a>2.UINavigationController (Springboard跳板式:星巴克)</h3><p>UINavigationController作为一种容器适合管理跳板式（SpringBoard 如： 星巴克）这种结构的APP</p>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>清晰展现各入口</li>
+<li>容易记住各入口位置，方便快速找到</li>
+</ol>
+<h4 id="确定"><a href="#确定" class="headerlink" title="确定"></a>确定</h4><ol>
+<li>无法在多入口间灵活跳转，不适合任务操作</li>
+<li>容易形成更深的路径</li>
+<li>不能直接展现入口内容</li>
+<li>不能显示太多入口次级内容</li>
+</ol>
+<h3 id="3-UINavigationController做整体，融合TabBarController（List-Menu列表式：知乎）"><a href="#3-UINavigationController做整体，融合TabBarController（List-Menu列表式：知乎）" class="headerlink" title="3.UINavigationController做整体，融合TabBarController（List Menu列表式：知乎）"></a>3.UINavigationController做整体，融合TabBarController（List Menu列表式：知乎）</h3><h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>层次展示清晰</li>
+<li>可展示内容较长的标题</li>
+<li>可展示标题的次级内容</li>
+</ol>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>同级内容过多时，用户浏览容易产生疲劳</li>
+<li>排版灵活性不是很高</li>
+<li>只能通过排列顺序、颜色来区分各入口重要程度</li>
+</ol>
+<h3 id="4-UIScrollvIewController融合pageControl-Carousel旋转木马式-豆瓣同城"><a href="#4-UIScrollvIewController融合pageControl-Carousel旋转木马式-豆瓣同城" class="headerlink" title="4.UIScrollvIewController融合pageControl (Carousel旋转木马式:豆瓣同城)"></a>4.UIScrollvIewController融合pageControl (Carousel旋转木马式:豆瓣同城)</h3><h4 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>单页面内容整体性强</li>
+<li>线性的浏览方式有顺畅感、方向感</li>
+</ol>
+<h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>不适合展示过多页面</li>
+<li>不能跳跃性地查看间隔的页面，只能按顺序查看相邻的页面</li>
+<li>由于各页面内容结构相似，容易忽略后面的内容</li>
+</ol>
+<h3 id="5-Drawer抽屉式：豆瓣小组"><a href="#5-Drawer抽屉式：豆瓣小组" class="headerlink" title="5. Drawer抽屉式：豆瓣小组"></a>5. Drawer抽屉式：豆瓣小组</h3><h4 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>兼容多种模式（页面内自有组织）</li>
+<li>扩展性好</li>
+</ol>
+<h4 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>隐藏框架中其他入口</li>
+<li>对入口交互的功能可见性(affordance)要求高</li>
+<li>对排版要求高</li>
+</ol>
+<h3 id="6-Plus点聚式：Path"><a href="#6-Plus点聚式：Path" class="headerlink" title="6. Plus点聚式：Path"></a>6. Plus点聚式：Path</h3><h4 id="优点-5"><a href="#优点-5" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>灵活</li>
+<li>展示方式有趣</li>
+<li>使界面更开阔</li>
+</ol>
+<h4 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>隐藏框架中其他入口</li>
+<li>对入口交互的功能可见性(affordance)要求高</li>
+</ol>
+<h3 id="7-Gallery陈列馆式：多看，豆瓣电影"><a href="#7-Gallery陈列馆式：多看，豆瓣电影" class="headerlink" title="7.Gallery陈列馆式：多看，豆瓣电影"></a>7.Gallery陈列馆式：多看，豆瓣电影</h3><h4 id="优点-6"><a href="#优点-6" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>直观展现各项内容</li>
+<li>方便浏览经常更新的内容</li>
+</ol>
+<h4 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>不适合展现顶层入口框架</li>
+<li>容易形成界面内容过多，显得杂乱</li>
+<li>设计效果容易呆板</li>
+</ol>
+<h3 id="8-Waterfall瀑布式"><a href="#8-Waterfall瀑布式" class="headerlink" title="8.Waterfall瀑布式"></a>8.Waterfall瀑布式</h3><h4 id="优点-7"><a href="#优点-7" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>浏览时产生流畅体验</li>
+</ol>
+<h4 id="缺点-6"><a href="#缺点-6" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>缺乏对整体内容的体积感，容易发生空间位置迷失</li>
+<li>浏览一段时间后，容易产生疲劳感</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kinds-of-viewControllers/">kinds of viewControllers</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/17/viewController试图控制器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS打电话发短信" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/13/iOS打电话发短信/">iOS打电话发短信</a>
+    </h1>
+  
+
+        <a href="/2015/01/13/iOS打电话发短信/" class="archive-article-date">
+  	<time datetime="2015-01-13T04:58:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-13</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##打电话发信息</p>
+<p>###发短信   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">*系统方法</div><div class="line">1.sms://电话号码,确定URL</div><div class="line">2.调用系统方法   </div><div class="line"></div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;sms://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *msg =  [NSURL URLWithString:strURL];    </div><div class="line"></div><div class="line">* [[UIApplication sharedApplication] openURL:msg];</div><div class="line"></div><div class="line">*代理方法    </div><div class="line"></div><div class="line">1. &lt;MessageUI.h&gt;头文件，   </div><div class="line">2. &lt;MFMessageComposeViewControllerDelegate&gt; 代理</div><div class="line">3. message.messageComposeDelegate = self;(delegete比      较特殊)   </div><div class="line">4.本身是导航控制器，所以要present或者dismiss</div></pre></td></tr></table></figure>
+<p>##打电话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">*系统方法   </div><div class="line"></div><div class="line">1.tel://电话号码,确定URL</div><div class="line">2.调用系统方法     </div><div class="line">3.缺点：不能打电话前的询问和回到应用页面 </div><div class="line"></div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;tel://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *msg =  [NSURL URLWithString:strURL];    </div><div class="line"></div><div class="line">* [[UIApplication sharedApplication] openURL:msg];</div><div class="line"></div><div class="line"></div><div class="line">*用webView，可以有询问，也可以回到应用页面 </div><div class="line">  </div><div class="line"></div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;telprompt://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *tel =  [NSURL URLWithString:strURL]; </div><div class="line">*  NSURLRequest *request = [NSURLRequest requestWithURL:tel];</div><div class="line">* UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];</div><div class="line">* [wenView loadRequest:request]; </div><div class="line">* _webView = webView;</div><div class="line"></div><div class="line">*注意*：这里的webView生成成员变量，不执行 [self.view addSubview:webView]</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">*另一种系统方法   </div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;telprompt://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *tel =  [NSURL URLWithString:strURL];    </div><div class="line"></div><div class="line">* [[UIApplication sharedApplication] openURL:tel];</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/13/iOS打电话发短信/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS数据持久化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/12/02/iOS数据持久化/">data-persistence</a>
+    </h1>
+  
+
+        <a href="/2014/12/02/iOS数据持久化/" class="archive-article-date">
+  	<time datetime="2014-12-02T05:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-12-02</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Sandbox（沙盒机制）"><a href="#Sandbox（沙盒机制）" class="headerlink" title="Sandbox（沙盒机制）"></a>Sandbox（沙盒机制）</h1><blockquote>
+<p>iOS中得沙盒机制（sandbox）是一种安全体系，它规定了应用程序只能在为该应用程序创建的文件夹内读取文件，不可以访问其他地方的内容。所有的非代码文件都保存在这个地方，如图片，声音，属性列表和文本文件等。</p>
 </blockquote>
-        <a class="article-more-a"  href="/2016/12/07/介绍/#more">更多 >></a>
+<ul>
+<li>每个应用程序都在自己的沙盒内</li>
+<li>不能随意跨越自己的沙盒去访问别的应用程序的沙盒内容</li>
+<li><p>应用程序向外请求或接受数据都需要经过权限认证</p>
+<p>  <strong>一个沙盒中包含四部分</strong>    </p>
+<ul>
+<li>.app文件，即可运行的应用文件；</li>
+<li>Document，苹果建议将程序创建或程序浏览的文件数据保存在该目录下，iTunes备份和恢复时会包括该目录；</li>
+<li>Library，存储程序的默认设置或其它状态信息；</li>
+<li>Library/Caches，存放缓存文件，iTunes不会备份此目录，此目录下的文件不会在应用退出删除；</li>
+<li>tmp，创建和存放临时文件的地方，iTu不会备份此目录。</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码获取沙盒路径的方法</strong></p>
+<ol>
+<li><p>获取根目录</p>
+<p> NSString *homePath = NSHomeDirectory();</p>
+</li>
+<li><p>获取Document目录<br> NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES)[0];</p>
+</li>
+<li><p>获取Cache目录<br> NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES)[0];</p>
+</li>
+<li><p>获取Library目录<br> NSString *libPath = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask, YES)[0];</p>
+</li>
+<li>获取tmp目录<br> NSString *tmpPath = NSTemporaryDirectory();</li>
+</ol>
+<h1 id="iOS数据持久化技术"><a href="#iOS数据持久化技术" class="headerlink" title="iOS数据持久化技术"></a>iOS数据持久化技术</h1><p>数据持久化既是，能将内存中的<code>数据模型</code>转换为<code>存储模型</code>，并能在将来需要时将<code>存储模型</code>还原为<code>数据模型</code>的一种机制。</p>
+<p><strong>说明 ：</strong> 通俗的讲，也就是将数据保存在非易失性的设备中，并且能在需要时恢复。针对苹果设备来说，就是从闪存到内存的过程。</p>
+<h2 id="iOS开发中数据持久化的方法"><a href="#iOS开发中数据持久化的方法" class="headerlink" title="iOS开发中数据持久化的方法"></a>iOS开发中数据持久化的方法</h2><ul>
+<li>Row File APIs(C语言的文件操作，iOS的NSFilemanager)</li>
+<li>NSUserDefaults （默认保存文件在对应的程序包sandbox的目录下的library/Preferences）</li>
+<li>Plist(属性列表)</li>
+<li>NSCoding + Archiver&amp;Unarchiver (对象归档)</li>
+<li>SQLite （数据库）</li>
+<li>FMDB (对SQLite的封装)</li>
+</ul>
+<hr>
+<h5 id="property-nonatomic-strong-NSString-filePath"><a href="#property-nonatomic-strong-NSString-filePath" class="headerlink" title="@property (nonatomic, strong) NSString *filePath;"></a>@property (nonatomic, strong) NSString *filePath;</h5><h5 id="property-nonatomic-strong-UITextField-textField"><a href="#property-nonatomic-strong-UITextField-textField" class="headerlink" title="@property (nonatomic, strong) UITextField *textField;"></a>@property (nonatomic, strong) UITextField *textField;</h5><h3 id="define-kFileName-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-”test-txt”"><a href="#define-kFileName-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-”test-txt”" class="headerlink" title="#define kFileName &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@”test.txt”"></a>#define kFileName &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@”test.txt”</h3><hr>
+<h3 id="ROW-APIs"><a href="#ROW-APIs" class="headerlink" title="ROW APIs"></a>ROW APIs</h3><h4 id="C语言文件操作-ROW-APIs"><a href="#C语言文件操作-ROW-APIs" class="headerlink" title="C语言文件操作### ROW APIs"></a>C语言文件操作### ROW APIs</h4><ol>
+<li><p>创建文件路径</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//创建文件存放路径（一般需要保存的文件存放在sandbox的Document目录下）</div><div class="line">- (void)setupPath</div><div class="line">&#123;</div><div class="line">	NSString *documentDirectory = NSSearchPathForDirectorieInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];</div><div class="line">	self.filePath = [documentDirectory stringByAppendingPathComponent:kFileName];	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>文件的写入</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">￼- (void)saveData￼&#123;	￼// oc文件路径转化为c	￼const char *filePath = [_filePath UTF8String];	￼// 打开文件	￼FILE *fp = fopen(filePath, &quot;w+&quot;);	￼if (NULL == fp) &#123;</div><div class="line">		perror(&quot;fopen&quot;);		￼return;	&#125;	￼￼// 将_textFiled的内容写到文件</div><div class="line">	￼const char *content = [_textField.text UTF8String];	￼size_t size = fwrite(content, BUFSIZE, 1, fp);	￼fclose(fp);	￼if (size &gt; 0) &#123;	￼	NSLog(@&quot;Saved data successfully&quot;);	￼&#125;￼&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>文件的读取</p>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)loadData</div><div class="line">&#123;	￼// 文件路径	￼const char *filePath = [_path UTF8String];	￼NSLog(@&quot;%s&quot;, filePath);	￼// 打开文件	￼FILE *fp = fopen(filePath, &quot;r&quot;);	￼if (fp == NULL) &#123;</div><div class="line">		perror(&quot;fopen&quot;);		return;	￼&#125;	//读取文件内容到内存</div><div class="line">	char buf[BUSIZ] = &#123;0&#125;;	//获取文件大小</div><div class="line">	fseek(fp,SEEK_END);	long size = ftell(fp);</div><div class="line">	fread(fp,size,1,buf);	//赋值给_textField</div><div class="line">	NSString *str = [NSString stringWithUTFString:str];</div><div class="line">	if(str != NULL &amp;&amp; ![str isEqualToString:@&quot;&quot;]);&#123;</div><div class="line">		_textField.text = str;</div><div class="line">	&#125;	fclose(fp);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h4 id="OC-NSFileManager文件管理器操作"><a href="#OC-NSFileManager文件管理器操作" class="headerlink" title="OC NSFileManager文件管理器操作"></a>OC NSFileManager文件管理器操作</h4><ol>
+<li><p>创建文件路径</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//创建文件存放路径（一般需要保存的文件存放在sandbox的Document目录下）</div><div class="line">- (void)setupPath</div><div class="line">&#123;</div><div class="line">	NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line">	NSString *documentDirectory = NSSearchPathForDirectorieInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];</div><div class="line">	//创建文件目录</div><div class="line">	NSString *test = [documentDirectory stringByAppendingPathComponent:@&quot;test&quot;];</div><div class="line">	[fileManager createDirectoryAtPath:test withIntermediateDirectories:YES attributes:nil error:nil];</div><div class="line">	self.filePath = [documentDirectory stringByAppendingPathComponent:kFileName];	</div><div class="line">	NSString *content = nil;</div><div class="line">	if(![fileManager fileExistsAtPath:self.filePAth])&#123;</div><div class="line">		[fileManager createFileAtPath:self.filePath contents:[content dataUsingEncoding:NSUTF*String] attributes:nil];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>文件的写入</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)saveData</div><div class="line">&#123;</div><div class="line">	NSError *error;</div><div class="line">	[self.textField.text writeToFile:self.filePath atomically:YE];</div><div class="line">	if(error)&#123;</div><div class="line">		NSLog(@&quot;Error : %@&quot;,error);</div><div class="line">		return;</div><div class="line">	&#125;</div><div class="line">	NSLog(@&quot;save data successfully&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>文件的读取</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)loadData</div><div class="line">&#123;</div><div class="line">	NSError *error;</div><div class="line">	NSString *content = [[NSString alloc]initWithContentsOfFile:self.filePath encoding:NSUTF*String error:&amp;error];</div><div class="line">	if(error)&#123;</div><div class="line">		NSLog(@&quot;Error : %@&quot;,error);</div><div class="line">		return;</div><div class="line">	&#125;</div><div class="line">	self.textField.text = content;</div><div class="line">	NSLog(@&quot;load data successfully&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="NSUserDefaults"><a href="#NSUserDefaults" class="headerlink" title="NSUserDefaults"></a>NSUserDefaults</h3><p>&gt;</p>
+<ul>
+<li>直接使用原始的文件操作API,不管是C语言的还是OC的都不太方便</li>
+<li><p>Cocoa会为每个app自动创建一个数据库,用来存储App本身的偏好设置,如:开关<br>值,音量值之类的少量信息</p>
+</li>
+<li><p>NSUserDefaults使用时用 [NSUserDefaults standardUserDefaults] 接口获取单例对象</p>
+</li>
+<li>NSUserDefaults本质上是以Key-Value形式存成plist文件,放在App的 Library/Preferences目录下</li>
+<li>这个文件是<code>不安全</code>的,所以千万不要用NSUserDefaults来存储密码之类的敏感信息,<code>用户名和密码应该使用KeyChains来存储</code></li>
+</ul>
+<ol>
+<li><p>文件的写入</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">	- (void)saveData</div><div class="line">	&#123;</div><div class="line">		￼NSUserDefaults *userDefaults = [NSUserDefaults	￼standardUserDefaults];		float progress = [self.progressTextField.text floatValue];		￼[userDefaults setFloat:progress forKey:@&quot;progress&quot;];		￼[userDefaults setObject:self.inputTextField.text		￼forKey:@&quot;input&quot;];		￼database		// keeps the in-memory cache in sync with a user’s defaults		￼￼[userDefaults synchronize];￼￼	&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>文件的读取</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (void)loadConfig￼&#123;	￼NSUserDefaults *userDefaults = [NSUserDefaults	￼standardUserDefaults];	￼self.toggle.on = [userDefaults boolForKey:@&quot;toggle&quot;];	self.progressView.progress = [userDefaults	floatForKey:@&quot;progress&quot;];	self.progressTextField.text = [NSString stringWithFormat:@&quot;%.2f&quot;,	self.progressView.progress];	self.inputTextField.text = [userDefaults stringForKey:@&quot;input&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> <strong>说明:</strong> <em>对NSUserDefaults单例对象的操作,实质上还是对PList文件 (Library/Preferences/<application bundleidentifier="">.plist)的读写,只是Apple帮我们封装好了 读写方法。</application></em></p>
+</li>
+</ol>
+<h3 id="Plist"><a href="#Plist" class="headerlink" title="Plist"></a>Plist</h3><p>&gt;</p>
+<ul>
+<li>NSUserDefaults只能读写Library/Preferences/<application bundleidentifier="">.plist这个 文件</application></li>
+<li>PList文件是XML格式的,只能存放固定数据格式的对象 </li>
+<li>PList文件支持的数据格式有NSString, NSNumber, Boolean, NSDate, NSData, NSArray,和NSDictionary。其中,Boolean格式事实上以[NSNumber numberOfBool:YES/NO];这样的形式表示。NSNumber支持float和int两种格式。</li>
+</ul>
+<ol>
+<li><p>创建文件路径</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)setUpPlist</div><div class="line">&#123;</div><div class="line">	NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line">	NSString *documentDirectory = NSSearchPathForDirectorieInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];</div><div class="line">	self.filePath = [documentDirectory stringByAppendingPathComponent:@&quot;test.plist&quot;];	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>写入plist文件</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)saveData</div><div class="line">&#123;</div><div class="line">	NSMutableDictionary *dict = [NSMutableDictionary dictionary];</div><div class="line">	￼dict[@&quot;textField&quot;] = _textField.text;	￼if (![dict writeToFile:_path atomically:YES]) &#123;		￼NSLog(@&quot;Error!!!&quot;);</div><div class="line">		return;				￼&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>plist文件的读取</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">	- (void)loadData</div><div class="line">	&#123;</div><div class="line">		NSMutableDictionary *dict = [NSMutableDictionary￼dictionaryWithContentsOfFile:_path];		￼NSString *content = dict[@&quot;textField&quot;];￼		if (content &amp;&amp; content.length &gt; 0) &#123;		￼_textField.text = content;￼		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Archiver-amp-Unarchiver"><a href="#Archiver-amp-Unarchiver" class="headerlink" title="Archiver&amp;Unarchiver"></a>Archiver&amp;Unarchiver</h3><p>&gt;</p>
+<ul>
+<li>NSUserDefaults和Plist文件支持常用数据类型,但是不支持自定义的数据对象 </li>
+<li>Cocoa提供了NSCoding和NSKeyArchiver两个工具类,可以把我们自定义的对象编码 成二进制数据流,然后存进文件里面</li>
+</ul>
+<ol>
+<li><p>NSCoding协议</p>
+<hr>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//解档，解码。解档之后会生成一个该类的对象（解码后对模型的属性赋值）</div><div class="line">- (id)initWithCoder:(NSCoder *)aDecoder&#123;	self = [super init];	if (self) &#123;		self.name = [aDecoder decodeObjectForKey:kNameKey];		self.age = [aDecoder decodeIntForKey:kAgeKey];		self.studyID = [aDecoder decodeObjectForKey:kStudyIDKey];	&#125;</div><div class="line">	return self;￼&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//归档，编码 （将模型的属性编码）</div><div class="line">- (id)initWithCoder:(NSCoder *)aDecoder&#123;	self = [super init];	if (self) &#123;		self.name = [aDecoder decodeObjectForKey:kNameKey];		self.age = [aDecoder decodeIntForKey:kAgeKey];		self.studyID = [aDecoder decodeObjectForKey:kStudyIDKey];	&#125;</div><div class="line">	return self;￼&#125;</div></pre></td></tr></table></figure>
+
+
+----
+</code></pre><ol>
+<li><p>保存数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">￼- (void)saveData&#123;    _student = [[YMStudent alloc] init];	￼_student.name = _name.text;	￼_student.age = [_age.text intValue];	￼_student.studyID = _studyID.text;	￼if ([NSKeyedArchiver archiveRootObject:_student toFile:self.filePath]) &#123;	￼	NSLog(@&quot;Archive successfully!&quot;);	￼&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>读取数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">￼- (void)loadData&#123;    _student = [NSKeyedUnarchiver unarchiveObjectWithFile:self.filePAth];  		￼if (student != nil) &#123;</div><div class="line">		_name.text = student.name;		_age.text = ￼[@(student.age) stringValue];		_studyID.text = ￼student.studyID;	￼	NSLog(@&quot;Archive successfully!&quot;);	￼&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="SQLite"><a href="#SQLite" class="headerlink" title="SQLite"></a>SQLite</h3><p><a href="http://www.sqlite.org" target="_blank" rel="external">SQLite</a></p>
+<h4 id="SQLite-shell-command"><a href="#SQLite-shell-command" class="headerlink" title="SQLite shell command"></a>SQLite shell command</h4><p><a href="http://www.sqlite.org/cli.html" target="_blank" rel="external">SQLite shell command</a></p>
+<h4 id="SQLite-usage"><a href="#SQLite-usage" class="headerlink" title="SQLite usage"></a>SQLite usage</h4><p>创建数据库连接对象: sqlite3</p>
+<p>创建预编译语句对象:sqlite3_stmt</p>
+<ol>
+<li><p>打开数据</p>
+<p> <strong>sqlite3_open()</strong></p>
+</li>
+<li><p>将SQL语句转换为预编译语句对象</p>
+<p> <strong>sqlite3_prepare_v2()</strong></p>
+</li>
+<li><p>执行预编译语句，每次处理一次，不需要返回值的语句（如INSERT,UPDATE,DELETE）,只需要执行该函数即可</p>
+<p> <strong>sqlite3_step()</strong></p>
+</li>
+<li><p>获取数据库中得不同类型的值</p>
+<ul>
+<li>sqlite3_column_blob()</li>
+<li>sqlite3_column_bytes()</li>
+<li>sqlite3_column_bytes16()</li>
+<li>sqlite3_column_count()  </li>
+<li>sqlite3_column_double()  </li>
+<li>sqlite3_column_int()  </li>
+<li>sqlite3_column_int64()  </li>
+<li>sqlite3_column_text()        </li>
+<li>sqlite3_column_text16()</li>
+<li>sqlite3_column_type()            </li>
+<li>sqlite3_column_value()</li>
+</ul>
+</li>
+<li><p>销毁有sqlite3_prepare_v2()函数创建的预处理语句对象</p>
+<p> <strong>sqlite3_finalize()</strong></p>
+</li>
+<li><p>关闭数据库(即销毁数据库连接对象)</p>
+<p> <strong>sqlite3_close()</strong></p>
+<h3 id="FMDB"><a href="#FMDB" class="headerlink" title="FMDB"></a>FMDB</h3><p>&gt;</p>
+</li>
+</ol>
+<p><a href="https://github.com/ccgus/fmdb">FMDB Document</a></p>
+<p><a href="http://ccgus.github.io/fmdb/html/index.html" target="_blank" rel="external">Download FMDB</a></p>
+<p>FMDB数据库操作类对sqlite3的操作进行了便利的封装并保证了多线程下的安全地操作数据库</p>
+<h5 id="FEMDB有三个主要的类"><a href="#FEMDB有三个主要的类" class="headerlink" title="FEMDB有三个主要的类"></a>FEMDB有三个主要的类</h5><ol>
+<li>FMDatabase - 表示一分单独的SQLite数据库，用来执行SQLite的命令</li>
+<li>FMResultSet - 表示FMDatabase执行查询结果集</li>
+<li>FMDatabaseQueue - 在多线程中执行多个查询或更新使用该类是线程安全的</li>
+</ol>
+<h4 id="数据库的创建"><a href="#数据库的创建" class="headerlink" title="数据库的创建"></a>数据库的创建</h4><p>#define kDBFileName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@”database.sqlite”</p>
+<pre><code>NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,￼NSUserDomainMask, YES)[0];
+NSString *DBPath = [docPath stringByAppendingPathComponent:kDBFileName];
+FMDatabase *database = [FMDatabase databaseWithPath:DBPath];
+</code></pre><h4 id="打开数据库"><a href="#打开数据库" class="headerlink" title="打开数据库"></a>打开数据库</h4><pre><code>if(![database open]){
+    NSLog(@&quot;Open database failed !&quot;);
+    return;
+}
+</code></pre><h4 id="执行更新"><a href="#执行更新" class="headerlink" title="执行更新"></a>执行更新</h4><ul>
+<li><strong>executeUpdate</strong></li>
+</ul>
+<p>一切不是SELECT命令的命令都是为更新。包括CREATE，UPDATE，INSERT，ALTER等。</p>
+<p>执行结果返回一个BOOL值。YES表示成功，NO表示失败。可以调用 -lastErrorMessage和 -lastErrorCode方法获取更多的信息。</p>
+<h4 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h4><ul>
+<li><strong>executeQuery</strong></li>
+</ul>
+<p>执行结果返回FMResultSet对象，失败返回nil。同样可以调用-lastErrorMessage和 -lastErrorCode方法获取更多的信息。获得的FMResultSet对象rs后，既是只有一条记录，一样使用[rs next];</p>
+<pre><code>eg: FMResultSet *rs = [db executeQuery:@&quot;SELECT Name, Age, FROM PersonList&quot;];
+while ([rs next]) {
+    ￼NSString *name = [rs stringForColumn:@&quot;Name&quot;];
+    ￼int age = [rs intForColumn:@&quot;Age&quot;];
+}
+</code></pre><h5 id="FMResultSet根据类型提取数据"><a href="#FMResultSet根据类型提取数据" class="headerlink" title="FMResultSet根据类型提取数据"></a>FMResultSet根据类型提取数据</h5><pre><code>- objectForColumnName:
+￼- longForColumn:
+￼- nlongLongIntForColumn:
+￼- boolForColumn:
+￼- doubleForColumn:
+￼- stringForColumn:
+￼- dateForColumn:
+￼- dataForColumn:
+￼- dataNoCopyForColumn:
+￼- UTF8StringForColumnName:
+￼
+</code></pre><p><code>以上方法，都有个{type}ForColumnIndex:版本，根据column的位置提取数据</code></p>
+<p>有些时候,只是需要query某一个row里特定的一个数值(比如只是要找John的年龄),FMDB 提供了几个比较简便的方法。这些方法定义在FMDatabaseAdditions.h,如果要使用,记得先 import进来</p>
+<pre><code>//找地址
+NSString *address = [db stringForQuery:@&quot;SELECT Address FROM PersonList ￼WHERE Name = ?&quot;,@&quot;John”];
+￼NSString *address = [db stringForQuery:@&quot;SELECT Address FROM PersonList WHERE Name = ?&quot;,@&quot;John”];
+￼//找年齡
+￼int age = [db intForQuery:@&quot;SELECT Age FROM PersonList WHERE Name     = ?&quot;,@&quot;John”];
+</code></pre><h4 id="关闭数据库"><a href="#关闭数据库" class="headerlink" title="关闭数据库"></a>关闭数据库</h4><ul>
+<li><strong>[FMDatabase close];</strong></li>
+</ul>
+<h4 id="数据库的批量操作"><a href="#数据库的批量操作" class="headerlink" title="数据库的批量操作"></a>数据库的批量操作</h4><p><strong>使用FMDatabase 的executeStatements:或者executeStatements:withResultBlock:(是否需 要返回结果)</strong></p>
+<pre><code>NSString *sql = @&quot;create table bulktest1 (id integer primary key ￼autoincrement, x text);&quot;
+&quot;create table bulktest2 (id integer primary key autoincrement, y text);&quot;
+&quot;create table bulktest3 (id integer primary key autoincrement, z text);&quot;
+&quot;insert into bulktest1 (x) values (&apos;XXX&apos;);&quot;
+&quot;insert into bulktest2 (y) values (&apos;YYY&apos;);&quot;
+&quot;insert into bulktest3 (z) values (&apos;ZZZ&apos;);&quot;;
+￼success = [database executeStatements:sql];
+</code></pre><p>或者</p>
+<pre><code>sql = @&quot;select count(*) as count from bulktest1;&quot;
+}];
+￼&quot;select count(*) as count from bulktest2;&quot;
+￼&quot;select count(*) as count from bulktest3;&quot;;
+￼success = [self.db executeStatements:sql withResultBlock:^int(NSDictionary ￼*dictionary) {
+￼NSInteger count = [dictionary[@&quot;count&quot;] integerValue];
+￼XCTAssertEqual(count, 1, @&quot;expected one record for dictionary %@&quot;,
+￼dictionary);
+￼return 0;
+}];
+</code></pre><h4 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h4><pre><code>**INSERT INTO myTable VALUES (?, ?, ?)**    
+</code></pre><p>问号只是占位,执行操作可以使用NSArray, NSDictionary, or a va_list来匹配参数<br>你也可以选择使用命名参数语法:INSERT INTO myTable VALUES (:id, :name, :value)<br>参数名必须以冒名开头。SQLite本身支持其他字符($,@),Dictionary key的内部实现是冒号 开头。注意你的NSDictionary key不要包含冒号</p>
+<pre><code>NSDictionary *argsDict = @{@&quot;name&quot;:@&quot;Jason&quot;};
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (:name)&quot;withParameterDictionary:argsDict];
+</code></pre><h4 id="FMDatabaseQueue-及线程安全"><a href="#FMDatabaseQueue-及线程安全" class="headerlink" title="FMDatabaseQueue 及线程安全"></a>FMDatabaseQueue 及线程安全</h4><p><code>不能使⽤用同⼀个FMDatabase在不同线程中操作,多线程的操作是通过FMDatabaseQueue实现</code></p>
+<p><strong>首先创建队列,然后把单任务包装到事务里,串行执行</strong></p>
+<pre><code>FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
+[queue inDatabase:^(FMDatabase *db) {
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];
+FMResultSet *rs = [db executeQuery:@&quot;select * from foo&quot;];
+while([rs next]) {
+...
+}
+</code></pre><p><strong>事务的回滚:(当前的队列的操作的取消）</strong></p>
+<pre><code>[queue inTransaction:^(FMDatabase *db, BOOL *rollback) { 
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];
+if (whoopsSomethingWrongHappened) {
+}
+*rollback = YES;
+return;
+// etc...
+[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber
+numberWithInt:4]];
+￼}];
+</code></pre><p>￼<strong>FMDatabaseQueue会在同一个队列里 <code>同步</code>执行任务, GCD也会按它接收的块的顺序来执行</strong></p>
+<h2 id="关于Setting-Bundles"><a href="#关于Setting-Bundles" class="headerlink" title="关于Setting Bundles"></a>关于Setting Bundles</h2><p>&gt;</p>
+<ul>
+<li>Setting Bundle的概念更多地应该是在App的配置选择上</li>
+<li>Setting Bundle可以给用户提供一个从《设置》应用里去配置应用程序的方式 </li>
+<li>从开发者的角度来看,一般需要频繁修改的配置选项,如游戏的音量和控制选项等最好 放到app内部的设置页里,而类似于邮箱应用中的邮件地址和服务器的设置等不需要频 繁更改的配置项可以放到Setting Bundle里 </li>
+<li>从《设置》应用中进行设置,实际上是操作iOS配置系统中的应用程序域(Application Domain),是持久的</li>
+</ul>
+<p><strong>iOS的配置系统中存在如下一些域,将来查询时严格按照如下列出域的顺序进行查找</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>Domain</strong></th>
+<th style="text-align:left"><strong>State</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">NSArgumentDomain</td>
+<td style="text-align:left">volatile(易失的)</td>
+</tr>
+<tr>
+<td style="text-align:left">Application（Identified by the app’s identifier）</td>
+<td style="text-align:left">persistent(持久的)</td>
+</tr>
+<tr>
+<td style="text-align:left">NSGlobalDomain</td>
+<td style="text-align:left">persistent</td>
+</tr>
+<tr>
+<td style="text-align:left">Languages(Identified by the language names)</td>
+<td style="text-align:left">volatile</td>
+</tr>
+<tr>
+<td style="text-align:left">NSRegisterationDomain</td>
+<td style="text-align:left">volatile</td>
+</tr>
+</tbody>
+</table>
+<p><strong>registerDefaults:方法是在NSRegistrationDomain域上进行配置的,所以仅仅是存在于 内存中的,易失的</strong></p>
+
       
 
       
@@ -149,11 +1485,16 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Persistence/">Data Persistence</a></li></ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/07/介绍/">展开全文 >></a>
+          <a class="article-more-a" href="/2014/12/02/iOS数据持久化/">展开全文 >></a>
         </p>
       
 
@@ -171,111 +1512,10 @@
 
 
   
-    <article id="post-ss" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/07/ss/">ss</a>
-    </h1>
-  
-
-        <a href="/2016/12/07/ss/" class="archive-article-date">
-  	<time datetime="2016-12-07T07:03:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-07</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/07/ss/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/07/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <a href="/2016/12/07/hello-world/" class="archive-article-date">
-  	<time datetime="2016-12-07T06:37:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-07</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/07/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -328,6 +1568,102 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Block</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">AFNetworking</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">c</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Git 操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">KVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hello world !</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Xcode调试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UINavigationController</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UIScorllView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">accelerator-key</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">cocoaPods</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">oc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UI_Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Data Persistence</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">kinds of viewControllers</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vim的使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">background_task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">内存管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">VIM_Sed</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Local/Romote Notification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">IOS XML JSON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">certificate</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

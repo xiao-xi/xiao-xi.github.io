@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://github.com/xiao-xi">
+  <title>chenxiaoxiang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##NSLog 与 printf的不同
+1. NSLog接收oc字符串作为参数，printf接收c语言的字符串作为参数
+2. NSLog输出后会自动换行，printf在输出后不会自动换行
+3. 使用NSLog时，需要包含头文件#import &amp;lt;Foundition/Foundition.h&amp;gt;；而使用printf时，需要包含头文件#include&amp;lt;stdio.h&amp;gt;
+4. N">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chenxiaoxiang">
+<meta property="og:url" content="https://github.com/xiao-xi/2014/10/23/OC笔记/index.html">
+<meta property="og:site_name" content="chenxiaoxiang">
+<meta property="og:description" content="##NSLog 与 printf的不同
+1. NSLog接收oc字符串作为参数，printf接收c语言的字符串作为参数
+2. NSLog输出后会自动换行，printf在输出后不会自动换行
+3. 使用NSLog时，需要包含头文件#import &amp;lt;Foundition/Foundition.h&amp;gt;；而使用printf时，需要包含头文件#include&amp;lt;stdio.h&amp;gt;
+4. N">
+<meta property="og:image" content="http://www.52nx.net/article/UploadPic/2011-10/2011101515463073132.png">
+<meta property="og:image" content="http://www.52nx.net/article/UploadPic/2011-7/2011772043927764.png">
+<meta property="og:image" content="http://s11.sinaimg.cn/middle/5f764369naf040c6ee03a&690">
+<meta property="og:updated_time" content="2015-02-08T15:08:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chenxiaoxiang">
+<meta name="twitter:description" content="##NSLog 与 printf的不同
+1. NSLog接收oc字符串作为参数，printf接收c语言的字符串作为参数
+2. NSLog输出后会自动换行，printf在输出后不会自动换行
+3. 使用NSLog时，需要包含头文件#import &amp;lt;Foundition/Foundition.h&amp;gt;；而使用printf时，需要包含头文件#include&amp;lt;stdio.h&amp;gt;
+4. N">
+<meta name="twitter:image" content="http://www.52nx.net/article/UploadPic/2011-10/2011101515463073132.png">
+  
+    <link rel="alternative" href="/atom.xml" title="chenxiaoxiang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="null" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">xiao-xi</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">chenxiaoxiang</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/随笔">随笔</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/xiao-xi" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="mail" target="_blank" href="mailto:36871102@qq.com" title="mail"><i class="icon-mail"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">xiao-xi</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="null" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">xiao-xi</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">chenxiaoxiang</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+		        
+		        	<li><a href="/archives">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/xiao-xi" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="mail" target="_blank" href="mailto:36871102@qq.com" title="mail"><i class="icon-mail"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-OC笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://www.52nx.net/article/UploadPic/2011-10/2011101515463073132.png" alt="image"></p>
+<p>##NSLog 与 printf的不同</p>
+<pre><code>1. NSLog接收oc字符串作为参数，printf接收c语言的字符串作为参数
+2. NSLog输出后会自动换行，printf在输出后不会自动换行
+3. 使用NSLog时，需要包含头文件#import &lt;Foundition/Foundition.h&gt;；而使用printf时，需要包含头文件#include&lt;stdio.h&gt;
+4. NSLog可以输出日期，时间戳，进程号等信息，而printf不能输出这些信息
+</code></pre><h2 id="常用术语"><a href="#常用术语" class="headerlink" title="常用术语"></a>常用术语</h2><p>面向过程 ： Procedure Oriented</p>
+<p>面向对象 ： Object Oriented ，<strong>简称OO</strong></p>
+<p>面向对象编程 ： Object Oriented Programming，<strong>简称OOP</strong></p>
+<h2 id="OC-语法"><a href="#OC-语法" class="headerlink" title="OC 语法"></a>OC 语法</h2><ol>
+<li><strong>类的声明</strong></li>
+</ol>
+<pre><code>@interface 类名：父类（默认为 NSObject 该类时根类）
+
+{
+
+    定义成员变量；（默认情况下，成员变量为protect类型，）
+
+}    
+
+（ 可以用@public将其定义为public类型，此时定义的属性或变量允许被外界访问）
+@property(nonatomic/atomic,readonly/readwrite,assign/strong/retain/wake)类型 属性名；（定义属性可以自动生成setter和getter方法）
+
+声明类方法；（标识 ＋ 该方法向类发消息）
+
+声明实例方法； （标识 － 该方法向对象发消息） 声明类方法时 返回值最好定义为`instancetype`类型
+
+@end
+</code></pre><ol>
+<li><p><strong>类的实现</strong></p>
+<pre><code> @implemention 类名
+
+ － 实例方法
+｛
+        实现代码； 
+ ｝
+
+ ＋ 类fangfa
+｛ 
+        实现代码； 
+ ｝
+
+ 重写父类方法；
+ 如：descripition、 dealloc、init等
+
+ @end
+</code></pre><p>3.<strong>创建对象</strong></p>
+<pre><code>1.包含所创建类的头文件
+2.类名 ＊对象名；
+2.1 类名 ＊对象名 ＝ ［［类名 alloc］init］；（创建对象并为其分配内存、初始化）
+2.2 类名 ＊对象名 ＝ ［类名 new］；（每次都会创建出新的对象，并且返回对象的地址。）
+3. 给对象赋值；（可以调用相应的类方法）；
+4. 给对象发消息，完成所需要进行的操作；［对象 方法］；
+</code></pre></li>
+<li><p><strong>匿名对象</strong></p>
+<pre><code>方法调用：
+
+    ［［类名 new］方法］；／［［［类名 alloc］init］方法］；
+
+属性访问：
+
+    ［类名 new］-&gt;属性 ＝ 赋值；（外界访问定义为public类型的属性）
+</code></pre></li>
+</ol>
+<h2 id="OC方法和函数的区别"><a href="#OC方法和函数的区别" class="headerlink" title="OC方法和函数的区别"></a>OC方法和函数的区别</h2><pre><code>1. OC方法的声明只能在@interface 和 @end之间，只能在@implementation 和 @end之间。即OC方法独立于类存在。
+2. C函数不属于类，跟类没有联系，C函数所有权只属于定义函数的文件
+3. C函数不能访问OC对象的成员变量。
+</code></pre><h2 id="OC语法细节"><a href="#OC语法细节" class="headerlink" title="OC语法细节"></a>OC语法细节</h2><pre><code>1. 成员变量不能在｛｝中进行初始化、不能直接拿去访问
+2. 方法的声明不能写在@end之后
+3. 方法不能当作函数一样调用
+4. 成员变量、方法不能用static等关键字进行修饰
+</code></pre><h2 id="OC方法注意点"><a href="#OC方法注意点" class="headerlink" title="OC方法注意点"></a>OC方法注意点</h2><pre><code>方法只有声明，没有实现（经典错误，系统提示警告）
+方法没有声明，只有实现（编译器警告，但是可以调用，OC的弱语法）
+编译的时候，访问没有定义的成员变量直接报错，调用没有的方法，只是警告
+没有@interface，纸偶@implemenation也可以成功定义一个类
+        @implemenation Dog : NSObject
+        {
+            int _age;
+            NSString *_name;
+        }
+
+        - (void)print
+        {
+            NSLog(@&quot;The dog&apos;s name is %@,ang de it&apos;s %d years old!&quot;,_name,_age);
+        }
+        @end
+
+@implemenation 中不能声明和@interface一样的成员变量
+
+OC中有`BOOL`基本数据类型，其值是`YES`和`NO`，而不是true 和false，它实际上是一种对带符号的自负类型（signed char）的定义（typedef），它使用8为存储空间。`YES定义为1，NO定义为0`；
+</code></pre><p><img src="http://www.52nx.net/article/UploadPic/2011-7/2011772043927764.png" alt="image"></p>
+<h3 id="类方法he实例方法"><a href="#类方法he实例方法" class="headerlink" title="类方法he实例方法"></a>类方法he实例方法</h3><ol>
+<li><p><strong>类方法</strong></p>
+<pre><code>＊ 该方法是直接可以用类名来执行的方法（类本身会在内存中占据存储空间，里面有类／对象方法列表）
+＊ 以加号 ＋ 开头
+＊ 只能用类名调用，对象不能调用
+＊ 类方法不能访问实例变量（成员变量）
+＊ 使用场合：当不需要访问成员变量时，尽量使用类方法
+＊ 类方法和对象方法可以同名
+</code></pre></li>
+<li><p><strong>实例方法</strong></p>
+<pre><code>＊ 该方法是用对象名来执行的方法
+＊ 以减号 — 开头
+＊ 只能用对象名调用，类不能调用，该方法没有对象是不能被执行的
+＊ 对象方法能访问实例变量（成员变量）
+</code></pre></li>
+</ol>
+<h3 id="setter和getter方法"><a href="#setter和getter方法" class="headerlink" title="setter和getter方法"></a>setter和getter方法</h3><ol>
+<li><p><strong>setter和getter方法的使用场合</strong></p>
+<pre><code>@public的成员可以随意被赋植，应该使用set和get方法来管理成员变量的访问
+</code></pre></li>
+<li><p><strong>setter方法</strong></p>
+<pre><code>作用：用来设置成员变量，可以在方法里面过滤一些不合理的值
+命名规范：方法以set开头，而且后面跟上成员变量名，成员变量名必须首字母大写，尽量形参名称不要与成员变量名重名（成员变量名最好以下划线 _ 开头）
+返回值：一般为void
+</code></pre></li>
+<li><p><strong>getter方法</strong></p>
+<pre><code>作用：返回对象内部的成员变量
+命名规范：方法名和成员变量名同名
+返回值：一般与成员变量的类型相同  
+</code></pre></li>
+</ol>
+<h3 id="self关键字"><a href="#self关键字" class="headerlink" title="self关键字"></a>self关键字</h3><ol>
+<li><p><strong>成员变量和局部变量同名</strong></p>
+<pre><code>当成员变量和局部变量同名时，采取就近原则，访问的是局部变量
+当self访问成员变量，区分同名的局部变量
+</code></pre></li>
+<li><p><strong>使用细节</strong></p>
+<pre><code>1. 出现的地方：所有的OC方法中（对象方法／类方法），不能出现在函数
+2. 作用：
+    使用“self.属性”访问当前方法中的成员变量
+    使用“self-&gt; 成员变量”访问当前方法中public成员变量
+    使用“［self 方法］”调用方法（类方法／实例方法）
+3. 类方法中self只能调用类方法，实例方法中self只能调用实例方法
+</code></pre></li>
+</ol>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><ol>
+<li><p><strong>继承的概念</strong></p>
+<pre><code>1. is－a机制
+2. 即当创建的多个类有共同的属性和行为时，可以抽出一个类作为父类，在父类中定义相同的属性，声明实现相同的行为（方法）；
+3. 子类可以使用父类的所有属性和方法，并且子类可以在父类的基础上拓补自己的属性和方法，包括重写父类方法。重写父类方法时，子类对象会优先调用子类重写后的方法。
+4. 子类属性和方法访问的过程： 如果子类没有相应的方法或属性，则去访问父类，一次递进知道找到NSObject根类，如果仍然没有找到相对应的方法和属性，则报错。
+</code></pre></li>
+<li><p><strong>继承的专业术语</strong></p>
+<pre><code>父类／超类    superclass
+子类 subclass／subclasses
+</code></pre></li>
+<li><p><strong>继承的细节</strong></p>
+<pre><code>单继承，不支持多继承
+子类和父类不能有相同的成员变量
+子类可以重写父类中声明的方法（在代码运行时，oc确保调用相应类的重写方的实现）
+</code></pre></li>
+<li><p><strong>继承的优缺点</strong></p>
+<pre><code>优点：
+在不改变原来模型的基础上，拓充方法
+建立了类与类的联系
+抽取了公共代码
+
+缺点：
+耦合性强
+</code></pre></li>
+<li><p><strong>super关键字</strong></p>
+<pre><code>super既不是参数，也不是实例变量，而是oc编译器提供的功能
+用于提供一种在子类中显示调用父类的方法    
+</code></pre></li>
+<li><p><strong>继承的局限性</strong></p>
+<pre><code>父类不能访问子类属性、调用子类方法
+不能继承累簇（如 NSString累簇）
+</code></pre></li>
+</ol>
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><ol>
+<li><p><strong>多态的基本概念</strong>    </p>
+<pre><code>某一类事物的多种形态
+OC对象具有多态性
+</code></pre></li>
+<li><p><strong>多态的体现</strong></p>
+<pre><code>主要体现在继承下：向不同的对象发相同的消息，其呈现的行为不一样。（如DrawShape程序中，向不同图像的对象发送draw消息，其打印结果是不同的）。
+子类对象可以赋值给父类指针；
+如：Father *f = [children new];
+父类指针可以访问对应的属性和方法
+如： f.age = 23;  
+    [f study];
+</code></pre></li>
+<li><p><strong>多态的好处</strong></p>
+<pre><code>用父类接收参数，节省代码
+</code></pre></li>
+<li><p><strong>多态的局限性</strong></p>
+<pre><code>不能访问子类的属性（可以考虑强制转换）
+</code></pre></li>
+<li><p><strong>多态的细节</strong></p>
+<pre><code>动态绑定，在运行时根据对象的类型确定动态调用的方法
+</code></pre></li>
+</ol>
+<h2 id="复合"><a href="#复合" class="headerlink" title="复合"></a>复合</h2><p> <strong>复合包括组合和聚合</strong></p>
+<pre><code>has－a机制
+组合和聚合表示将各个部分组合在一起，用于表达整体与部分的关系。在面向对象的编程思想里，就是用已有类的对象封装新的类。
+</code></pre><ul>
+<li>组合 ：表示一种<code>强的、严格的</code>整体与部分的关系，部分和整体的生命周期一样。 比如：人和人头</li>
+<li>聚合 ：表示一种<code>弱的</code>整体与部分的关系，比如： 汽车和轮胎</li>
+</ul>
+<h2 id="Foundition框架"><a href="#Foundition框架" class="headerlink" title="Foundition框架"></a>Foundition框架</h2><pre><code>1. OC集合只能存储OC对象，不能存储c语言中的基本数据类型，如int，float，enum，struct，且不能在集合中存储nil。
+</code></pre><h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><ol>
+<li>不可变字符串 ： NSString *string1;</li>
+<li><p>可变字符串 ：  <code>NSMutableString</code> *string2;</p>
+<p> 对可变字符串的操作：</p>
+<p> 2.1 增加元素 </p>
+<p> <code>string2 appendFormat:@&quot;hello&quot;];</code></p>
+<p> 2.2 删除元素</p>
+<p> <code>[string2 replaceCharacterInRange:NAMakeRange(2,3)];</code></p>
+<p> 2.3 修改元素（替换）  </p>
+<p> <code>[string2 replaceCharacterInRange:NAMakeRange(2,3)withString:@&quot;word&quot;];</code></p>
+</li>
+<li><p>字符串的操作</p>
+<p> 3.1 比较</p>
+<p> //判断两个字符串是否相等，返回的是BOOL值</p>
+<p> <code>[str1 isEqualTo:str2];</code></p>
+<p> <code>NSCompareResult res  = [str1 copmare:str2];</code></p>
+<p> 不区分大小写的比较：<code>caseInsensitiveCompare</code></p>
+<p> 有选择参数的比较： <code>［str compare：str2 option：NSStringCompareOption］</code></p>
+<p> NSStringCompareOption选项可以传入的参数</p>
+<pre><code>enum {
+           NSCaseInsensitiveSearch = 1,   不区分大小写
+           NSLiteralSearch = 2,           对于相等的字符串逐个比较
+           NSBackwardsSearch = 4,         从后向前比较
+          NSAnchoredSearch = 8,          限制比较从开始还是结尾
+           NSNumericSearch = 64,          对于数字按数字比较
+          NSDiacriticInsensitiveSearch = 128,     不区分音节
+           NSWidthInsensitiveSearch = 256,         忽略full－width half－width （如 Unicode code point U+FF41 和 Unicode code point U+0061 的字母 “a”is equal）
+           NSForcedOrderingSearch = 512,           对于不区分大小写比较相等的字符串，强制返回NSOderedAscending or NSOrderedDeascending （如“aa” is grater than “AA”）
+           NSRegularExpressionSearch = 1024        treated as an ICU－compatible regular expression
+    };
+</code></pre><p> NSCompareResult 有三种值：</p>
+<pre><code>NSOrderedSame  两字符串相等
+NSOrderedAscending  str1 &lt; str2
+NSOrderedDeascending  str1 &gt; str2;
+</code></pre><p> 3.2 求长度</p>
+<p> <code>NSUInteger strlen = [str1 length];</code></p>
+<p> 3.3 大小写转换</p>
+<p> <code>str2 = [str1 uupercaseString];</code></p>
+<p> <code>str2 = [str1 lowercaseString];</code></p>
+<p> 3.4 获取文件前缀、后缀</p>
+<p> <code>str2 ＝[str1 hasPrefix:@&quot;word&quot;];</code></p>
+<p> <code>str2 = [str1 hasSuffix:@&quot;txt&quot;];</code></p>
+<p> 3.5 获取子串</p>
+<p> //获取str2在str1中的位置，即range.location and range.length</p>
+<p> <code>range = [str1 rangOfString:str3];</code></p>
+<p> <code>range = [str1 rangOfString:@&quot;hello&quot;];</code></p>
+<p> //获取str1 第6个位置之后的字符串赋值给str2</p>
+<p> <code>str2 = [str1 substringFromIndex:6];</code></p>
+<p> //获取str1 从开始到第6个位置之间的字符串赋值给str2</p>
+<p> <code>str2 = [str1 substringTOIndex:6];</code></p>
+<p> //获取str1 从第6个位置开始长度为5的字符串赋值给str2</p>
+<p> <code>str2 = [str1 substringWithRange:NSMakeRange（6，7）];</code></p>
+<p> 3.6 文件路径的转换</p>
+<p> //间文件路径字符串str1 ＝ @“~/test.html”的路径转换为绝对路径赋值给str2</p>
+<p> <code>str2 = [str1 stringByExpandingTildeInPath];</code></p>
+<p> //间文件路径字符串str1 ＝ @“/users/qingyun/test.html”的路径转换为相对路径赋值给str2</p>
+<p> <code>str2 = [str1 stringByAbbreviatingWithTildeInPath];</code></p>
+<p> 3.7 文件路径的扩展名</p>
+<p> <code>str2 = [str1 pathExtension];</code>   此时 str2 ＝ @“html”；</p>
+<p> 3.7 删除文件路径的后缀</p>
+<p> <code>str2 = [str1 stringByDeletePathExtension];</code>   此时 str2 ＝ @“~/test”；</p>
+<p> 3.9 追加字符串</p>
+<p> str1 ＝ @”hello word”;</p>
+<p> <code>str2 = [str1 stringByAppendingFormat:@&quot;wellcom&quot;];</code>   此时 str2 ＝ @“hello word wellcom”;</p>
+</li>
+</ol>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><ol>
+<li>不可变数组 ： NSArray  *array1;</li>
+<li><p>可变数组 ： <code>NSMutableArray</code>  *array2;</p>
+<p> 数组初始化：</p>
+<p> <code>NSArray *array1 = [NSArray arrayWithObjects:@&quot;hello&quot;,@&quot;word&quot;,@&quot;two&quot;,nil];</code></p>
+<p> <code>NSArray *array1 = @[@12,@34,@&quot;hello&quot;,@&quot;error&quot;];</code></p>
+<p> //创建空数组</p>
+<p> <code>NSMutableArray  *array2 = [NSMutableArray array];</code></p>
+<p> //用已有的数组创建新数组</p>
+<p> <code>NSMutableArray  *array2 = [NSMutableArray arrayWithArray:array];</code></p>
+<p> //创建一个数组，并预分配内存</p>
+<p> <code>NSMutableArray  *array2 = [NSMutableArray arrayWithCapacity:40];</code></p>
+<p> 对可变数组的操作：</p>
+<p> 2.1 增加元素 </p>
+<p> <code>[array2 addObjects:@&quot;hello&quot;];</code></p>
+<p> 2.2 删除元素</p>
+<p> //删除下标为2的对象</p>
+<p> <code>[array2 removeObjectsAtIndex:2];</code></p>
+<p> //删除一定范围内的所有@“hello”</p>
+<p> <code>[array2 removeObject:@&quot;hello&quot; inRange:NSMakeRange(2, 3)];</code></p>
+<p> <code>[array3 removeObjectIdenticalTo:@&quot;is&quot; inRange:NSMakeRange(1, 5)];</code></p>
+<p> //删除该数组内的所有@“hello”</p>
+<p> <code>[array2 removeObjectIdenticalTo:@&quot;hello&quot;];</code></p>
+<p> 2.3 修改元素（替换）</p>
+<p> <code>[array2 removeObjectsAtIndex:2 withObject:@&quot;dog&quot;];</code></p>
+<p> <code>[array2 removeObjectsAtIndex:2 withObject:str];</code></p>
+<p> <code>[array2 removeObjectsInRange:NSMakeRang(0,2) withObjectFromArray:array];</code></p>
+<p> 2.4 插入元素</p>
+<p> <code>[array2 insertObjects:str1 AtIndex:2];</code></p>
+<p> 2.5 访问数组某个对象</p>
+<p> <code>array2［下标］</code></p>
+</li>
+</ol>
+<h4 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h4><ol>
+<li>不可变数组 ： NSDictionary  *dictionary1;</li>
+<li><p>可变数组 ： <code>NSMutableDictionary</code>  *dictionary2;</p>
+<p> 字典初始化：</p>
+<p> <code>Dictionary *dictionary1 = [NSDictionary dictionaryWithObjectsAndKeys:str1,@&quot;hello&quot;,str2,@&quot;word&quot;,str3,@&quot;two&quot;,nil];</code></p>
+<p> <code>Dictionary *dictionary1 = @{@&quot;num1&quot;:@12,@&quot;num2&quot;:@34,@&quot;str1&quot;:@&quot;hello&quot;,@&quot;str2&quot;:@&quot;error&quot;};</code></p>
+<p> //创建空字典</p>
+<p> <code>NSMutableDictionary  *dictionary2 = [NSMutableDictionary dictionary];</code></p>
+<p> //用已有的字典创建新字典</p>
+<p> <code>NSMutableDictionary  *dictionary2 = [NSMutableDictionary dictionaryWithDictionary:array];</code></p>
+<p> //创建一个字典，并预分配内存</p>
+<p> <code>NSMutableDictionary  *dictionary2 = [NSMutableDictionary dictionaryWithCapacity:40];</code></p>
+<p> 对可变字典的操作：</p>
+<p> 2.1 增加元素 </p>
+<p> <code>[dictionary2 addObjects:(id)forKey:@&quot;key&quot;];</code></p>
+<p> 2.2 删除元素</p>
+<p> <code>[dictionary2 removeObjectForKey:@&quot;key&quot;];</code></p>
+<p> 2.3 修改元素（替换）</p>
+<p> <code>[dictionary2 setObject:（id）forKey:@&quot;key&quot;];</code></p>
+<p> 2.4 访问字典</p>
+<p> <code>dictionary2［@“key”］;</code></p>
+<p> <code>[dictionary2 objectForKey:@&quot;key&quot;]</code></p>
+</li>
+</ol>
+<h4 id="装箱－开箱"><a href="#装箱－开箱" class="headerlink" title="装箱－开箱"></a>装箱－开箱</h4><ol>
+<li><p>对基本数据类型的装箱－NSNumber</p>
+<p> //装箱方法1</p>
+<p> <code>NSNumber *number = [NSNumber numberWithChar:&#39;X&#39;];</code></p>
+<p> <code>NSNumber *number = [NSNumber numberWithINT:23];</code></p>
+<p> <code>NSNumber *number = [NSNumber numberWithBOOL:YES];</code></p>
+<p> <code>NSNumber *number = [NSNumber numberWithDouble:34.5];</code></p>
+<p> //装箱方法2</p>
+<p> @23，@34.5</p>
+<p> //开箱</p>
+<p> <code>[number charValue];</code></p>
+<p> <code>[number intValue];</code></p>
+<p> <code>[number BOOLValue];</code></p>
+<p> <code>[number DoubleValue];</code>    </p>
+</li>
+<li><p>对所有非对象类型的装箱（包括基本数据类型）－ NSValue</p>
+<p> //对NSRect，NSPoint，NSRange装箱,也可以对基本数据类型进行装箱</p>
+<p> NSRect rect = NSMakeRect(10,20,30,40);</p>
+<p> <code>NSValue *value = [NSvalue valueWithBytes:&amp;rect objCType:@encode(NSRect)];</code></p>
+<p> int a ＝ 5；</p>
+<p> <code>NSValue *value = [NSvalue valueWithBytes:&amp;a objCType:@encode(int)];</code></p>
+<p> //开箱</p>
+<p> NSRect rect2 ＝ ｛0｝；</p>
+<p> <code>［value getValue:&amp;rect］;</code></p>
+<p> int b = 0;</p>
+<p> <code>[value getValue:&amp;b];</code></p>
+<p> //仅对NSRect，NSPoint，NSRange装箱</p>
+<p> <code>NSValue *value = [NSValue valueWithRect];</code></p>
+<p> <code>NSValue *value = [NSValue valueWithRange];</code></p>
+<p> <code>NSValue *value = [NSValue valueWithPoint];</code></p>
+<p> //开箱</p>
+<p> NSRect rect2 ＝ ｛0｝；</p>
+<p> <code>[value rectValue];</code></p>
+<p> NSRange range = {0};</p>
+<p> <code>[value rangeValue];</code></p>
+<p> NSPoint point = {0};</p>
+<p> <code>[value pointValue];</code></p>
+</li>
+</ol>
+<h4 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h4><pre><code>//normal enumerator
+
+NSEnumerator *enumer = [array objectEnumerator];
+
+id obj;
+while (obj = [enumer nextObject]) {
+    NSLog(@&quot;%@&quot;,obj);
+}
+
+NSEnumerator *enumer2 = [array reverseObjectEnumerator];
+while (obj = [enumer2 nextObject]) {
+    NSLog(@&quot;%@&quot;,obj);
+}
+
+//fast enumerator
+
+for (id obj2 in array) {
+    NSLog(@&quot;%@&quot;,obj2);
+}
+</code></pre><h2 id="类别"><a href="#类别" class="headerlink" title="类别"></a>类别</h2><ol>
+<li><p>类别的简述</p>
+<ul>
+<li>为现有的类（自定义的类、第三方的类或者是系统定义的类）添加一些新的行为；</li>
+<li>类别可以解决继承不能为累簇添加新方法的问题。</li>
+</ul>
+</li>
+<li><p>类别的声明和实现</p>
+<p> 格式： <code>类名 ＋ 类别名</code></p>
+<p> 如：为NSString 创建一个类别 <code>NSString＋NumberConvenience</code>；</p>
+<p> 只要保证类别名称唯一，可以向一个类中添加任意数量的类别。</p>
+<p> 声明：</p>
+<p> @interface NSString （NumberConvenience）</p>
+<p> － （NSNumber *）lengthAsNumber;</p>
+<p> @end</p>
+<p> 实现：</p>
+<p> @implementation NSString （NumberConvenience）</p>
+<p> － （NSNumber *）lengthAsNumber<br> {</p>
+<p> }</p>
+<p> @end</p>
+</li>
+<li><p>类别的优缺点</p>
+<p> 缺点：</p>
+<pre><code>* 只能添加方法，只可以访问原始类的实例变量，无法向类别中添加新的实例变量
+* 名称冲突。类别具有最高优先级，即当类别中定义与对应类中已有的方法同名的方法，对象调用该方法时，会优先调用类别中定义的方法。
+* 多个Category中如果实现了相同的方法，只有最后一个参与编译的才会有效   
+</code></pre><p> 优点：</p>
+<pre><code>* 将类的实现代码分散到多个不同文件或框架中。
+* 可以创建对类中私有方法的前向引用，
+* 向对象添加非正式协议。
+</code></pre></li>
+<li><p>使用类别实现类的扩展</p>
+<p>  类的扩展等同于在类声明的<code>源代码</code>中声明一个无名的（即括号“ （） ”里面为空）类别，并实现；</p>
+<ul>
+<li>类的扩展可以在<code>源代码</code>中使用</li>
+<li>可以添加实例变量作为类的私有变量和方法</li>
+<li>可以将只读权限改为读写权限</li>
+<li>创建数量不限</li>
+</ul>
+</li>
+<li><p>利用类别分散实现代码的优点</p>
+<pre><code>. 在大型的项目中， 一个类的实现可能非常大，并且.m文件不能分离。但是使用类别可以将一个类的实现分散且有规律的组织在不同的文件中。还可以将一个类的实现分散到不同的框架中。 
+. 编程人员可以更加容易阅读代码并实现多人合作编码
+. 版本管理降低冲突
+. 维护人员更容易理解代码
+</code></pre></li>
+<li><p>非常正式协议</p>
+<p> 非正式协议就是为NSObject类创建一个类别；</p>
+</li>
+<li><p>响应选择器</p>
+<ul>
+<li><p>使用@selector()编译指令来指定选择器,圆括号里是具体的方法名。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">（有几个参数要有几个冒号“ : ”）</div><div class="line"> 如：</div><div class="line"> @selector(setEngine:)</div><div class="line"> @selector(setTire:atIndex:)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>- 选择器的类型关键字:SEL
+- \- (BOOL)respondsToSelector:(SEL)@Selector; 使用此方法可以判断某一对象是否可以执行指定的方法。 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">QYStudent *student = [[QYStudent alloc]init];</div></pre></td></tr></table></figure>
+
+如： 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[student respondToSelector:(SEL)@selector(study)]; //对对象student判断其是否有study这个方法，有的话返回值为YES，没有的话返回值为NO。</div></pre></td></tr></table></figure>
+</code></pre><h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><ol>
+<li><p>基本用途</p>
+<ul>
+<li>可以用来声明一大堆方法（不能声明成员变量）</li>
+<li>只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明</li>
+<li>只要父类遵守了某个协议，就相当于子类也遵守了    </li>
+</ul>
+</li>
+<li><p>格式<br> @protocol 协议名</p>
+<p> 方法声明列表</p>
+<p> @end</p>
+<p> 某个类遵守某个协议</p>
+<p> @interface 类名 : 父类名&lt;协议名&gt;</p>
+<p> @end</p>
+</li>
+<li><p>关键字</p>
+<p> 协议中有2个关键字可以控制方法是否要实现（默认是@required），在大多数情况下，用途在于程序员之间的交流</p>
+<ul>
+<li>@required: 该关键字以下且@optional关键字以上的方法必须要实现（若不实现，编译器会发出警告</li>
+<li>@optional: 该关键字以下且@required关键字以上的方法可以选择性的实现</li>
+</ul>
+</li>
+<li><p>协议遵守协议</p>
+<ul>
+<li><p>一个协议可以遵守其他多个协议，多个协议之间用逗号 , 隔开</p>
+<ul>
+<li>一个协议遵守了其他协议，就相当于拥有了其他协议中的方法声明</li>
+</ul>
+<p>@protocol 协议名称 &lt;协议1, 协议2&gt;</p>
+<p>@end</p>
+</li>
+</ul>
+</li>
+<li><p>基协议</p>
+<ul>
+<li>NSObject是一个基类，最根本最基本的类，任何其他类最终都要继承它</li>
+<li>其实还有一个协议，名字也叫NSObject，它是一个基协议，最根本最基本的协议</li>
+<li>NSObject协议中声明很多最基本的方法，比如description、retain、release等</li>
+<li>建议每个新的协议都要遵守NSObject协议</li>
+</ul>
+</li>
+<li><p>定义变量时指定协议</p>
+<p> // NSObject类型的对象，并且要遵守NSCopying协议</p>
+<ul>
+<li><p>NSObject<nscopying> *obj;</nscopying></p>
+<p>// 任何OC对象，并且要遵守NSCoding协议</p>
+</li>
+<li><p>id<nscoding> obj2;</nscoding></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p><strong>内存管理机制：引用计数</strong></p>
+<ol>
+<li><p>引用计数的计算</p>
+<ul>
+<li>alloc 、new 、copy(copy生成接收对象的一个副本) //使用这三个方法创建对象时，对象的引用计数器为1<ul>
+<li>- (id) retain; //给对象发送retain消息后，对象的引用计数器加1</li>
+<li>- (void) release; //给对像发送release消息后，对象的引用计数器减1</li>
+<li>- (void)dealloc; //当一个对象的引用计数器变为0而即将被销毁时,Objective-C自动向对                             象发送一条dealloc消息，我们通常都会在自己的对象中重写dealloc方法</li>
+<li>- (unsigned) retainCount;//获取当前对象的引用计数器的值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>非ARC环境下内存的管理</p>
+<p> 当某个对象被持有有，［对象名 retain］；<br> 当某个对象不再被持有时，［对象名 release］；</p>
+</li>
+<li><p>ARC环境下内存的管理</p>
+<ul>
+<li><p>规则</p>
+<p>  只要还有一个强指针变量指向对象，对象就会保持在内存中</p>
+</li>
+<li><p>强引用，弱引用</p>
+<p>  ➢    默认所有实例变量和局部变量都是Strong指针</p>
+<p>  ➢    弱指针指向的对象被回收后，弱指针会自动变为nil指针，不会引发野指针错误。其修饰符号为__weak;</p>
+</li>
+<li><p>注意点</p>
+<pre><code>➢    不能调用release、retain、autorelease、retainCount
+</code></pre><p> ➢    可以重写dealloc，但是不能调用[super dealloc]</p>
+<p> ➢    @property : 想长期拥有某个对象，应该用strong，其他对象用weak</p>
+<p> ➢    其他基本数据类型依然用assign</p>
+<p> ➢    两端互相引用时，一端用strong、一端用weak</p>
+<ol>
+<li>自动释放池</li>
+</ol>
+</li>
+<li>自动释放池是一个存放实体的集合，这些实体可能是对象，这些对象能够被自动释放。</li>
+<li><p>/ - (id) autorelease; //是NSObject类提供的方法，此方法在某一个预定的时候，向对象发送release消息，返回值是接收消息的对象。实际上当给一个对象发送autorelease消息的时候，就是将这个对象添加到的自动释放池(NSAutoreleasePool)中，当自动释放池销毁时，会向该池中的所有对象发送release消息。</p>
+<p>如： - (NSString <em>) description<br>{<br>  NSString </em>desc;<br>   desc = [[NSString alloc] initWithFormat: @” I am %d years old”,29];<br>   return ([desc autorelease]);<br>}</p>
+</li>
+</ul>
+</li>
+<li><p>内存管理规则</p>
+<ul>
+<li>如果我使用了new , alloc 或者copy方法获得一个对象，则我必须释放或自释放该对象。</li>
+<li>如果你对对象调用了retain消息，那么你必须负责释放(release)这个对象，保证retain和release的使用次数相等。</li>
+</ul>
+</li>
+</ol>
+<h2 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h2><ol>
+<li><p>浅拷贝（shallow copy）</p>
+<p> 不会复制所引用的对象，新复制的对象只会指向现有的引用对象上。（引用计数加 1 ，地址不变）</p>
+</li>
+<li><p>深拷贝（deep copy）</p>
+<p> 真正意义的复制概念。得到的结果是多个，而非只是对象的引用。（引用计数 不变 ，地址发生变化）</p>
+</li>
+<li><p>关键字</p>
+<p> <code>copy</code>：对不可变的集合copy为浅拷贝，对可变的集合copy为深拷贝</p>
+<p> <code>mutableCopy</code>：对可变的或不可变的集合mutableCopy都是深拷贝，但是对于集合内部对象的拷贝时浅拷贝。</p>
+</li>
+</ol>
+<h2 id="BLOCK"><a href="#BLOCK" class="headerlink" title="BLOCK"></a>BLOCK</h2><ol>
+<li><p>基本概念</p>
+<p> 代码块本质上是和其他变量类似。不同的是，代码块存储的数据是一个函数体。使用代码块时，可以像调用其他标准函数一样，传入参数数，并得到返回值。    </p>
+</li>
+</ol>
+<pre><code>* Block封装了一段代码,可以在任何时候执行
+* Block可以作为函数参数或者函数的返回值，而其本身又可以带输入参数或返回值。
+* 苹果官方建议尽量多用block。在多线程、异步任务、集合遍历、集合排序、动画转场用的很多
+</code></pre><ol>
+<li><p>定义</p>
+<pre><code>int (^MySum)(int, int) = ^(int a, int b) {
+return a+b;
+};
+</code></pre><p>定义了一个叫MySum的blocks对象，它带有两个int参数，返回int。等式右边就是blocks的具体实现</p>
+</li>
+<li><p>对变量的访问权限</p>
+<ul>
+<li>对全局变量具有读写权限 </li>
+<li>对静态变量具有读写权限</li>
+<li>对局部变量只有访问权限（可以用<code>__block</code>修饰局部变量，这样可以对其进行修改）</li>
+</ul>
+</li>
+<li><p>与函数指针的对比</p>
+<p> <strong>定义函数指针</strong><br> int (<em>p)(int,int);<br> <em>*定义Blocks</em></em><br> int (^Blocks)(int,int);</p>
+<p> <strong>调用函数指针</strong><br> (<em>p)(10, 20);<br> <em>*调用Blocks</em></em><br> Blocks(10, 20);</p>
+</li>
+<li><p>typedef和赋值</p>
+<ul>
+<li><p>在声明的同时定义变量，然后赋值<br>int (^MySum)(int,int) = ^(int a,int b) {<br>return a + b;<br>};</p>
+</li>
+<li><p>也可先用typedef先声明类型，再定义变量进行赋值<br>typedef int (^MySum)(int,int);<br>MySum sum = ^(int a,int b) {<br>return a + b;<br>}; </p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="KVC（Key-Valuble-Coding）"><a href="#KVC（Key-Valuble-Coding）" class="headerlink" title="KVC（Key Valuble Coding）"></a>KVC（Key Valuble Coding）</h2><ol>
+<li>基本概念<ul>
+<li>是一种间接更改对象状态（或者说是属性值）的方式：key-value coding 简称KVC.</li>
+<li>主要本质特点是采用字符串来标识对象的属性变量，并可以利用这个标识来更改对象的状态（或者说是属性值）</li>
+</ul>
+</li>
+<li><p>基本用法</p>
+<ul>
+<li>/ - (id)valueForKey:(NSString *)key //以key作为标识符，获取其对应的属性值</li>
+<li>/ - (void)setValue:(id)value forKey:(NSString *)key //以key作为标识符设置其对应的属性值。</li>
+</ul>
+</li>
+<li><p>调用机制</p>
+<ul>
+<li>valueForKey:会首先查找以参数名命名（格式为-key或者isKey)的getter方法，如果找到的话则调用这个方法；如果没有找到这样的getter方法，它将会在对象内部寻找名称格式为_key或者key的实例变量，然后返回。</li>
+<li>setValue:forKey:的机制跟valueForKey相似。它首先查找参数名命名的setter方法，如果找到的话则完成设置；如果没有找到setter方法， 则直接在类中找到名称格式为_key或者key的实例变量， 然后将value赋值给它。</li>
+</ul>
+</li>
+<li><p>键路径</p>
+<p>键路径的概念和表示：可以在对象和不同的变量名称之间用圆点分开来表示。</p>
+<ul>
+<li>-(id)valueForKeyPath:(NSString *)keyPath //以keyPath作为标识符，获取其对应的属性值</li>
+<li>-(void)setValue:(id)value forKeyPath:(NSString *)keyPath //以keyPath为标识符，设置其对应的属性的值。</li>
+</ul>
+</li>
+</ol>
+<p>##通配符 《系统级别》</p>
+<ol>
+<li><p>{}</p>
+<p> touch {1,2,3,4,6,a,c,b,hello,t}.c</p>
+<p> // 同时创建 1.c,2.c,3.c,4.c,6.c,a.c,c.c,b.c,hello.c,t.c文件</p>
+</li>
+<li><p>*</p>
+<p> ls *.c</p>
+<p> //列出所有以 .c为后缀的文件</p>
+</li>
+<li><p>? </p>
+<p> ls ??h*.c</p>
+<p> //列出第三个字符为“h”，且以.c为后缀的所有文件</p>
+</li>
+<li><p>[]</p>
+<p> ls [0-9].c</p>
+<p> //列出以数字0-9为文件名的.c文件</p>
+</li>
+<li><p>!</p>
+<p> ls ![0-9].c</p>
+<p> //列出所有不是以数字0-9为文件名的.c文件</p>
+</li>
+</ol>
+<h2 id="谓词"><a href="#谓词" class="headerlink" title="谓词"></a>谓词</h2><ol>
+<li><p>谓词的定义</p>
+<p> 谓词使用了KVC机制。</p>
+<p> <code>NSPredicate *predicate = [[NSPredicate prdicateWithFormat:@string]];</code></p>
+<p> //实历化一个谓词对象.</p>
+<p> <code>NSArray predicateArr = [对象名 filteredArrayUsingPredicate predicate];</code></p>
+<p> //向对象发消息，过滤出满足谓词条件的内容，并存放到数组predicateArr中；   （filteredArrayPredicate:NSPredicate <em> 方法的返回值时NSArray </em>类型）</p>
+</li>
+<li><p>谓词中的操作符</p>
+<p>  <em>谓词操作符不区分大小写</em></p>
+<ul>
+<li><p>关系运算符</p>
+<p>  <code>{ &gt; &lt; &gt;= &lt;= == != }</code></p>
+</li>
+<li><p>逻辑运算符 </p>
+<p>  <code>{&amp;&amp;(and) ||(or) !}</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSPredicate *predicate = [NSPredicate predicateWithFormat:@&quot;name != &apos;lisi&apos; and age &gt; 12&quot;];</div></pre></td></tr></table></figure>
+
+
+* 范围运算符
+
+    `{between in}`
+
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">predicate = [NSPredicate predicateWithFormat:@&quot;age in &#123;23,25&#125;&quot;];</div><div class="line">//仅仅过滤出 age ＝ 23 和 age ＝ 25 的信息</div><div class="line">predicate = [NSPredicate predicateWithFormat:@&quot;age between &#123;23,25&#125;&quot;];</div><div class="line">//过滤出 23 &gt;= age &lt;＝ 25 的信息</div></pre></td></tr></table></figure>
+
+* 通配符
+
+    `{* ? 主要与like一起使用}`
+
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predicate = [NSPredicate predicateWithFormat:@&quot;name like &apos;??a*&apos;&quot;];</div><div class="line">//过滤name第三个字母为a的信息</div></pre></td></tr></table></figure>
+
+
+* 字符串特有操作符
+
+    `｛contains like endswith beginswith ［c］不区分大小写［d］不区分音节［cd］｝`
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predicate = [NSPredicate predicateWithFormat:@&quot;name endswith[cd] &apos;u&apos; and name contains[cd] &apos;ao&apos;&quot;];</div><div class="line">//过滤name以‘u’结尾 且 包含 “ao”的信息</div></pre></td></tr></table></figure>
+
+* 集合中的操作符
+
+    `{ANY ALL}`
+
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">predicate = [NSPredicate predicateWithFormat:@&quot;ALL age &gt; 10&quot;];</div><div class="line">      if ([predicate evaluateWithObject:Arr]) &#123;</div><div class="line">          NSLog(@&quot;evaluable&quot;);</div><div class="line">      &#125;else &#123;</div><div class="line">          NSLog(@&quot;It&apos;s  not evaluable &quot;);</div><div class="line">      &#125;</div><div class="line">      //判断数组Arr中的对象中age是否全部大于10</div></pre></td></tr></table></figure>
+
+
+* 谓词模板
+
+    `{$  %K}`
+
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NSPredicate *predicate = [NSPredicate predicateWithFormat:@&quot;age between $RANGE&quot;];</div><div class="line">      NSArray *arr = @[@20,@50];</div><div class="line">      NSDictionary *dic = @&#123;@&quot;RANGE&quot;:arr&#125;;</div><div class="line">      //过滤 20 &gt;= age &lt;= 50的信息</div><div class="line">      </div><div class="line">      NSString *keyPath = @&quot;age&quot;;</div><div class="line">      predicate = [NSPredicate predicateWithFormat:@&quot;%K &gt; %@&quot;,keyPath,@20];</div><div class="line">      //过滤age &gt; 20 的信息</div></pre></td></tr></table></figure>
+</code></pre><h2 id="正则表达式-《工具级别》"><a href="#正则表达式-《工具级别》" class="headerlink" title="正则表达式 《工具级别》"></a>正则表达式 《工具级别》</h2><p><strong>选择</strong></p>
+<p>| 竖直分隔符代表选择。例如，“grey | gray”可以匹配grey或gray</p>
+<p><strong>数量限定</strong></p>
+<ul>
+<li>+号代前面的字符至少要出现一次，可以出现多次。例如，“goo + gle”可以匹配google,gooogle,goooogle等</li>
+<li>？号代表前面的字符最多只能出现一次，可以不出现。例如，“colour？r”可以匹配color或者colour</li>
+<li><em>星号代表前面的字符可以不出现，可以出现一次或多次。例如，”0\</em>42”匹配42，042，0042，0004等。</li>
+<li>“{n}”代表前面的字符要出现n次，“{2，6}”代表前面的字符可以选择性的出现2-6次，例如，”go{2}gle”可以匹配google</li>
+</ul>
+<p><strong>匹配</strong><br>“（）”圆括号可以用来定义操作符的范围和优先度。例如，“gr(a|e)y”等价与“gray|grey”,”(grand)?father” 可以匹配father和grandfather。</p>
+<p><strong>^ $符号</strong></p>
+<ul>
+<li>^符号代表开始，例如，“^b”可以匹配以字符b开始的一类字符串</li>
+<li>$符号代表结束，例如，“x$”可以匹配以字符x结束的一类字符串，“^$”代表空</li>
+</ul>
+<p><strong>.符号</strong><br> .点符号，代表可以是任意字符。例如，“^a.{3}[0-9]+eh(hello)$”可以匹配ad_dehhello,a23d4ehhello,asdf345ehhello等</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">以上规则可以综合使用</div></pre></td></tr></table></figure>
+<h4 id="正则表达式可以用在grep，awk，sed，gas，find，等命令中，"><a href="#正则表达式可以用在grep，awk，sed，gas，find，等命令中，" class="headerlink" title="正则表达式可以用在grep，awk，sed，gas，find，等命令中，"></a>正则表达式可以用在grep，awk，sed，gas，find，等命令中，</h4><ul>
+<li>grep | ‘[a-z]{5}zsh$’ dotfiles 过滤dotifiles目录下的所有文件及目录</li>
+<li>ls | grep ‘^d’ ls命令列出当前目录下的以d开头的文件包括目录</li>
+<li>grep | -R ‘hello’ ./* 递归的查看根路径下的所有包含hello字符串的内容（-RE 递归的查找，支持正则表达式）</li>
+<li>find . -name ‘hello’查看名字为hello的文件的路径，</li>
+<li>find . -type d 查看当前目录下的所有文件夹的路径</li>
+<li>sed -RE ‘/^_.*(false)$/‘ /etc/passwd 查看passwd文件内容不是以下划线开始且以false结束的内容</li>
+</ul>
+<p><img src="http://s11.sinaimg.cn/middle/5f764369naf040c6ee03a&amp;690" alt="image"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oc/">oc</a></li></ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/xiao-xi/2014/10/23/OC笔记/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2014/10/23/C笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          c-notes
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/10/20/cocoa内存管理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">cocoa内存管理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 xiao-xi
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0.js"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Block</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">AFNetworking</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">c</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Git 操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">KVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hello world !</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Xcode调试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UINavigationController</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UIScorllView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">accelerator-key</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">cocoaPods</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">oc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UI_Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Data Persistence</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">kinds of viewControllers</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vim的使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">background_task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">内存管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">VIM_Sed</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Local/Romote Notification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">IOS XML JSON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">certificate</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">小逗网络</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
