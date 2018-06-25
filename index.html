@@ -1113,6 +1113,89 @@ locationNotification.applicationIconBadgeNumber = 10;
 
 
   
+    <article id="post-后台任务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/30/后台任务/">background_task</a>
+    </h1>
+  
+
+        <a href="/2015/01/30/后台任务/" class="archive-article-date">
+  	<time datetime="2015-01-30T12:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>iOS于2008年⾯面世时,只能有⼀一个第三⽅方应⽤用处于活动状态(位于前台)。这意味着应⽤用需要执 ⾏行的任务都必须位于前台的时候完成,否则任务将暂停并在应⽤用下次启动的时候执⾏行。iOS4推 出后,向第三⽅方应⽤用提供了后台功能。鉴于iOS设备的系统资源有限,以及省电,对后台处理有 ⼀一些限制,就是不能干扰前台应⽤用,也不能消耗太多电量。</p>
+<h3 id="iOS支持后台任务处理方式："><a href="#iOS支持后台任务处理方式：" class="headerlink" title="iOS支持后台任务处理方式："></a>iOS支持后台任务处理方式：</h3><ol>
+<li>在后台完成耗时任务。这种方式适用于完成大量数据的下载或更新等任务，他们需要的时间超过了用户与应用交互的时间。</li>
+<li>执行iOS允许的后台活动，如播放音乐、与蓝牙设备互交、监测GPS数据以获得位置发生重大变化、位置永久性网络连接让VoIP型应用能够正常运行。</li>
+</ol>
+<h3 id="检查设备是否支持后台任务"><a href="#检查设备是否支持后台任务" class="headerlink" title="检查设备是否支持后台任务"></a>检查设备是否支持后台任务</h3><p>在编写使用多任务功能的代码时，必须检查设备是否支持多任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIDevice* device = [UIDevice currentDevice];if (! [device isMultitaskingSupported])&#123;</div><div class="line">    NSLog(@&quot;当前设备不⽀支持多任务.&quot;);    return;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="在后台完成任务"><a href="#在后台完成任务" class="headerlink" title="在后台完成任务"></a>在后台完成任务</h3><p>要在后台执⾏行任务,应告诉应⽤用这项任务需要能够在后台运⾏行。另外,还应考虑需要多少内存 以及多⻓长时间才能完成。如果任务完成需要的时间超过10-15分钟,很可能任务还未完成应⽤用就 被终⽌止了。所以任务应该包含处理提前终⽌止的逻辑,并能够在重新启动应⽤用后继续执⾏行。操作 系统给应⽤用指定⼀一段时间,供它完成后台任务,但如果如果操作系统发现资源紧缺,也可能提 早终⽌止应⽤用。</p>
+<h4 id="后台任务的通用执行过程："><a href="#后台任务的通用执行过程：" class="headerlink" title="后台任务的通用执行过程："></a>后台任务的通用执行过程：</h4><ol>
+<li>向应用请求后台任务标识符，并指定一个用来处理终止程序的快。</li>
+<li>仅当应⽤用完了后台时间,或系统发现资源使用率过⾼进⽽决定终⽌应⽤时,终⽌处理程序才会被调⽤用。</li>
+<li>执⾏后台任务逻辑。这包括从请求后台任务标识符到结束后台任务之间的所有代码。</li>
+<li>让应用结束后台任务，并让后台标识符失效。</li>
+</ol>
+<h5 id="获取后台任务标识符"><a href="#获取后台任务标识符" class="headerlink" title="获取后台任务标识符"></a>获取后台任务标识符</h5><p>获取后台任务标识符同时制定终止处理程序块，使用__block 是为了block内部要对其修饰的变量修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">__block NSInteger counter = 0;</div><div class="line">__block UIBackgroundTaskIndentifier bTaskIndentifier = [[UIApplication shareApplication] beginBackgroundTaskWithExpirationHandler:</div><div class="line">^&#123;</div><div class="line">    ...</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h5 id="终止处理程序"><a href="#终止处理程序" class="headerlink" title="终止处理程序"></a>终止处理程序</h5><p>系统在指定的时间或资源⽤完后,将调⽤后台任务的终止处理程序。应用即将关闭前,将在主程中调⽤用终处理程序。给终⽌止处理程序提供的时间不多(最多几秒),所以它执⾏行的操作应尽可能少。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">    __block UIBackgroundTaskIdentifier bTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^&#123;</div><div class="line">    [[UIApplication sharedApplication] endBackgroundTask:bTask];//让应用指导后台任务结束    bTask = UIBackgroundTaskInvalid;//让后台任务标识符失效&#125;];</div></pre></td></tr></table></figure>
+<h5 id="执行后台任务"><a href="#执行后台任务" class="headerlink" title="执行后台任务"></a>执行后台任务</h5><p>获取后台任务标⽰符后,就可以开始在后台执⾏行任务了。再执⾏行后台任务过程中,注意从应⽤那⾥获取后台任务余下的时间。可据此决定是否接着执⾏其他的代码。通常在余下的时间还有几秒时终⽌止后台任务,让它有时间执⾏行扫尾工作。后台任务完成后,还需要做两项重要⼯作: 1. 对共享应⽤用实例调用<code>endBackgroundTask</code> 让应⽤用知道后台任务已结束;2. 将变量bTask设置为<code>UIBackgroundTaskInvalid</code> ,<strong>让这个后台任务标⽰示符⽆无效。从获取后台任务标示符到结束后台任务之间的所有代码将在后台执行。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">__block UIBackgroundTaskIdentifier bTask =[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^&#123;</div><div class="line">    [[UIApplication sharedApplication] endBackgroundTask:bTask];//让应用指导后台任务结束    bTask = UIBackgroundTaskInvalid;//让后台任务标识符失效&#125;];NSInteger timeDuration = 1 * 60;</div><div class="line">NSLog (@&quot;Background task starting , task ID is %u&quot;,bTask);</div><div class="line">for (int counter = 0; counter &lt;= timeDuration;counter ++ )</div><div class="line">&#123;</div><div class="line">    [NSThread sleepForTimeInterval:1];</div><div class="line">    //剩余运行时间</div><div class="line">    NSTimerInterval remainingTime = [[UIApplication sharedApplication] backgroundTimeRemaining];</div><div class="line">    if (remainingTime == DBL_MA)&#123;</div><div class="line">        NSLog(@&quot;Background Processed %d. Still in foreground.&quot;,counter);</div><div class="line">    &#125;else &#123;</div><div class="line">        NSLog(@&quot;Background Processed %d. Time remaining is: %f&quot;,counter,remainingTime);</div><div class="line">    &#125;</div><div class="line">&#125;dispatch_sync(dispatch_get_main_queue()&#123;</div><div class="line">    [self.backgroundButton setEnabled:YES];    [self.backgroundButton setTitle:@&quot;Start Background Task&quot; forState:UIControlStateNorm];</div><div class="line">&#125;[[UIApplication sharedApplication] endBackgroundTask:bTask];bTask = UIBackgroundTaskInvalid;</div></pre></td></tr></table></figure>
+<h3 id="实现后台任务"><a href="#实现后台任务" class="headerlink" title="实现后台任务"></a>实现后台任务</h3><p>iOS⽀支持⼀组具体的后台任务,这些活动可不断地进⾏下去,不像使⽤后台任务标示符那样受到限制。这些活动不受时间上的限制,注意这些活动不应使用过多的系统资源,以避免被操作系统强⾏终⽌止。</p>
+<h5 id="后台活动类型"><a href="#后台活动类型" class="headerlink" title="后台活动类型"></a>后台活动类型</h5><ul>
+<li>后台播放音频</li>
+<li>跟踪设备位置</li>
+<li>支持ip语音应用</li>
+<li>现在‘报刊杂志’应用的新内容</li>
+<li>与外置或蓝牙配件通信</li>
+<li>在后台取回内容</li>
+<li>使用推送通知启动后台下载<br>￼<br>￼</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background-task/">background_task</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/30/后台任务/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-移动端上线流程改善" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1186,89 +1269,6 @@ locationNotification.applicationIconBadgeNumber = 10;
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2015/01/30/移动端上线流程改善/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-后台任务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/30/后台任务/">background_task</a>
-    </h1>
-  
-
-        <a href="/2015/01/30/后台任务/" class="archive-article-date">
-  	<time datetime="2015-01-30T12:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>iOS于2008年⾯面世时,只能有⼀一个第三⽅方应⽤用处于活动状态(位于前台)。这意味着应⽤用需要执 ⾏行的任务都必须位于前台的时候完成,否则任务将暂停并在应⽤用下次启动的时候执⾏行。iOS4推 出后,向第三⽅方应⽤用提供了后台功能。鉴于iOS设备的系统资源有限,以及省电,对后台处理有 ⼀一些限制,就是不能干扰前台应⽤用,也不能消耗太多电量。</p>
-<h3 id="iOS支持后台任务处理方式："><a href="#iOS支持后台任务处理方式：" class="headerlink" title="iOS支持后台任务处理方式："></a>iOS支持后台任务处理方式：</h3><ol>
-<li>在后台完成耗时任务。这种方式适用于完成大量数据的下载或更新等任务，他们需要的时间超过了用户与应用交互的时间。</li>
-<li>执行iOS允许的后台活动，如播放音乐、与蓝牙设备互交、监测GPS数据以获得位置发生重大变化、位置永久性网络连接让VoIP型应用能够正常运行。</li>
-</ol>
-<h3 id="检查设备是否支持后台任务"><a href="#检查设备是否支持后台任务" class="headerlink" title="检查设备是否支持后台任务"></a>检查设备是否支持后台任务</h3><p>在编写使用多任务功能的代码时，必须检查设备是否支持多任务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIDevice* device = [UIDevice currentDevice];if (! [device isMultitaskingSupported])&#123;</div><div class="line">    NSLog(@&quot;当前设备不⽀支持多任务.&quot;);    return;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="在后台完成任务"><a href="#在后台完成任务" class="headerlink" title="在后台完成任务"></a>在后台完成任务</h3><p>要在后台执⾏行任务,应告诉应⽤用这项任务需要能够在后台运⾏行。另外,还应考虑需要多少内存 以及多⻓长时间才能完成。如果任务完成需要的时间超过10-15分钟,很可能任务还未完成应⽤用就 被终⽌止了。所以任务应该包含处理提前终⽌止的逻辑,并能够在重新启动应⽤用后继续执⾏行。操作 系统给应⽤用指定⼀一段时间,供它完成后台任务,但如果如果操作系统发现资源紧缺,也可能提 早终⽌止应⽤用。</p>
-<h4 id="后台任务的通用执行过程："><a href="#后台任务的通用执行过程：" class="headerlink" title="后台任务的通用执行过程："></a>后台任务的通用执行过程：</h4><ol>
-<li>向应用请求后台任务标识符，并指定一个用来处理终止程序的快。</li>
-<li>仅当应⽤用完了后台时间,或系统发现资源使用率过⾼进⽽决定终⽌应⽤时,终⽌处理程序才会被调⽤用。</li>
-<li>执⾏后台任务逻辑。这包括从请求后台任务标识符到结束后台任务之间的所有代码。</li>
-<li>让应用结束后台任务，并让后台标识符失效。</li>
-</ol>
-<h5 id="获取后台任务标识符"><a href="#获取后台任务标识符" class="headerlink" title="获取后台任务标识符"></a>获取后台任务标识符</h5><p>获取后台任务标识符同时制定终止处理程序块，使用__block 是为了block内部要对其修饰的变量修改。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">__block NSInteger counter = 0;</div><div class="line">__block UIBackgroundTaskIndentifier bTaskIndentifier = [[UIApplication shareApplication] beginBackgroundTaskWithExpirationHandler:</div><div class="line">^&#123;</div><div class="line">    ...</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<h5 id="终止处理程序"><a href="#终止处理程序" class="headerlink" title="终止处理程序"></a>终止处理程序</h5><p>系统在指定的时间或资源⽤完后,将调⽤后台任务的终止处理程序。应用即将关闭前,将在主程中调⽤用终处理程序。给终⽌止处理程序提供的时间不多(最多几秒),所以它执⾏行的操作应尽可能少。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">    __block UIBackgroundTaskIdentifier bTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^&#123;</div><div class="line">    [[UIApplication sharedApplication] endBackgroundTask:bTask];//让应用指导后台任务结束    bTask = UIBackgroundTaskInvalid;//让后台任务标识符失效&#125;];</div></pre></td></tr></table></figure>
-<h5 id="执行后台任务"><a href="#执行后台任务" class="headerlink" title="执行后台任务"></a>执行后台任务</h5><p>获取后台任务标⽰符后,就可以开始在后台执⾏行任务了。再执⾏行后台任务过程中,注意从应⽤那⾥获取后台任务余下的时间。可据此决定是否接着执⾏其他的代码。通常在余下的时间还有几秒时终⽌止后台任务,让它有时间执⾏行扫尾工作。后台任务完成后,还需要做两项重要⼯作: 1. 对共享应⽤用实例调用<code>endBackgroundTask</code> 让应⽤用知道后台任务已结束;2. 将变量bTask设置为<code>UIBackgroundTaskInvalid</code> ,<strong>让这个后台任务标⽰示符⽆无效。从获取后台任务标示符到结束后台任务之间的所有代码将在后台执行。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">__block UIBackgroundTaskIdentifier bTask =[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^&#123;</div><div class="line">    [[UIApplication sharedApplication] endBackgroundTask:bTask];//让应用指导后台任务结束    bTask = UIBackgroundTaskInvalid;//让后台任务标识符失效&#125;];NSInteger timeDuration = 1 * 60;</div><div class="line">NSLog (@&quot;Background task starting , task ID is %u&quot;,bTask);</div><div class="line">for (int counter = 0; counter &lt;= timeDuration;counter ++ )</div><div class="line">&#123;</div><div class="line">    [NSThread sleepForTimeInterval:1];</div><div class="line">    //剩余运行时间</div><div class="line">    NSTimerInterval remainingTime = [[UIApplication sharedApplication] backgroundTimeRemaining];</div><div class="line">    if (remainingTime == DBL_MA)&#123;</div><div class="line">        NSLog(@&quot;Background Processed %d. Still in foreground.&quot;,counter);</div><div class="line">    &#125;else &#123;</div><div class="line">        NSLog(@&quot;Background Processed %d. Time remaining is: %f&quot;,counter,remainingTime);</div><div class="line">    &#125;</div><div class="line">&#125;dispatch_sync(dispatch_get_main_queue()&#123;</div><div class="line">    [self.backgroundButton setEnabled:YES];    [self.backgroundButton setTitle:@&quot;Start Background Task&quot; forState:UIControlStateNorm];</div><div class="line">&#125;[[UIApplication sharedApplication] endBackgroundTask:bTask];bTask = UIBackgroundTaskInvalid;</div></pre></td></tr></table></figure>
-<h3 id="实现后台任务"><a href="#实现后台任务" class="headerlink" title="实现后台任务"></a>实现后台任务</h3><p>iOS⽀支持⼀组具体的后台任务,这些活动可不断地进⾏下去,不像使⽤后台任务标示符那样受到限制。这些活动不受时间上的限制,注意这些活动不应使用过多的系统资源,以避免被操作系统强⾏终⽌止。</p>
-<h5 id="后台活动类型"><a href="#后台活动类型" class="headerlink" title="后台活动类型"></a>后台活动类型</h5><ul>
-<li>后台播放音频</li>
-<li>跟踪设备位置</li>
-<li>支持ip语音应用</li>
-<li>现在‘报刊杂志’应用的新内容</li>
-<li>与外置或蓝牙配件通信</li>
-<li>在后台取回内容</li>
-<li>使用推送通知启动后台下载<br>￼<br>￼</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background-task/">background_task</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/01/30/后台任务/">展开全文 >></a>
         </p>
       
 
@@ -1542,15 +1542,15 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">SVN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Xcode调试</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">oc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">SVN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1562,7 +1562,7 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">cocoaPods</a>
+                <a href="javascript:void(0)">UI_Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1570,7 +1570,7 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">UI_Notes</a>
+                <a href="javascript:void(0)">cocoaPods</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1578,11 +1578,11 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
+                <a href="javascript:void(0)">Hello World</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hello World</a>
+                <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1598,15 +1598,11 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">VIM_Sed</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">vim的使用</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">ci</a>
+                <a href="javascript:void(0)">VIM_Sed</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1618,11 +1614,15 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">certificate</a>
+                <a href="javascript:void(0)">Local/Romote Notification</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Local/Romote Notification</a>
+                <a href="javascript:void(0)">ci</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">certificate</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1677,7 +1677,8 @@ locationNotification.applicationIconBadgeNumber = 10;
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">小逗网络、iOS、Reactnative、Shell、Python</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">陈霄翔/计算机科学与技术/平顶山学院/本科/2011-2015
+工作时间：2015.3.12 - 至今 联系：QQ36871102 / 微信1821019798 / 手机18210191798</div>
   	  	
     	</section>
     
