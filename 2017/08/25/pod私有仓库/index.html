@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://github.com/xiao-xi">
+  <title>pod私有仓库 | chenxiaoxiang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="pod私有库的创建和使用###pod工具的使用
+cocoapods的原理
+
+Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。
+对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。
+CocoaPods 通过一个名为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pod私有仓库">
+<meta property="og:url" content="https://github.com/xiao-xi/2017/08/25/pod私有仓库/index.html">
+<meta property="og:site_name" content="chenxiaoxiang">
+<meta property="og:description" content="pod私有库的创建和使用###pod工具的使用
+cocoapods的原理
+
+Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。
+对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。
+CocoaPods 通过一个名为">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-62c0fe205f8f39a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-6ea3470914017a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-59b13b0523c7226c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-2e77d2127d1ad9a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-13d66bc09d25a0dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-f9b3993f00f2ef36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-df38ca0d4307291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-06-25T12:03:24.413Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pod私有仓库">
+<meta name="twitter:description" content="pod私有库的创建和使用###pod工具的使用
+cocoapods的原理
+
+Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。
+对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。
+CocoaPods 通过一个名为">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2926528-62c0fe205f8f39a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
+  
+    <link rel="alternative" href="/atom.xml" title="chenxiaoxiang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="http://ohvg3bz6c.bkt.clouddn.com/IMG_2462.JPG" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">xiao-xi</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">chenxiaoxiang</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/">随笔</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/xiao-xi" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="mail" target="_blank" href="mailto:xiao-xifff@foxmail.com" title="mail"><i class="icon-mail"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">xiao-xi</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://ohvg3bz6c.bkt.clouddn.com/IMG_2462.JPG" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">xiao-xi</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">chenxiaoxiang</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/">随笔</a></li>
+		        
+		        
+		        	<li><a href="/archives">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/xiao-xi" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="mail" target="_blank" href="mailto:xiao-xifff@foxmail.com" title="mail"><i class="icon-mail"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-pod私有仓库" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      pod私有仓库
+    </h1>
+  
+
+        <a href="/2017/08/25/pod私有仓库/" class="archive-article-date">
+  	<time datetime="2017-08-25T11:59:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-25</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="pod私有库的创建和使用"><a href="#pod私有库的创建和使用" class="headerlink" title="pod私有库的创建和使用"></a>pod私有库的创建和使用</h1><p>###pod工具的使用</p>
+<h4 id="cocoapods的原理"><a href="#cocoapods的原理" class="headerlink" title="cocoapods的原理"></a>cocoapods的原理</h4><blockquote>
+<ol>
+<li>Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。</li>
+<li>对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。</li>
+<li>CocoaPods 通过一个名为 Pods.xcconfig 的文件来在编译时设置所有的依赖和参数。</li>
+</ol>
+</blockquote>
+<p>####工具依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">➜  ~ nvm --version</div><div class="line">0.31.3</div><div class="line"></div><div class="line">➜  ~ ruby --version</div><div class="line">ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-darwin15]</div><div class="line"></div><div class="line">➜  ~ pod --version</div><div class="line">1.2.1</div><div class="line"></div><div class="line">➜  ~ git --version</div><div class="line">git version 2.11.0 (Apple Git-81)</div></pre></td></tr></table></figure>
+<p>tip：本文跳过cocoapods安装</p>
+<p>####查看本地pod 仓库<br>本地已经有一个master库（安装pod后自动就会存在，官方的目录）<br>OFToolSpec是后来创建的一个私有库</p>
+<blockquote>
+<p>Type：版本管理工具类型及分枝名<br>URL：git仓库地址<br>Path：本地仓库地址（在根目录下.cocoapods下）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">➜  ~ pod repo</div><div class="line"></div><div class="line">master</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://github.com/CocoaPods/Specs.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/master</div><div class="line"></div><div class="line">OFToolSpec</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://git.coding.net/one_fools/OFToolRepo.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/OFToolSpec</div><div class="line"></div><div class="line">2 repos</div></pre></td></tr></table></figure>
+<p>####创建pod lib<br>在桌面创建PodPrivate文件，然后在终端进入PodPrivate文件并运行命令 <code>pod lib create OFPublicTool</code>创建私有库模版</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➜  ~ cd Desktop </div><div class="line">➜  Desktop mkdir PodPrivate</div><div class="line">➜  Desktop cd PodPrivate </div><div class="line">➜  PodPrivate ls</div><div class="line">➜  PodPrivate pod lib create OFPublicTool</div></pre></td></tr></table></figure>
+<p>以下是配置选择，可以使用默认选项（带有下划线的选项，并且除了Prefix前缀设置，其他的不区分大小写）</p>
+<blockquote>
+<ol>
+<li>工程语言</li>
+<li>是否需要Demo </li>
+<li>测试框架</li>
+<li>是否需要view测试 </li>
+<li>工程前缀</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//设置使用的语言</div><div class="line">What language do you want to use?? [ Swift / ObjC ]</div><div class="line"> &gt; ObjC</div><div class="line">//是否为library创建一个demo工程</div><div class="line">Would you like to include a demo application with your library? [ Yes / No ]</div><div class="line"> &gt; </div><div class="line">yes</div><div class="line">//使用的单元测试框架（具体请参看下方`单元测试`链接）</div><div class="line">Which testing frameworks will you use? [ Specta / Kiwi / None ]</div><div class="line"> &gt; None</div><div class="line">//使用UITest</div><div class="line">Would you like to do view based testing? [ Yes / No ]</div><div class="line"> &gt; no</div><div class="line">//你的项目中类的前缀</div><div class="line">What is your class prefix?</div><div class="line"> &gt; OF</div></pre></td></tr></table></figure>
+<p><a href="http://www.infoq.com/cn/news/2015/04/ios-testing-ci/" target="_blank" rel="external">单元测试</a><br>然后会在当前目录生成 <code>OFPublicTool</code> 文件夹，并且会在Xcode中自动打开这个项目<br>注意可能会有一个警告提示<br><img src="http://upload-images.jianshu.io/upload_images/2926528-62c0fe205f8f39a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="A86EECEC-4BF2-4789-BC58-558ADD701F17.png"><br>打开<code>OFPublicTool/Example/OFPublicTool.xcworkspace</code> 工程<br>删除此处的 <code>ReplaceMe.m</code>文件，在这里创建将要使用私有库管理的文件<br><img src="http://upload-images.jianshu.io/upload_images/2926528-6ea3470914017a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="C07AFF42-4781-4443-A45A-C4D1F016B948.png"><br> 如下：<br><img src="http://upload-images.jianshu.io/upload_images/2926528-59b13b0523c7226c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="F86C3A58-429A-4B39-9C7E-F05C8AAFB23B.png"></p>
+<p>然后修改此处的 <code>OFPublicTool.podspec</code>文件，下面标注必须修改的地方<br><img src="http://upload-images.jianshu.io/upload_images/2926528-2e77d2127d1ad9a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="05A1876C-4EE2-4B2B-B241-C39AD98AD3F4.png"></p>
+<p>###创建git私有仓库（使用<a href="https://coding.net" target="_blank" rel="external">coding</a>）<br>申请账号后创建Git私有仓库项目<br><img src="http://upload-images.jianshu.io/upload_images/2926528-13d66bc09d25a0dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="BACDCF36-B34C-4F97-B7F2-86DFFB1ED4F2.png"><br>之后需要在页面上获取的信息有<br><img src="http://upload-images.jianshu.io/upload_images/2926528-f9b3993f00f2ef36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="9C15D4BB-9BE8-4204-B8F2-559A344ACEEE.png"></p>
+<p>把相关的信息修改到 <code>OFPublicTool.podspec</code>中<br>以下是我的修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s.summary          = &apos;My PublicTool.&apos;</div><div class="line">s.homepage         = &apos;https://coding.net/u/one_fools/p/OFPublicTool&apos;</div><div class="line">s.source           = &#123; :git =&gt; &apos;https://git.coding.net/one_fools/OFPublicTool.git&apos;, :tag =&gt; s.version.to_s &#125;</div></pre></td></tr></table></figure>
+<p>之后进入 <code>Example</code>目录使用 <code>pod update</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜  Example git:(master) ✗ pod update</div></pre></td></tr></table></figure>
+<p>发现有报错信息 <code>The validator for Swift projects uses Swift 3.0 by default...</code><br><img src="http://upload-images.jianshu.io/upload_images/2926528-df38ca0d4307291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="35FAF51B-C569-43C4-A7A4-32D56D281351.png"><br>不过上面有写到<code>echo &quot;2.3&quot; &gt; .swift-version</code><br>继续使用此命令，然后再来一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  Example git:(master) ✗ echo &quot;2.3&quot; &gt; .swift-version</div><div class="line">➜  Example git:(master) ✗ pod update</div></pre></td></tr></table></figure>
+<p>安装成功后发现下面的警告并没有消失（暂时不管）<br>对项目进行 <code>command + B</code>构建一次应该会成功，然后在项目中 <code>OFViewController.m</code> 中引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &quot;OFPublicTool.h&quot;</div></pre></td></tr></table></figure></p>
+<p>并对项目再次进行 <code>command + B</code>构建，若成功，说明 <code>OFPublicTool.podspec</code> 中的source_files路径是正确的</p>
+<blockquote>
+<p>若是报错无法找到文件：</p>
+</blockquote>
+<p>接下来用pod的命令检查一下此文件下的lib。<br>后退到podspec文件存在的目录下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) ✗ pod lib lint</div><div class="line"></div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">OFPublicTool passed validation.</div></pre></td></tr></table></figure>
+<p>如果出现此处提示说明检查通过</p>
+<p>用 <code>pod spec lint</code>命令检查一下远程的lib，现在没有提交到git私有仓库，一定会报错的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) ✗ pod spec lint</div><div class="line"></div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line">    - ERROR | [iOS] unknown: Encountered an unknown error ([!] /usr/bin/git clone https://git.coding.net/one_fools/OFPublicTool.git /var/folders/dr/688z508n1fb2m9bh9kqs5_ch0000gn/T/d20170520-7169-ee52z2 --template= --single-branch --depth 1 --branch 0.1.0</div><div class="line"></div><div class="line">Cloning into &apos;/var/folders/dr/688z508n1fb2m9bh9kqs5_ch0000gn/T/d20170520-7169-ee52z2&apos;...</div><div class="line">fatal: Remote branch 0.1.0 not found in upstream origin</div><div class="line">) during validation.</div><div class="line"></div><div class="line">Analyzed 1 podspec.</div><div class="line"></div><div class="line">[!] The spec did not pass validation, due to 1 error.</div></pre></td></tr></table></figure>
+<p>发现报了一个错误，需要一个tag 0.1.0，下面将本地文件提交到git私有仓库并打一个0.1.0的tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) ✗ git add .</div><div class="line">➜  OFPublicTool git:(master) ✗ git commit -m&quot;first commit&quot;</div><div class="line">➜  OFPublicTool git:(master) git remote add origin https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">➜  OFPublicTool git:(master) git push origin master</div><div class="line">➜  OFPublicTool git:(master) git tag -m&quot;tag 0.1.0&quot; 0.1.0</div><div class="line">➜  OFPublicTool git:(master) git push --tags</div></pre></td></tr></table></figure>
+<p>git操作不再细述<br>上传成功之后再次用 <code>pod spec lint</code>命令检查一下远程的lib</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod spec lint</div><div class="line"></div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">Analyzed 1 podspec.</div><div class="line"></div><div class="line">OFPublicTool.podspec passed validation.</div><div class="line"></div><div class="line">➜  OFPublicTool git:(master)</div></pre></td></tr></table></figure>
+<p>发现通过检查，这时候可以去私有仓库看一下会发现已经上传成功了</p>
+<p>但是现在还没完，接下来我们把podspec文件上传的我们自己的spec仓库里，而不是cocoapods的仓库。<br>下面我们创建本地仓库并把这个podspec文件上传进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod repo</div><div class="line">➜  OFPublicTool git:(master) pod repo add OFPublicToolSpec https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">➜  OFPublicTool git:(master) pod repo</div><div class="line"></div><div class="line">master</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://github.com/CocoaPods/Specs.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/master</div><div class="line"></div><div class="line">OFPublicToolSpec</div><div class="line">- Type: git (tags/0.1.0^0)</div><div class="line">- URL:  https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/OFPublicToolSpec</div><div class="line"></div><div class="line">OFToolSpec</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://git.coding.net/one_fools/OFToolRepo.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/OFToolSpec</div><div class="line"></div><div class="line">3 repos</div></pre></td></tr></table></figure>
+<p>然后上传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod repo push OFPublicToolSpec OFPublicTool.podspec </div><div class="line"></div><div class="line">Validating spec</div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">Updating the `OFPublicToolSpec&apos; repo</div><div class="line"></div><div class="line">Already up-to-date.</div><div class="line"></div><div class="line">Adding the spec to the `OFPublicToolSpec&apos; repo</div><div class="line"></div><div class="line"> - [Update] OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">Pushing the `OFPublicToolSpec&apos; repo</div><div class="line"></div><div class="line">To https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">   8632a92..98f3d44  master -&gt; master</div></pre></td></tr></table></figure>
+<p>上传成功</p>
+<p>最后检验</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod search OFPublicTool</div><div class="line">Creating search index for spec repo &apos;OFPublicToolSpec&apos;.. Done!</div><div class="line">[!] Unable to find a pod with name, author, summary, or description matching `OFPublicTool`</div></pre></td></tr></table></figure>
+<p>发现报错，这是因为search index中缓存没有清理，再次搜索会等待一段时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) rm ~/Library/Caches/CocoaPods/search_index.json</div><div class="line">➜  OFPublicTool git:(master) pod search OFPublicTool</div></pre></td></tr></table></figure>
+<p>最后在一个新项目里引入使用，测试是否ok</p>
+<p>###注意事项<br>Asserts报错：（更改文件目录，注意要使用仓库指定文件名）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">--sources参数 制定数据源</div><div class="line">--use-libraries参数 使用libraries（报错时，error: include of non-modular header inside framework module &apos;xxx&apos;, [-Werror,-Wnon-modular-include-in-framework-module]）</div><div class="line">--allow-warnings 参数 忽略警告</div><div class="line">pod lib lint --sources=http://git.51xiaodou.com/XD_App_dev/XDBasePublicUtil.git,https://github.com/CocoaPods/Specs.git --use-libraries --allow-warnings</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">--sources参数 制定数据源</div><div class="line">--use-libraries参数 使用libraries（报错时，error: include of non-modular header inside framework module &apos;xxx&apos;, [-Werror,-Wnon-modular-include-in-framework-module]）</div><div class="line">--allow-warnings 参数 忽略警告</div><div class="line">pod repo push XDBaseFramework XDBaseFramework.podspec --sources=http://git.51xiaodou.com/XD_App_dev/XDBasePublicUtil.git,https://github.com/CocoaPods/Specs.git --use-libraries --allow-warnings --verbose</div></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://upload-images.jianshu.io/upload_images/2926528-dfbf8a23cc604c07.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://upload-images.jianshu.io/upload_images/2926528-c8ac7b352ae69422.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/xiao-xi/2017/08/25/pod私有仓库/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/03/02/移动端性能标准/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          移动端性能标准
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/02/03/vim命令-sed/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">vim_command_sed</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2018 xiao-xi
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0.js"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Block</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Foundation Kit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">c</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">AFNetworking</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">KVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Xcode调试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Git 操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UINavigationController</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">oc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UIScorllView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UI_Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">cocoaPods</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hello World</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">accelerator-key</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">内存管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">kinds of viewControllers</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Data Persistence</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">background_task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">VIM_Sed</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">standards</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vim的使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Local/Romote Notification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">certificate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">iOS XML JSON</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">小逗网络、iOS、Reactnative、Shell、Python</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

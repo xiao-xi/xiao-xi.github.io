@@ -74,7 +74,7 @@
 				
 					<a class="github" target="_blank" href="https://github.com/xiao-xi" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="mail" target="_blank" href="mailto:36871102@qq.com" title="mail"><i class="icon-mail"></i></a>
+					<a class="mail" target="_blank" href="mailto:xiao-xifff@foxmail.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -116,7 +116,7 @@
 					
 						<a class="github" target="_blank" href="https://github.com/xiao-xi" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="mail" target="_blank" href="mailto:36871102@qq.com" title="mail"><i class="icon-mail"></i></a>
+						<a class="mail" target="_blank" href="mailto:xiao-xifff@foxmail.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -139,18 +139,264 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/25/移动端性能标准/">移动端性能标准</a>
+      <a class="article-title" href="/2018/03/02/移动端性能标准/">移动端性能标准</a>
     </h1>
   
 
-        <a href="/2017/06/25/移动端性能标准/" class="archive-article-date">
-  	<time datetime="2017-06-25T08:56:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-25</time>
+        <a href="/2018/03/02/移动端性能标准/" class="archive-article-date">
+  	<time datetime="2018-03-02T08:56:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-02</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="性能标准"><a href="#性能标准" class="headerlink" title="性能标准"></a>性能标准</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>
+        <h1 id="项目性能标准"><a href="#项目性能标准" class="headerlink" title="项目性能标准"></a>项目性能标准</h1><p>##需求<br>针对用户使用体验方面有以下几个问题：</p>
+<p>####启动时间长：<br>点击应用图标进入应用首页的过程使用时间过长，用户等待时间过长</p>
+<p>####闪退及崩溃：<br>点击某按钮或使用某功能时出现应用退出或重启</p>
+<p>####应用卡顿：<br>应用响应用户操作延时过长或应用某些页面在显示时特别卡顿</p>
+<p>####交互隐患：<br>未对系统功能的交互进行处理，如：电话、短信、推送、低电量、锁屏、后台控制、耳机及数据线插拔、磁盘不足等</p>
+<p>####网络处理隐患：<br>流量浪费，用户操作应用时流量消耗异常大，偷跑流量或者未对任何网络请求进行缓存处理，未对使用网络类型进行判断处理；弱网状态下未做超时处理等</p>
+<p>####功耗大：<br>应用的运行时内存占用过大、CPU使用率过大导致手机发热严重，应用耗电量较大，除游戏以外的应用，使用时很快耗完电池电量</p>
+<p>##应用性能标准（移动端需要注意以下几个问题）</p>
+<p>####1、启动时间  </p>
+<table>
+<thead>
+<tr>
+<th>应用性能指标(启动时间)</th>
+<th>应用启动时间(秒)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优秀</td>
+<td>2s以内</td>
+</tr>
+<tr>
+<td>标准</td>
+<td>2s ~ 5s</td>
+</tr>
+<tr>
+<td>轻微延迟</td>
+<td>5s ~ 8s</td>
+</tr>
+<tr>
+<td>严重延迟</td>
+<td>8s以上</td>
+</tr>
+</tbody>
+</table>
+<p>应用启动时间一般指点击应用到应用进入首页可以交互的时间<br>代码层次指应用开始调用<code>main()</code>到<code>didFinishLaunch()</code>中设置的根容器可交互的时间<br>为了给用户良好的体验，在这个过程中不要进行太多的设置工作，否则会导致应用启动时间过长<br>应用启动时间和设备本身性能也有关系，对硬件性能较差的设备可以接受更长的启动时间</p>
+<p>####2、Crash</p>
+<table>
+<thead>
+<tr>
+<th>应用性能指标(Crash)</th>
+<th>应用Crash率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优秀</td>
+<td>0～2%%</td>
+</tr>
+<tr>
+<td>标准</td>
+<td>2～4%%</td>
+</tr>
+<tr>
+<td>轻微隐患</td>
+<td>4～12%%</td>
+</tr>
+<tr>
+<td>严重隐患</td>
+<td>12%%以上</td>
+</tr>
+</tbody>
+</table>
+<p>应用Crash一般分为iOS的闪退和Android的ANR<br>应用发生Crash一般会记录CrashLog日志<br>发生Crash的情况有很多，常见的有几种：<br>1、循环引用导致的内存泄漏<br>2、数组越界<br>3、线程阻塞<br>4、UI阻塞<br>5、空指针问题</p>
+<p>为避免应用Crash，应在应用上线之前对应用进行充分测试，并对部分代码场景进行容错处理，另外还可以通过以下方式降低Crash率</p>
+<p>#####静态分析<br>应用上线之前对项目代码进行静态分析，从代码层次排除异常代码</p>
+<p>#####异常捕获<br>对部分功能进行异常捕获，防止小的异常导致应用Crash</p>
+<p>#####log日志<br>记录崩溃日志，分析崩溃原因，定位崩溃代码并进行修复</p>
+<p>####3、FPS（页面流畅度）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">应用性能指标(FPS)</th>
+<th style="text-align:left">FPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">优秀</td>
+<td style="text-align:left">60fps</td>
+</tr>
+<tr>
+<td style="text-align:left">标准</td>
+<td style="text-align:left">58fps ~ 60fps</td>
+</tr>
+<tr>
+<td style="text-align:left">差</td>
+<td style="text-align:left">58fps以下</td>
+</tr>
+<tr>
+<td style="text-align:left">极差</td>
+<td style="text-align:left">30fps以下</td>
+</tr>
+</tbody>
+</table>
+<p>####4、CPU</p>
+<table>
+<thead>
+<tr>
+<th>应用性能指标(CPU)</th>
+<th>CPU使用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优秀</td>
+<td>20%以下</td>
+</tr>
+<tr>
+<td>标准</td>
+<td>20% ~ 50%</td>
+</tr>
+<tr>
+<td>差</td>
+<td>50% ~ 80%</td>
+</tr>
+<tr>
+<td>极差</td>
+<td>80%以上</td>
+</tr>
+</tbody>
+</table>
+<p>####5、Memory</p>
+<table>
+<thead>
+<tr>
+<th>应用性能标准(Memory)</th>
+<th>内存使用(MB)(1G内存)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优秀</td>
+<td>100M以下</td>
+</tr>
+<tr>
+<td>标准</td>
+<td>100 ~ 200M</td>
+</tr>
+<tr>
+<td>差</td>
+<td>200M ~ 400M</td>
+</tr>
+<tr>
+<td>极差</td>
+<td>400M 以上</td>
+</tr>
+</tbody>
+</table>
+<p>####6、Network</p>
+<p>#####网络响应时间</p>
+<table>
+<thead>
+<tr>
+<th>应用性能标准(网络响应)</th>
+<th>响应时间(ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优秀</td>
+<td>0 ~ 400ms</td>
+</tr>
+<tr>
+<td>标准</td>
+<td>400ms ~ 2000ms</td>
+</tr>
+<tr>
+<td>慢</td>
+<td>2000ms ~ 5000ms</td>
+</tr>
+<tr>
+<td>特别慢</td>
+<td>5000ms以上</td>
+</tr>
+</tbody>
+</table>
+<p>#####网络流量消耗</p>
+<table>
+<thead>
+<tr>
+<th>应用性能标准(流量消耗)</th>
+<th>每10分钟平均流量(MB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优秀</td>
+<td>3MB 以下</td>
+</tr>
+<tr>
+<td>标准</td>
+<td>3MB ~ 8MB</td>
+</tr>
+<tr>
+<td>大</td>
+<td>8MB ~ 20MB</td>
+</tr>
+<tr>
+<td>极大</td>
+<td>20MB 以上</td>
+</tr>
+</tbody>
+</table>
+<p>####7、交互隐患解决</p>
+<table>
+<thead>
+<tr>
+<th>应用性能标准(交互隐患)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>电话（语音及视频电话）</td>
+</tr>
+<tr>
+<td>短信</td>
+</tr>
+<tr>
+<td>闹钟</td>
+</tr>
+<tr>
+<td>推送</td>
+</tr>
+<tr>
+<td>锁屏</td>
+</tr>
+<tr>
+<td>应用进入后台</td>
+</tr>
+<tr>
+<td>后台控制台</td>
+</tr>
+<tr>
+<td>耳机插拔及数据线插拔</td>
+</tr>
+<tr>
+<td>磁盘不足</td>
+</tr>
+<tr>
+<td>电量不足</td>
+</tr>
+</tbody>
+</table>
+<p>####8、耗电量</p>
+<p>满电状态持续使用同一个应用时间应该超过3个小时<br>电量的损耗通常和应用的场景，内存的操作频率，CPU的使用程度有关</p>
+
       
 
       
@@ -167,7 +413,121 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/06/25/移动端性能标准/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/02/移动端性能标准/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-pod私有仓库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/25/pod私有仓库/">pod私有仓库</a>
+    </h1>
+  
+
+        <a href="/2017/08/25/pod私有仓库/" class="archive-article-date">
+  	<time datetime="2017-08-25T11:59:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-25</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="pod私有库的创建和使用"><a href="#pod私有库的创建和使用" class="headerlink" title="pod私有库的创建和使用"></a>pod私有库的创建和使用</h1><p>###pod工具的使用</p>
+<h4 id="cocoapods的原理"><a href="#cocoapods的原理" class="headerlink" title="cocoapods的原理"></a>cocoapods的原理</h4><blockquote>
+<ol>
+<li>Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。</li>
+<li>对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。</li>
+<li>CocoaPods 通过一个名为 Pods.xcconfig 的文件来在编译时设置所有的依赖和参数。</li>
+</ol>
+</blockquote>
+<p>####工具依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">➜  ~ nvm --version</div><div class="line">0.31.3</div><div class="line"></div><div class="line">➜  ~ ruby --version</div><div class="line">ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-darwin15]</div><div class="line"></div><div class="line">➜  ~ pod --version</div><div class="line">1.2.1</div><div class="line"></div><div class="line">➜  ~ git --version</div><div class="line">git version 2.11.0 (Apple Git-81)</div></pre></td></tr></table></figure>
+<p>tip：本文跳过cocoapods安装</p>
+<p>####查看本地pod 仓库<br>本地已经有一个master库（安装pod后自动就会存在，官方的目录）<br>OFToolSpec是后来创建的一个私有库</p>
+<blockquote>
+<p>Type：版本管理工具类型及分枝名<br>URL：git仓库地址<br>Path：本地仓库地址（在根目录下.cocoapods下）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">➜  ~ pod repo</div><div class="line"></div><div class="line">master</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://github.com/CocoaPods/Specs.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/master</div><div class="line"></div><div class="line">OFToolSpec</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://git.coding.net/one_fools/OFToolRepo.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/OFToolSpec</div><div class="line"></div><div class="line">2 repos</div></pre></td></tr></table></figure>
+<p>####创建pod lib<br>在桌面创建PodPrivate文件，然后在终端进入PodPrivate文件并运行命令 <code>pod lib create OFPublicTool</code>创建私有库模版</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➜  ~ cd Desktop </div><div class="line">➜  Desktop mkdir PodPrivate</div><div class="line">➜  Desktop cd PodPrivate </div><div class="line">➜  PodPrivate ls</div><div class="line">➜  PodPrivate pod lib create OFPublicTool</div></pre></td></tr></table></figure>
+<p>以下是配置选择，可以使用默认选项（带有下划线的选项，并且除了Prefix前缀设置，其他的不区分大小写）</p>
+<blockquote>
+<ol>
+<li>工程语言</li>
+<li>是否需要Demo </li>
+<li>测试框架</li>
+<li>是否需要view测试 </li>
+<li>工程前缀</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//设置使用的语言</div><div class="line">What language do you want to use?? [ Swift / ObjC ]</div><div class="line"> &gt; ObjC</div><div class="line">//是否为library创建一个demo工程</div><div class="line">Would you like to include a demo application with your library? [ Yes / No ]</div><div class="line"> &gt; </div><div class="line">yes</div><div class="line">//使用的单元测试框架（具体请参看下方`单元测试`链接）</div><div class="line">Which testing frameworks will you use? [ Specta / Kiwi / None ]</div><div class="line"> &gt; None</div><div class="line">//使用UITest</div><div class="line">Would you like to do view based testing? [ Yes / No ]</div><div class="line"> &gt; no</div><div class="line">//你的项目中类的前缀</div><div class="line">What is your class prefix?</div><div class="line"> &gt; OF</div></pre></td></tr></table></figure>
+<p><a href="http://www.infoq.com/cn/news/2015/04/ios-testing-ci/" target="_blank" rel="external">单元测试</a><br>然后会在当前目录生成 <code>OFPublicTool</code> 文件夹，并且会在Xcode中自动打开这个项目<br>注意可能会有一个警告提示<br><img src="http://upload-images.jianshu.io/upload_images/2926528-62c0fe205f8f39a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="A86EECEC-4BF2-4789-BC58-558ADD701F17.png"><br>打开<code>OFPublicTool/Example/OFPublicTool.xcworkspace</code> 工程<br>删除此处的 <code>ReplaceMe.m</code>文件，在这里创建将要使用私有库管理的文件<br><img src="http://upload-images.jianshu.io/upload_images/2926528-6ea3470914017a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="C07AFF42-4781-4443-A45A-C4D1F016B948.png"><br> 如下：<br><img src="http://upload-images.jianshu.io/upload_images/2926528-59b13b0523c7226c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="F86C3A58-429A-4B39-9C7E-F05C8AAFB23B.png"></p>
+<p>然后修改此处的 <code>OFPublicTool.podspec</code>文件，下面标注必须修改的地方<br><img src="http://upload-images.jianshu.io/upload_images/2926528-2e77d2127d1ad9a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="05A1876C-4EE2-4B2B-B241-C39AD98AD3F4.png"></p>
+<p>###创建git私有仓库（使用<a href="https://coding.net" target="_blank" rel="external">coding</a>）<br>申请账号后创建Git私有仓库项目<br><img src="http://upload-images.jianshu.io/upload_images/2926528-13d66bc09d25a0dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="BACDCF36-B34C-4F97-B7F2-86DFFB1ED4F2.png"><br>之后需要在页面上获取的信息有<br><img src="http://upload-images.jianshu.io/upload_images/2926528-f9b3993f00f2ef36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="9C15D4BB-9BE8-4204-B8F2-559A344ACEEE.png"></p>
+<p>把相关的信息修改到 <code>OFPublicTool.podspec</code>中<br>以下是我的修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s.summary          = &apos;My PublicTool.&apos;</div><div class="line">s.homepage         = &apos;https://coding.net/u/one_fools/p/OFPublicTool&apos;</div><div class="line">s.source           = &#123; :git =&gt; &apos;https://git.coding.net/one_fools/OFPublicTool.git&apos;, :tag =&gt; s.version.to_s &#125;</div></pre></td></tr></table></figure>
+<p>之后进入 <code>Example</code>目录使用 <code>pod update</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜  Example git:(master) ✗ pod update</div></pre></td></tr></table></figure>
+<p>发现有报错信息 <code>The validator for Swift projects uses Swift 3.0 by default...</code><br><img src="http://upload-images.jianshu.io/upload_images/2926528-df38ca0d4307291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="35FAF51B-C569-43C4-A7A4-32D56D281351.png"><br>不过上面有写到<code>echo &quot;2.3&quot; &gt; .swift-version</code><br>继续使用此命令，然后再来一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  Example git:(master) ✗ echo &quot;2.3&quot; &gt; .swift-version</div><div class="line">➜  Example git:(master) ✗ pod update</div></pre></td></tr></table></figure>
+<p>安装成功后发现下面的警告并没有消失（暂时不管）<br>对项目进行 <code>command + B</code>构建一次应该会成功，然后在项目中 <code>OFViewController.m</code> 中引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &quot;OFPublicTool.h&quot;</div></pre></td></tr></table></figure></p>
+<p>并对项目再次进行 <code>command + B</code>构建，若成功，说明 <code>OFPublicTool.podspec</code> 中的source_files路径是正确的</p>
+<blockquote>
+<p>若是报错无法找到文件：</p>
+</blockquote>
+<p>接下来用pod的命令检查一下此文件下的lib。<br>后退到podspec文件存在的目录下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) ✗ pod lib lint</div><div class="line"></div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">OFPublicTool passed validation.</div></pre></td></tr></table></figure>
+<p>如果出现此处提示说明检查通过</p>
+<p>用 <code>pod spec lint</code>命令检查一下远程的lib，现在没有提交到git私有仓库，一定会报错的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) ✗ pod spec lint</div><div class="line"></div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line">    - ERROR | [iOS] unknown: Encountered an unknown error ([!] /usr/bin/git clone https://git.coding.net/one_fools/OFPublicTool.git /var/folders/dr/688z508n1fb2m9bh9kqs5_ch0000gn/T/d20170520-7169-ee52z2 --template= --single-branch --depth 1 --branch 0.1.0</div><div class="line"></div><div class="line">Cloning into &apos;/var/folders/dr/688z508n1fb2m9bh9kqs5_ch0000gn/T/d20170520-7169-ee52z2&apos;...</div><div class="line">fatal: Remote branch 0.1.0 not found in upstream origin</div><div class="line">) during validation.</div><div class="line"></div><div class="line">Analyzed 1 podspec.</div><div class="line"></div><div class="line">[!] The spec did not pass validation, due to 1 error.</div></pre></td></tr></table></figure>
+<p>发现报了一个错误，需要一个tag 0.1.0，下面将本地文件提交到git私有仓库并打一个0.1.0的tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) ✗ git add .</div><div class="line">➜  OFPublicTool git:(master) ✗ git commit -m&quot;first commit&quot;</div><div class="line">➜  OFPublicTool git:(master) git remote add origin https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">➜  OFPublicTool git:(master) git push origin master</div><div class="line">➜  OFPublicTool git:(master) git tag -m&quot;tag 0.1.0&quot; 0.1.0</div><div class="line">➜  OFPublicTool git:(master) git push --tags</div></pre></td></tr></table></figure>
+<p>git操作不再细述<br>上传成功之后再次用 <code>pod spec lint</code>命令检查一下远程的lib</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod spec lint</div><div class="line"></div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">Analyzed 1 podspec.</div><div class="line"></div><div class="line">OFPublicTool.podspec passed validation.</div><div class="line"></div><div class="line">➜  OFPublicTool git:(master)</div></pre></td></tr></table></figure>
+<p>发现通过检查，这时候可以去私有仓库看一下会发现已经上传成功了</p>
+<p>但是现在还没完，接下来我们把podspec文件上传的我们自己的spec仓库里，而不是cocoapods的仓库。<br>下面我们创建本地仓库并把这个podspec文件上传进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod repo</div><div class="line">➜  OFPublicTool git:(master) pod repo add OFPublicToolSpec https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">➜  OFPublicTool git:(master) pod repo</div><div class="line"></div><div class="line">master</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://github.com/CocoaPods/Specs.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/master</div><div class="line"></div><div class="line">OFPublicToolSpec</div><div class="line">- Type: git (tags/0.1.0^0)</div><div class="line">- URL:  https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/OFPublicToolSpec</div><div class="line"></div><div class="line">OFToolSpec</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://git.coding.net/one_fools/OFToolRepo.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/OFToolSpec</div><div class="line"></div><div class="line">3 repos</div></pre></td></tr></table></figure>
+<p>然后上传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod repo push OFPublicToolSpec OFPublicTool.podspec </div><div class="line"></div><div class="line">Validating spec</div><div class="line"> -&gt; OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">Updating the `OFPublicToolSpec&apos; repo</div><div class="line"></div><div class="line">Already up-to-date.</div><div class="line"></div><div class="line">Adding the spec to the `OFPublicToolSpec&apos; repo</div><div class="line"></div><div class="line"> - [Update] OFPublicTool (0.1.0)</div><div class="line"></div><div class="line">Pushing the `OFPublicToolSpec&apos; repo</div><div class="line"></div><div class="line">To https://git.coding.net/one_fools/OFPublicTool.git</div><div class="line">   8632a92..98f3d44  master -&gt; master</div></pre></td></tr></table></figure>
+<p>上传成功</p>
+<p>最后检验</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) pod search OFPublicTool</div><div class="line">Creating search index for spec repo &apos;OFPublicToolSpec&apos;.. Done!</div><div class="line">[!] Unable to find a pod with name, author, summary, or description matching `OFPublicTool`</div></pre></td></tr></table></figure>
+<p>发现报错，这是因为search index中缓存没有清理，再次搜索会等待一段时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) rm ~/Library/Caches/CocoaPods/search_index.json</div><div class="line">➜  OFPublicTool git:(master) pod search OFPublicTool</div></pre></td></tr></table></figure>
+<p>最后在一个新项目里引入使用，测试是否ok</p>
+<p>###注意事项<br>Asserts报错：（更改文件目录，注意要使用仓库指定文件名）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">--sources参数 制定数据源</div><div class="line">--use-libraries参数 使用libraries（报错时，error: include of non-modular header inside framework module &apos;xxx&apos;, [-Werror,-Wnon-modular-include-in-framework-module]）</div><div class="line">--allow-warnings 参数 忽略警告</div><div class="line">pod lib lint --sources=http://git.51xiaodou.com/XD_App_dev/XDBasePublicUtil.git,https://github.com/CocoaPods/Specs.git --use-libraries --allow-warnings</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">--sources参数 制定数据源</div><div class="line">--use-libraries参数 使用libraries（报错时，error: include of non-modular header inside framework module &apos;xxx&apos;, [-Werror,-Wnon-modular-include-in-framework-module]）</div><div class="line">--allow-warnings 参数 忽略警告</div><div class="line">pod repo push XDBaseFramework XDBaseFramework.podspec --sources=http://git.51xiaodou.com/XD_App_dev/XDBasePublicUtil.git,https://github.com/CocoaPods/Specs.git --use-libraries --allow-warnings --verbose</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/25/pod私有仓库/">展开全文 >></a>
         </p>
       
 
@@ -761,6 +1121,97 @@ locationNotification.applicationIconBadgeNumber = 10;
 
 
   
+    <article id="post-移动端上线流程改善" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/30/移动端上线流程改善/">background_task</a>
+    </h1>
+  
+
+        <a href="/2015/01/30/移动端上线流程改善/" class="archive-article-date">
+  	<time datetime="2015-01-30T12:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-30</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#移动端上线流程改善 </p>
+<p>##移动端上线流程<br>针对近阶段应用上线失败问题<br>优化APP上线流程</p>
+<pre><code>1、提出需求
+    -1、上线日期
+    -2、主要功能点及优先级
+
+2、需求评审
+    -1、确认开发范围
+    -2、确认开发周期
+    -3、确认测试时间
+    -4、尝试性提交日期
+    -5、上线申请日期
+（尝试性提交日期-测试时间=开发时间）
+
+3、开发
+
+4、测试环境测试
+
+5、预发布环境测试
+
+6、预备提交
+    - 提交负责人确认
+    - 项目配置确认
+    - 提交内容确认
+    - 提交材料确认（描述信息，图片等）
+    - 提交平台确认
+
+7、提交审核
+    - 1、尝试性提交
+        -&gt;审核通过-&gt;beta预发布状态
+        -&gt;审核失败-&gt;检测原因-&gt;修改-&gt;重新提交至审核成功-&gt;beta预发布状态
+    - 2、上线申请
+        -&gt;审核通过-&gt;预发布状态-&gt;上线报告
+        -&gt;审核失败-&gt;上线失败事故-&gt;检测原因-&gt;修改-&gt;重新提交至审核成功/失败-&gt;预发布状态/beta预发布状态-&gt;上线成功/失败-&gt;事故总结报告
+
+8、审核通过（预发布）
+
+9、发布应用
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background-task/">background_task</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/01/30/移动端上线流程改善/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-后台任务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1018,198 +1469,6 @@ locationNotification.applicationIconBadgeNumber = 10;
 
 
   
-    <article id="post-viewController试图控制器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/17/viewController试图控制器/">viewController</a>
-    </h1>
-  
-
-        <a href="/2015/01/17/viewController试图控制器/" class="archive-article-date">
-  	<time datetime="2015-01-17T05:43:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-17</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-UIViewController生命周期几种方法调用时机"><a href="#1-UIViewController生命周期几种方法调用时机" class="headerlink" title="1.UIViewController生命周期几种方法调用时机"></a>1.UIViewController生命周期几种方法调用时机</h2><ol>
-<li>- (id)initWithNibName:(NSString <em>)nibNameOrNil bundle:(NSBundle </em>)nibBundleOrNil;<br>当UIViewController在初始化加载xib文件时，该方法被调用。</li>
-<li>- (void)loadView;<br>当每次访问UIViewController的view(比如controller.view,self.view)并且view为nil，该方法就会被调用。</li>
-<li>- (void)viewWillUnload; </li>
-<li>- (void)viewDidUnload;</li>
-<li>- (void)viewDidLoad;<br>不管是通过xib文件还是重写loadView创建UIViewController的view，在view创建完毕后，最终都会调用该方法。</li>
-<li>- (void)viewWillAppear:(BOOL)animated;<br>当view将要呈现在UI界面上时会调用该方法。</li>
-<li>- (void)viewDidAppear:(BOOL)animated;<br>当view已经完全过渡到屏幕上时会调用该方法。</li>
-<li>- (void)viewWillDisappear:(BOOL)animated;<br>当view将要消失，或被覆盖、隐藏时会调用该方法。</li>
-<li>- (void)viewDidDisappear:(BOOL)animated;<br>当view已经完全消失，或被覆盖、隐藏时会调用该方法。</li>
-</ol>
-<h2 id="2-UIViewController-xib的加载过程"><a href="#2-UIViewController-xib的加载过程" class="headerlink" title="2.UIViewController xib的加载过程"></a>2.UIViewController xib的加载过程</h2><p>loadView默认实现就是在自定义的UIViewController类里不重写loadView方法，或者重写后只是在方法里简单实现[super loadView]。默认实现做了如下几个工作：</p>
-<ol>
-<li>它会先去查找与UIViewController相关联的xib文件，通过加载xib文件来创建UIViewController的view<br> 如果在初始化UIViewController指定了xib文件名，就会根据传入的xib文件名加载对应的xib文件<br> [[UIViewController alloc] initWithNibName:@”ViewController” bundle:nil];<br> 如果没有明显地传xib文件名，就会加载跟UIViewController同名的xib文件<br> [[UIViewController alloc] init]; // 加载UIViewController.xib </li>
-<li>如果没有找到相关联的xib文件，就会创建一个空白的UIView，然后赋值给UIViewController的view属性，大致如下：<br> self.view = [[[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame] autorelease];</li>
-</ol>
-<h2 id="3-几种控制器容器的优缺点"><a href="#3-几种控制器容器的优缺点" class="headerlink" title="3.几种控制器容器的优缺点"></a>3.几种控制器容器的优缺点</h2><h3 id="1-UITabBarController-Tabbar底部标签式-Instagram、微信、微博"><a href="#1-UITabBarController-Tabbar底部标签式-Instagram、微信、微博" class="headerlink" title="1.UITabBarController(Tabbar底部标签式:Instagram、微信、微博)"></a>1.UITabBarController(Tabbar底部标签式:Instagram、微信、微博)</h3><p>UITabBarController作为一种容器适合管理底部标签式（TabBar 如： Instagram、微信、微博）这种结构的APP</p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>清楚当前所在的入口位置</li>
-<li>轻松在各入口间频繁跳转且不会迷失方向</li>
-<li>直接展现最重要入口的内容信息（默认首页）</li>
-</ol>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>功能入口过多时，该模式显得笨重不实用(超过5个的时候会将其他控制器添加到一个更多界面)</p>
-<h3 id="2-UINavigationController-Springboard跳板式-星巴克"><a href="#2-UINavigationController-Springboard跳板式-星巴克" class="headerlink" title="2.UINavigationController (Springboard跳板式:星巴克)"></a>2.UINavigationController (Springboard跳板式:星巴克)</h3><p>UINavigationController作为一种容器适合管理跳板式（SpringBoard 如： 星巴克）这种结构的APP</p>
-<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>清晰展现各入口</li>
-<li>容易记住各入口位置，方便快速找到</li>
-</ol>
-<h4 id="确定"><a href="#确定" class="headerlink" title="确定"></a>确定</h4><ol>
-<li>无法在多入口间灵活跳转，不适合任务操作</li>
-<li>容易形成更深的路径</li>
-<li>不能直接展现入口内容</li>
-<li>不能显示太多入口次级内容</li>
-</ol>
-<h3 id="3-UINavigationController做整体，融合TabBarController（List-Menu列表式：知乎）"><a href="#3-UINavigationController做整体，融合TabBarController（List-Menu列表式：知乎）" class="headerlink" title="3.UINavigationController做整体，融合TabBarController（List Menu列表式：知乎）"></a>3.UINavigationController做整体，融合TabBarController（List Menu列表式：知乎）</h3><h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>层次展示清晰</li>
-<li>可展示内容较长的标题</li>
-<li>可展示标题的次级内容</li>
-</ol>
-<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ol>
-<li>同级内容过多时，用户浏览容易产生疲劳</li>
-<li>排版灵活性不是很高</li>
-<li>只能通过排列顺序、颜色来区分各入口重要程度</li>
-</ol>
-<h3 id="4-UIScrollvIewController融合pageControl-Carousel旋转木马式-豆瓣同城"><a href="#4-UIScrollvIewController融合pageControl-Carousel旋转木马式-豆瓣同城" class="headerlink" title="4.UIScrollvIewController融合pageControl (Carousel旋转木马式:豆瓣同城)"></a>4.UIScrollvIewController融合pageControl (Carousel旋转木马式:豆瓣同城)</h3><h4 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>单页面内容整体性强</li>
-<li>线性的浏览方式有顺畅感、方向感</li>
-</ol>
-<h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><ol>
-<li>不适合展示过多页面</li>
-<li>不能跳跃性地查看间隔的页面，只能按顺序查看相邻的页面</li>
-<li>由于各页面内容结构相似，容易忽略后面的内容</li>
-</ol>
-<h3 id="5-Drawer抽屉式：豆瓣小组"><a href="#5-Drawer抽屉式：豆瓣小组" class="headerlink" title="5. Drawer抽屉式：豆瓣小组"></a>5. Drawer抽屉式：豆瓣小组</h3><h4 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>兼容多种模式（页面内自有组织）</li>
-<li>扩展性好</li>
-</ol>
-<h4 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h4><ol>
-<li>隐藏框架中其他入口</li>
-<li>对入口交互的功能可见性(affordance)要求高</li>
-<li>对排版要求高</li>
-</ol>
-<h3 id="6-Plus点聚式：Path"><a href="#6-Plus点聚式：Path" class="headerlink" title="6. Plus点聚式：Path"></a>6. Plus点聚式：Path</h3><h4 id="优点-5"><a href="#优点-5" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>灵活</li>
-<li>展示方式有趣</li>
-<li>使界面更开阔</li>
-</ol>
-<h4 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h4><ol>
-<li>隐藏框架中其他入口</li>
-<li>对入口交互的功能可见性(affordance)要求高</li>
-</ol>
-<h3 id="7-Gallery陈列馆式：多看，豆瓣电影"><a href="#7-Gallery陈列馆式：多看，豆瓣电影" class="headerlink" title="7.Gallery陈列馆式：多看，豆瓣电影"></a>7.Gallery陈列馆式：多看，豆瓣电影</h3><h4 id="优点-6"><a href="#优点-6" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>直观展现各项内容</li>
-<li>方便浏览经常更新的内容</li>
-</ol>
-<h4 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h4><ol>
-<li>不适合展现顶层入口框架</li>
-<li>容易形成界面内容过多，显得杂乱</li>
-<li>设计效果容易呆板</li>
-</ol>
-<h3 id="8-Waterfall瀑布式"><a href="#8-Waterfall瀑布式" class="headerlink" title="8.Waterfall瀑布式"></a>8.Waterfall瀑布式</h3><h4 id="优点-7"><a href="#优点-7" class="headerlink" title="优点"></a>优点</h4><ol>
-<li>浏览时产生流畅体验</li>
-</ol>
-<h4 id="缺点-6"><a href="#缺点-6" class="headerlink" title="缺点"></a>缺点</h4><ol>
-<li>缺乏对整体内容的体积感，容易发生空间位置迷失</li>
-<li>浏览一段时间后，容易产生疲劳感</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kinds-of-viewControllers/">kinds of viewControllers</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/01/17/viewController试图控制器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS打电话发短信" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/13/iOS打电话发短信/">iOS打电话发短信</a>
-    </h1>
-  
-
-        <a href="/2015/01/13/iOS打电话发短信/" class="archive-article-date">
-  	<time datetime="2015-01-13T04:58:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-13</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##打电话发信息</p>
-<p>###发短信   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">*系统方法</div><div class="line">1.sms://电话号码,确定URL</div><div class="line">2.调用系统方法   </div><div class="line"></div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;sms://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *msg =  [NSURL URLWithString:strURL];    </div><div class="line"></div><div class="line">* [[UIApplication sharedApplication] openURL:msg];</div><div class="line"></div><div class="line">*代理方法    </div><div class="line"></div><div class="line">1. &lt;MessageUI.h&gt;头文件，   </div><div class="line">2. &lt;MFMessageComposeViewControllerDelegate&gt; 代理</div><div class="line">3. message.messageComposeDelegate = self;(delegete比      较特殊)   </div><div class="line">4.本身是导航控制器，所以要present或者dismiss</div></pre></td></tr></table></figure>
-<p>##打电话</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">*系统方法   </div><div class="line"></div><div class="line">1.tel://电话号码,确定URL</div><div class="line">2.调用系统方法     </div><div class="line">3.缺点：不能打电话前的询问和回到应用页面 </div><div class="line"></div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;tel://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *msg =  [NSURL URLWithString:strURL];    </div><div class="line"></div><div class="line">* [[UIApplication sharedApplication] openURL:msg];</div><div class="line"></div><div class="line"></div><div class="line">*用webView，可以有询问，也可以回到应用页面 </div><div class="line">  </div><div class="line"></div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;telprompt://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *tel =  [NSURL URLWithString:strURL]; </div><div class="line">*  NSURLRequest *request = [NSURLRequest requestWithURL:tel];</div><div class="line">* UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];</div><div class="line">* [wenView loadRequest:request]; </div><div class="line">* _webView = webView;</div><div class="line"></div><div class="line">*注意*：这里的webView生成成员变量，不执行 [self.view addSubview:webView]</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">*另一种系统方法   </div><div class="line">* NSString *strURL = [NSString </div><div class="line">  stringWithFormat:@&quot;telprompt://%@&quot;,self.textField.text];    </div><div class="line"></div><div class="line">* NSURL *tel =  [NSURL URLWithString:strURL];    </div><div class="line"></div><div class="line">* [[UIApplication sharedApplication] openURL:tel];</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/01/13/iOS打电话发短信/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1268,11 +1527,11 @@ locationNotification.applicationIconBadgeNumber = 10;
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Foundation Kit</a>
+                <a href="javascript:void(0)">Block</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Block</a>
+                <a href="javascript:void(0)">Foundation Kit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1284,15 +1543,7 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Git 操作</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">KVC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">SVN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1300,7 +1551,7 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">oc</a>
+                <a href="javascript:void(0)">Git 操作</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1308,19 +1559,15 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">oc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">UIScorllView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">cocoaPods</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">accelerator-key</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">内存管理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1328,15 +1575,7 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Data Persistence</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">kinds of viewControllers</a>
+                <a href="javascript:void(0)">cocoaPods</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1344,7 +1583,23 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vim的使用</a>
+                <a href="javascript:void(0)">accelerator-key</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">内存管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">kinds of viewControllers</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Data Persistence</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1352,15 +1607,19 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Local/Romote Notification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">VIM_Sed</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">iOS XML JSON</a>
+                <a href="javascript:void(0)">standards</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">vim的使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Local/Romote Notification</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1368,7 +1627,7 @@ locationNotification.applicationIconBadgeNumber = 10;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">standards</a>
+                <a href="javascript:void(0)">iOS XML JSON</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1419,7 +1678,7 @@ locationNotification.applicationIconBadgeNumber = 10;
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">小逗网络</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">小逗网络、iOS、Reactnative、Shell、Python</div>
   	  	
     	</section>
     
