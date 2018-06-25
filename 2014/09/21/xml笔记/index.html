@@ -6,14 +6,60 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/xiao-xi">
-  <title>chenxiaoxiang</title>
+  <title>xml笔记 | chenxiaoxiang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="chenxiaoxiang">
-<meta property="og:url" content="https://github.com/xiao-xi/page/3/index.html">
+  <meta name="description" content="#XML1.什么是XML？    
+XML：Extensible Markup Language(可扩展标记语言）   
+
+传输数据而非显示数据  (区别于HTML) 
+标签没有没预定，需要自行定义标签，具有自我描述性   
+被设计为传输和存储数据，焦点是数据的内容   
+
+2.XML的特点？    
+
+仅仅是纯文本   
+可以发明自己的标签   
+
+3.XML的优点？    
+
+简化数据共享">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xml笔记">
+<meta property="og:url" content="https://github.com/xiao-xi/2014/09/21/xml笔记/index.html">
 <meta property="og:site_name" content="chenxiaoxiang">
+<meta property="og:description" content="#XML1.什么是XML？    
+XML：Extensible Markup Language(可扩展标记语言）   
+
+传输数据而非显示数据  (区别于HTML) 
+标签没有没预定，需要自行定义标签，具有自我描述性   
+被设计为传输和存储数据，焦点是数据的内容   
+
+2.XML的特点？    
+
+仅仅是纯文本   
+可以发明自己的标签   
+
+3.XML的优点？    
+
+简化数据共享">
+<meta property="og:updated_time" content="2016-12-08T15:10:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chenxiaoxiang">
+<meta name="twitter:title" content="xml笔记">
+<meta name="twitter:description" content="#XML1.什么是XML？    
+XML：Extensible Markup Language(可扩展标记语言）   
+
+传输数据而非显示数据  (区别于HTML) 
+标签没有没预定，需要自行定义标签，具有自我描述性   
+被设计为传输和存储数据，焦点是数据的内容   
+
+2.XML的特点？    
+
+仅仅是纯文本   
+可以发明自己的标签   
+
+3.XML的优点？    
+
+简化数据共享">
   
     <link rel="alternative" href="/atom.xml" title="chenxiaoxiang" type="application/atom+xml">
   
@@ -130,474 +176,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-hexo搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-xml笔记" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/20/hexo搭建/">hexo搭建</a>
-    </h1>
-  
-
-        <a href="/2014/10/20/hexo搭建/" class="archive-article-date">
-  	<time datetime="2014-10-20T13:37:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-20</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://www.zkedu.com/images/upfiles/2014/02/14/20140214560901-387.jpg" alt="mou icon"></p>
-<p>1.安装nvm(node.js的版本管理工具）</p>
-<pre><code>$ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
-</code></pre><p>2.添加如下内容到.zshrc配置文件</p>
-<pre><code>[ -s &quot;/Users/`users`/.nvm/nvm.sh&quot; ] &amp;&amp; . &quot;/Users/`users`/.nvm/nvm.sh&quot; # This loads nvm
-</code></pre><p>3.安装node.js(通过nvm安装)</p>
-<pre><code>$ nvm install 0.10
-</code></pre><p>4.安装hexo（通过npm安装）</p>
-<pre><code>$ npm install -g hexo
-</code></pre><p>5.创建hexo文件夹，并安装hexo相关组件</p>
-<pre><code>$ hexo init hexo
-$ cd hexo
-$ npm install
-</code></pre><p>6.本地查看</p>
-<p>输入如下命令后，打开浏览器，并输入localhost:4000来查看</p>
-<pre><code>$ hexo g
-$ hexo s
-</code></pre><p>7.注册github账号</p>
-<pre><code>创建github账号同名repository
-eg:github账号名位dorayox，则创建dorayox.github.io
-部署到github上
-</code></pre><p>8.如下所示编辑_config.yml</p>
-<pre><code>deploy:
-  type: github
-  repository: git@github.com:dorayox/dorayox.github.io.git
-  branch: master
-</code></pre><p>9.输入如下命令，完成到github得部署，之后打开浏览器并输入dorayox.github.io来查看</p>
-<pre><code>$ hexo g
-$ hexo d
-</code></pre><blockquote>
-<p>若hexo仍不能用则进行下面操作：</p>
-</blockquote>
-<ol>
-<li><p>检查 ～ 目录下 <code>.nvm</code> 是否 git 化，若是则删除其中 <code>.git</code> 删除，</p>
-</li>
-<li><p>进入 <code>.nvm/v0.10.32/bin</code> 目录下复制 <code>Users/qingyun/.nvm/v0.10.32/bin</code> 目录，</p>
-</li>
-<li><p>再次进入 ～目录下，<code>vi .zshrc</code><br>设置路径   <code>export PATH=$PATH:/Users/qingyun/.nvm/v0.10.32/bin</code> </p>
-</li>
-<li><p>退出iterm重新进入，<code>cd hexo</code> ，</p>
-</li>
-<li><p>再次运行hexo命令如：<code>hexo s</code> </p>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac上搭建hexo极简指南/">Mac上搭建hexo极简指南</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/10/20/hexo搭建/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-vim使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/20/vim使用/">vim使用</a>
-    </h1>
-  
-
-        <a href="/2014/10/20/vim使用/" class="archive-article-date">
-  	<time datetime="2014-10-20T13:00:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-20</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li><p>vim编辑器使用 </p>
-</li>
-<li><p>C语言函数</p>
-<pre><code>函数定义         函数声明         函数嵌套(new)
-</code></pre></li>
-<li><p>gcc编译器</p>
-<pre><code>预处理 gcc -E 编译 gcc -S 汇编 gcc -c 链接
-调试 gcc -g 指定输出名字 gcc -o 开启警告提醒 gcc -Wall
-</code></pre></li>
-<li><p>lldb调试器</p>
-<pre><code>list (l)
-break (b) run (r)
-next (n) step (s) continue (c) quit (q)
-</code></pre></li>
-<li><p>unix/linux常用符号</p>
-</li>
-</ol>
-<pre><code>^
-$
-&gt;
-&lt;
-! (!!、!gcc) ? ($?)
-</code></pre><ol>
-<li><p>unix/linux常用命令 cd</p>
-<pre><code>ls pwd cat cp mv mkdir touch echo
-</code></pre></li>
-<li><p>unix/linux的环境变量<br>￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$HOME	$PATH</div></pre></td></tr></table></figure>
-<p>###sizeof运算符详解</p>
-<pre><code>1. sizeof(char)
-2. sizeof(short) 3. sizeof(int)
-4. sizeof(long)
-5. sizeof(float)
-6. sizeof(double) 7. sizeof(char *) 8. sizeof(int *)
-9. sizeof(array) 
-</code></pre><p>###字符串操作</p>
-<pre><code>1. atoi/atol(将字符转换成整数)
-2. strtod/strtol (将字符串转换成小数)
-3. tolower/toupper (大小写字母转换)
- man ctype - man tolower 
-4. strcmp/strcasecmp(字符串比较)
-5. strchr/strstr
-6. strcpy/strncpy
-7. strcat/strncat
-8. strlen
-</code></pre><p>###内存操作</p>
-<pre><code>1. malloc - free 2. memset
-3. memcpy
-4. memcmp
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim的使用/">vim的使用</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/10/20/vim使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Git-操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/20/Git-操作/">Git 操作</a>
-    </h1>
-  
-
-        <a href="/2014/10/20/Git-操作/" class="archive-article-date">
-  	<time datetime="2014-10-20T11:33:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-20</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Git-操作"><a href="#Git-操作" class="headerlink" title="Git 操作"></a>Git 操作</h1><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><ol>
-<li><p>初始化仓库</p>
-<p>   。git init</p>
-</li>
-<li><p>配置作者信息</p>
-<p>   。git config –global user.email”youremail@corp.com”</p>
-<p>   。git config –global user.email”youremail@corp.com”</p>
-</li>
-</ol>
-<ol>
-<li><p>添加文件到暂存区</p>
-<p>  。git add <filename><br>  。git add * (添加所有文件到暂存区)</filename></p>
-</li>
-<li><p>移除文件</p>
-<p>  。git rm <filename></filename></p>
-</li>
-<li><p>重命名一个文件</p>
-<p>  。 git rm <filename></filename></p>
-</li>
-<li><p>提交暂存区</p>
-<p>  。 git commit只会提交暂存区(staged)⾥面的⽂件</p>
-<p>  。 git commit -m “message”</p>
-</li>
-<li><p>查看工作目录的状态</p>
-<p>  。 git status</p>
-</li>
-<li><p>查看提交历史记录</p>
-<p>  。 git clone</p>
-</li>
-<li><p>查看文件改变</p>
-<p>  。 git diff</p>
-</li>
-</ol>
-<hr>
-<h2 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h2><ol>
-<li><p>撤销加入暂存区的操作</p>
-<p> 。git reset HEAD \<file></file></p>
-</li>
-</ol>
-<ol>
-<li><p>撤销修改的操作</p>
-<p> 。git checkout – \<file></file></p>
-</li>
-<li><p>将本地的修改放进回收站 </p>
-<p> 。git stash</p>
-</li>
-<li><p>从回收站中恢复本地的修改 </p>
-<p> 。git stash apply</p>
-</li>
-</ol>
-<p>￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼</p>
-<h2 id="￼Tag操作"><a href="#￼Tag操作" class="headerlink" title="￼Tag操作"></a>￼Tag操作</h2><ol>
-<li><p>查看tag</p>
-<p> 。git tag</p>
-</li>
-<li><p>创建tag</p>
-<p> 。git tag -a v1.0 -m “my version 1.0”</p>
-</li>
-<li><p>显示tag信息</p>
-<p> 。git show v1.0</p>
-</li>
-<li><p>对之前的提交打tag</p>
-<p> 。git tag -a v0.1 -m “version 0.1”</p>
-</li>
-</ol>
-<p>分支操作</p>
-<ol>
-<li><p>查看分支</p>
-<p> 。git branch</p>
-</li>
-<li><p>创建分支</p>
-<p> 。git branch <branchname></branchname></p>
-</li>
-<li><p>删除分支</p>
-<p> 。git branch -d <branchname></branchname></p>
-</li>
-<li><p>切换分支</p>
-<p> 。git checkout <branchname></branchname></p>
-</li>
-<li><p>合并分支</p>
-<p> 。git merge <branchname></branchname></p>
-</li>
-<li><p>rebase操作</p>
-<p> 。git rebase <basebranch> <newbranch></newbranch></basebranch></p>
-</li>
-</ol>
-<h2 id="远端仓库操作"><a href="#远端仓库操作" class="headerlink" title="远端仓库操作"></a>远端仓库操作</h2><ol>
-<li><p>克隆一个远端仓库</p>
-<p> 。git clone URL</p>
-</li>
-<li><p>添加远端仓库</p>
-<p> 。git remote add <name> <url></url></name></p>
-</li>
-<li><p>更新远端仓库的分支和数据 </p>
-<p> 。git fetch <name></name></p>
-</li>
-<li><p>获取并合并远端仓库的分支到当前分支</p>
-<p> 。git pull <reponame> <branchname></branchname></reponame></p>
-<p> 。eg: git pull origin master </p>
-</li>
-<li><p>上传本地分支和数据到远端仓库</p>
-<p> 。git push <reponame> <branchname></branchname></reponame></p>
-<p> 。eg: git push origin master </p>
-</li>
-<li><p>跟踪远端仓库上的分支</p>
-<p> 。git checkout –track origin/testbranch</p>
-<p> 。git checkout -b test origin/testbranch<br>￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼￼<br>￼     </p>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git-操作/">Git 操作</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/10/20/Git-操作/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Xcode常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/20/Xcode常用命令/">accelerator-key</a>
-    </h1>
-  
-
-        <a href="/2014/10/20/Xcode常用命令/" class="archive-article-date">
-  	<time datetime="2014-10-20T11:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-20</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://i.k1982.com/png/up/200712/20071206130310888.png" alt="image"></p>
-<h2 id="Base-Key"><a href="#Base-Key" class="headerlink" title="Base Key"></a>Base Key</h2><p>command + c : 复制选中的内容</p>
-<p>command + v : 粘贴已复制的内容</p>
-<p>command + X : 剪贴已选中的内容</p>
-<p>command + z : 撤销最近一次执行放入操作</p>
-<p>command + / : 选中多行，一次注释多行</p>
-<h2 id="Move-Key"><a href="#Move-Key" class="headerlink" title="Move Key"></a>Move Key</h2><p>ctrl + a : 移动光标到行首</p>
-<p>ctrl + e : 移动光标到行尾</p>
-<p>ctrl + p : 向上移动光标</p>
-<p>ctrl + n : 向下移动光标</p>
-<p>ctrl + b : 向左按字符移动光标</p>
-<p>ctrl + f : 向右按字符移动光标</p>
-<p>ctrl + option + b :  向左按符移动光标</p>
-<p>ctrl + option + f :  向右按符移动光标</p>
-<h2 id="Select-Key"><a href="#Select-Key" class="headerlink" title="Select Key"></a>Select Key</h2><p>ctrl + shift + b : 从光标处向左按字符选中</p>
-<p>ctrl + shift + f : 从光标处向右按字符选中</p>
-<p>ctrl + shift + p : 从光标处向上按行选中</p>
-<p>ctrl + shift + n : 从光标处按行向上选中</p>
-<h2 id="Delete-Key"><a href="#Delete-Key" class="headerlink" title="Delete Key"></a>Delete Key</h2><p>ctrl + d : 删除贯标右边的字符，按字符删除</p>
-<p>ctrl + h : 删除贯标左边的字符，按字符删除</p>
-<p>ctrl + k : 删除光标所在位置之后的所有内容</p>
-<h2 id="Key-–-XCode"><a href="#Key-–-XCode" class="headerlink" title="Key – XCode"></a>Key – XCode</h2><p>command + shift + 0 :  打开官方文档</p>
-<p>command + shift + n : 创建一个工程</p>
-<p>commanf + n : 创建一个类、协议、类别、累扩展等</p>
-<p>command + b : 编译代码</p>
-<p>command + r : 运行生成的代码</p>
-<p>command + shift + k : 清空XCode之前的编译</p>
-<p>command + shift + -&gt;/&lt;-;(左方向键) : 切换页面</p>
-<p>commang + f : 在官方文档中调出搜索栏</p>
-<p>comand + option + enter : 分栏</p>
-<p>command + enter  : 回到一栏</p>
-<p>command + ctrl +左右键 : 不同页面的切换</p>
-<p>shift + tab : 选中上一个</p>
-<p>tab : 选中下一个</p>
-<h2 id="other-key"><a href="#other-key" class="headerlink" title="other key"></a>other key</h2><p>command + ctrl + f  : 切换当前应用程序界面的大小，同时将桌面背景消失，只显示当前应用程序</p>
-<p>command + option + “+” : vim终端界面的大小切换 </p>
-<p>ctrl + 左右键 : 桌面快速切换</p>
-<p>ctrl + 上键 : 已开应用程序，分布呈现在当前桌面</p>
-<p>ctrl + 下键 : 呈现当前应用程序已开启的所有窗口，以及使用当前应用程序开启的历史文件</p>
-<p>command + tab : 快速向后选择桌面已开启的应用程序</p>
-<p>command + tab + shift : 快速向前选择桌面已开启的应用程序</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/accelerator-key/">accelerator-key</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/10/20/Xcode常用命令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-xml笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/09/21/xml笔记/">xml笔记</a>
+    <h1 class="article-title" itemprop="name">
+      xml笔记
     </h1>
   
 
@@ -823,6 +409,27 @@ dispatch_async(dispatch_get_main_queue(), ^{
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -835,92 +442,90 @@ dispatch_async(dispatch_get_main_queue(), ^{
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/09/21/xml笔记/">展开全文 >></a>
-        </p>
-      
 
       
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/09/20/hello-world/">Hello World</a>
-    </h1>
-  
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
 
-        <a href="/2014/09/20/hello-world/" class="archive-article-date">
-  	<time datetime="2014-09-20T10:55:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-09-20</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/xiao-xi/2014/09/21/xml笔记/" alt="微信分享二维码">
     </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hello-World/">Hello World</a></li></ul>
-	</div>
+</div>
 
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/09/20/hello-world/">展开全文 >></a>
-        </p>
-      
-
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
 
-
-
-
-
-
-
-
+  
+<nav id="article-nav">
+  
+    <a href="/2014/10/20/Xcode常用命令/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          accelerator-key
+        
+      </div>
+    </a>
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
+    <a href="/2014/09/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
+</nav>
+
+
+
+
+
+
+
 
 
           </div>
@@ -942,8 +547,8 @@ dispatch_async(dispatch_get_main_queue(), ^{
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
