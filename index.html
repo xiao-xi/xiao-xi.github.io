@@ -132,6 +132,61 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-移动端性能标准" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/移动端性能标准/">移动端性能标准</a>
+    </h1>
+  
+
+        <a href="/2017/06/25/移动端性能标准/" class="archive-article-date">
+  	<time datetime="2017-06-25T08:56:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-25</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##性能标准</p>
+<p>##总结</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/standards/">standards</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/06/25/移动端性能标准/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-vim命令-sed" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1157,361 +1212,6 @@ locationNotification.applicationIconBadgeNumber = 10;
 
 
   
-    <article id="post-iOS数据持久化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/02/iOS数据持久化/">data-persistence</a>
-    </h1>
-  
-
-        <a href="/2014/12/02/iOS数据持久化/" class="archive-article-date">
-  	<time datetime="2014-12-02T05:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-12-02</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Sandbox（沙盒机制）"><a href="#Sandbox（沙盒机制）" class="headerlink" title="Sandbox（沙盒机制）"></a>Sandbox（沙盒机制）</h1><blockquote>
-<p>iOS中得沙盒机制（sandbox）是一种安全体系，它规定了应用程序只能在为该应用程序创建的文件夹内读取文件，不可以访问其他地方的内容。所有的非代码文件都保存在这个地方，如图片，声音，属性列表和文本文件等。</p>
-</blockquote>
-<ul>
-<li>每个应用程序都在自己的沙盒内</li>
-<li>不能随意跨越自己的沙盒去访问别的应用程序的沙盒内容</li>
-<li><p>应用程序向外请求或接受数据都需要经过权限认证</p>
-<p>  <strong>一个沙盒中包含四部分</strong>    </p>
-<ul>
-<li>.app文件，即可运行的应用文件；</li>
-<li>Document，苹果建议将程序创建或程序浏览的文件数据保存在该目录下，iTunes备份和恢复时会包括该目录；</li>
-<li>Library，存储程序的默认设置或其它状态信息；</li>
-<li>Library/Caches，存放缓存文件，iTunes不会备份此目录，此目录下的文件不会在应用退出删除；</li>
-<li>tmp，创建和存放临时文件的地方，iTu不会备份此目录。</li>
-</ul>
-</li>
-</ul>
-<p><strong>代码获取沙盒路径的方法</strong></p>
-<ol>
-<li><p>获取根目录</p>
-<p> NSString *homePath = NSHomeDirectory();</p>
-</li>
-<li><p>获取Document目录<br> NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES)[0];</p>
-</li>
-<li><p>获取Cache目录<br> NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES)[0];</p>
-</li>
-<li><p>获取Library目录<br> NSString *libPath = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask, YES)[0];</p>
-</li>
-<li>获取tmp目录<br> NSString *tmpPath = NSTemporaryDirectory();</li>
-</ol>
-<h1 id="iOS数据持久化技术"><a href="#iOS数据持久化技术" class="headerlink" title="iOS数据持久化技术"></a>iOS数据持久化技术</h1><p>数据持久化既是，能将内存中的<code>数据模型</code>转换为<code>存储模型</code>，并能在将来需要时将<code>存储模型</code>还原为<code>数据模型</code>的一种机制。</p>
-<p><strong>说明 ：</strong> 通俗的讲，也就是将数据保存在非易失性的设备中，并且能在需要时恢复。针对苹果设备来说，就是从闪存到内存的过程。</p>
-<h2 id="iOS开发中数据持久化的方法"><a href="#iOS开发中数据持久化的方法" class="headerlink" title="iOS开发中数据持久化的方法"></a>iOS开发中数据持久化的方法</h2><ul>
-<li>Row File APIs(C语言的文件操作，iOS的NSFilemanager)</li>
-<li>NSUserDefaults （默认保存文件在对应的程序包sandbox的目录下的library/Preferences）</li>
-<li>Plist(属性列表)</li>
-<li>NSCoding + Archiver&amp;Unarchiver (对象归档)</li>
-<li>SQLite （数据库）</li>
-<li>FMDB (对SQLite的封装)</li>
-</ul>
-<hr>
-<h5 id="property-nonatomic-strong-NSString-filePath"><a href="#property-nonatomic-strong-NSString-filePath" class="headerlink" title="@property (nonatomic, strong) NSString *filePath;"></a>@property (nonatomic, strong) NSString *filePath;</h5><h5 id="property-nonatomic-strong-UITextField-textField"><a href="#property-nonatomic-strong-UITextField-textField" class="headerlink" title="@property (nonatomic, strong) UITextField *textField;"></a>@property (nonatomic, strong) UITextField *textField;</h5><h3 id="define-kFileName-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-”test-txt”"><a href="#define-kFileName-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-”test-txt”" class="headerlink" title="#define kFileName &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@”test.txt”"></a>#define kFileName &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@”test.txt”</h3><hr>
-<h3 id="ROW-APIs"><a href="#ROW-APIs" class="headerlink" title="ROW APIs"></a>ROW APIs</h3><h4 id="C语言文件操作-ROW-APIs"><a href="#C语言文件操作-ROW-APIs" class="headerlink" title="C语言文件操作### ROW APIs"></a>C语言文件操作### ROW APIs</h4><ol>
-<li><p>创建文件路径</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//创建文件存放路径（一般需要保存的文件存放在sandbox的Document目录下）</div><div class="line">- (void)setupPath</div><div class="line">&#123;</div><div class="line">	NSString *documentDirectory = NSSearchPathForDirectorieInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];</div><div class="line">	self.filePath = [documentDirectory stringByAppendingPathComponent:kFileName];	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>文件的写入</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">￼- (void)saveData￼&#123;	￼// oc文件路径转化为c	￼const char *filePath = [_filePath UTF8String];	￼// 打开文件	￼FILE *fp = fopen(filePath, &quot;w+&quot;);	￼if (NULL == fp) &#123;</div><div class="line">		perror(&quot;fopen&quot;);		￼return;	&#125;	￼￼// 将_textFiled的内容写到文件</div><div class="line">	￼const char *content = [_textField.text UTF8String];	￼size_t size = fwrite(content, BUFSIZE, 1, fp);	￼fclose(fp);	￼if (size &gt; 0) &#123;	￼	NSLog(@&quot;Saved data successfully&quot;);	￼&#125;￼&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>文件的读取</p>
-</li>
-</ol>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)loadData</div><div class="line">&#123;	￼// 文件路径	￼const char *filePath = [_path UTF8String];	￼NSLog(@&quot;%s&quot;, filePath);	￼// 打开文件	￼FILE *fp = fopen(filePath, &quot;r&quot;);	￼if (fp == NULL) &#123;</div><div class="line">		perror(&quot;fopen&quot;);		return;	￼&#125;	//读取文件内容到内存</div><div class="line">	char buf[BUSIZ] = &#123;0&#125;;	//获取文件大小</div><div class="line">	fseek(fp,SEEK_END);	long size = ftell(fp);</div><div class="line">	fread(fp,size,1,buf);	//赋值给_textField</div><div class="line">	NSString *str = [NSString stringWithUTFString:str];</div><div class="line">	if(str != NULL &amp;&amp; ![str isEqualToString:@&quot;&quot;]);&#123;</div><div class="line">		_textField.text = str;</div><div class="line">	&#125;	fclose(fp);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><h4 id="OC-NSFileManager文件管理器操作"><a href="#OC-NSFileManager文件管理器操作" class="headerlink" title="OC NSFileManager文件管理器操作"></a>OC NSFileManager文件管理器操作</h4><ol>
-<li><p>创建文件路径</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//创建文件存放路径（一般需要保存的文件存放在sandbox的Document目录下）</div><div class="line">- (void)setupPath</div><div class="line">&#123;</div><div class="line">	NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line">	NSString *documentDirectory = NSSearchPathForDirectorieInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];</div><div class="line">	//创建文件目录</div><div class="line">	NSString *test = [documentDirectory stringByAppendingPathComponent:@&quot;test&quot;];</div><div class="line">	[fileManager createDirectoryAtPath:test withIntermediateDirectories:YES attributes:nil error:nil];</div><div class="line">	self.filePath = [documentDirectory stringByAppendingPathComponent:kFileName];	</div><div class="line">	NSString *content = nil;</div><div class="line">	if(![fileManager fileExistsAtPath:self.filePAth])&#123;</div><div class="line">		[fileManager createFileAtPath:self.filePath contents:[content dataUsingEncoding:NSUTF*String] attributes:nil];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>文件的写入</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)saveData</div><div class="line">&#123;</div><div class="line">	NSError *error;</div><div class="line">	[self.textField.text writeToFile:self.filePath atomically:YE];</div><div class="line">	if(error)&#123;</div><div class="line">		NSLog(@&quot;Error : %@&quot;,error);</div><div class="line">		return;</div><div class="line">	&#125;</div><div class="line">	NSLog(@&quot;save data successfully&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>文件的读取</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)loadData</div><div class="line">&#123;</div><div class="line">	NSError *error;</div><div class="line">	NSString *content = [[NSString alloc]initWithContentsOfFile:self.filePath encoding:NSUTF*String error:&amp;error];</div><div class="line">	if(error)&#123;</div><div class="line">		NSLog(@&quot;Error : %@&quot;,error);</div><div class="line">		return;</div><div class="line">	&#125;</div><div class="line">	self.textField.text = content;</div><div class="line">	NSLog(@&quot;load data successfully&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="NSUserDefaults"><a href="#NSUserDefaults" class="headerlink" title="NSUserDefaults"></a>NSUserDefaults</h3><p>&gt;</p>
-<ul>
-<li>直接使用原始的文件操作API,不管是C语言的还是OC的都不太方便</li>
-<li><p>Cocoa会为每个app自动创建一个数据库,用来存储App本身的偏好设置,如:开关<br>值,音量值之类的少量信息</p>
-</li>
-<li><p>NSUserDefaults使用时用 [NSUserDefaults standardUserDefaults] 接口获取单例对象</p>
-</li>
-<li>NSUserDefaults本质上是以Key-Value形式存成plist文件,放在App的 Library/Preferences目录下</li>
-<li>这个文件是<code>不安全</code>的,所以千万不要用NSUserDefaults来存储密码之类的敏感信息,<code>用户名和密码应该使用KeyChains来存储</code></li>
-</ul>
-<ol>
-<li><p>文件的写入</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">	- (void)saveData</div><div class="line">	&#123;</div><div class="line">		￼NSUserDefaults *userDefaults = [NSUserDefaults	￼standardUserDefaults];		float progress = [self.progressTextField.text floatValue];		￼[userDefaults setFloat:progress forKey:@&quot;progress&quot;];		￼[userDefaults setObject:self.inputTextField.text		￼forKey:@&quot;input&quot;];		￼database		// keeps the in-memory cache in sync with a user’s defaults		￼￼[userDefaults synchronize];￼￼	&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>文件的读取</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (void)loadConfig￼&#123;	￼NSUserDefaults *userDefaults = [NSUserDefaults	￼standardUserDefaults];	￼self.toggle.on = [userDefaults boolForKey:@&quot;toggle&quot;];	self.progressView.progress = [userDefaults	floatForKey:@&quot;progress&quot;];	self.progressTextField.text = [NSString stringWithFormat:@&quot;%.2f&quot;,	self.progressView.progress];	self.inputTextField.text = [userDefaults stringForKey:@&quot;input&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> <strong>说明:</strong> <em>对NSUserDefaults单例对象的操作,实质上还是对PList文件 (Library/Preferences/<application bundleidentifier="">.plist)的读写,只是Apple帮我们封装好了 读写方法。</application></em></p>
-</li>
-</ol>
-<h3 id="Plist"><a href="#Plist" class="headerlink" title="Plist"></a>Plist</h3><p>&gt;</p>
-<ul>
-<li>NSUserDefaults只能读写Library/Preferences/<application bundleidentifier="">.plist这个 文件</application></li>
-<li>PList文件是XML格式的,只能存放固定数据格式的对象 </li>
-<li>PList文件支持的数据格式有NSString, NSNumber, Boolean, NSDate, NSData, NSArray,和NSDictionary。其中,Boolean格式事实上以[NSNumber numberOfBool:YES/NO];这样的形式表示。NSNumber支持float和int两种格式。</li>
-</ul>
-<ol>
-<li><p>创建文件路径</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)setUpPlist</div><div class="line">&#123;</div><div class="line">	NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line">	NSString *documentDirectory = NSSearchPathForDirectorieInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];</div><div class="line">	self.filePath = [documentDirectory stringByAppendingPathComponent:@&quot;test.plist&quot;];	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>写入plist文件</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)saveData</div><div class="line">&#123;</div><div class="line">	NSMutableDictionary *dict = [NSMutableDictionary dictionary];</div><div class="line">	￼dict[@&quot;textField&quot;] = _textField.text;	￼if (![dict writeToFile:_path atomically:YES]) &#123;		￼NSLog(@&quot;Error!!!&quot;);</div><div class="line">		return;				￼&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>plist文件的读取</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">	- (void)loadData</div><div class="line">	&#123;</div><div class="line">		NSMutableDictionary *dict = [NSMutableDictionary￼dictionaryWithContentsOfFile:_path];		￼NSString *content = dict[@&quot;textField&quot;];￼		if (content &amp;&amp; content.length &gt; 0) &#123;		￼_textField.text = content;￼		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="Archiver-amp-Unarchiver"><a href="#Archiver-amp-Unarchiver" class="headerlink" title="Archiver&amp;Unarchiver"></a>Archiver&amp;Unarchiver</h3><p>&gt;</p>
-<ul>
-<li>NSUserDefaults和Plist文件支持常用数据类型,但是不支持自定义的数据对象 </li>
-<li>Cocoa提供了NSCoding和NSKeyArchiver两个工具类,可以把我们自定义的对象编码 成二进制数据流,然后存进文件里面</li>
-</ul>
-<ol>
-<li><p>NSCoding协议</p>
-<hr>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//解档，解码。解档之后会生成一个该类的对象（解码后对模型的属性赋值）</div><div class="line">- (id)initWithCoder:(NSCoder *)aDecoder&#123;	self = [super init];	if (self) &#123;		self.name = [aDecoder decodeObjectForKey:kNameKey];		self.age = [aDecoder decodeIntForKey:kAgeKey];		self.studyID = [aDecoder decodeObjectForKey:kStudyIDKey];	&#125;</div><div class="line">	return self;￼&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//归档，编码 （将模型的属性编码）</div><div class="line">- (id)initWithCoder:(NSCoder *)aDecoder&#123;	self = [super init];	if (self) &#123;		self.name = [aDecoder decodeObjectForKey:kNameKey];		self.age = [aDecoder decodeIntForKey:kAgeKey];		self.studyID = [aDecoder decodeObjectForKey:kStudyIDKey];	&#125;</div><div class="line">	return self;￼&#125;</div></pre></td></tr></table></figure>
-
-
-----
-</code></pre><ol>
-<li><p>保存数据</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">￼- (void)saveData&#123;    _student = [[YMStudent alloc] init];	￼_student.name = _name.text;	￼_student.age = [_age.text intValue];	￼_student.studyID = _studyID.text;	￼if ([NSKeyedArchiver archiveRootObject:_student toFile:self.filePath]) &#123;	￼	NSLog(@&quot;Archive successfully!&quot;);	￼&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>读取数据</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">￼- (void)loadData&#123;    _student = [NSKeyedUnarchiver unarchiveObjectWithFile:self.filePAth];  		￼if (student != nil) &#123;</div><div class="line">		_name.text = student.name;		_age.text = ￼[@(student.age) stringValue];		_studyID.text = ￼student.studyID;	￼	NSLog(@&quot;Archive successfully!&quot;);	￼&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="SQLite"><a href="#SQLite" class="headerlink" title="SQLite"></a>SQLite</h3><p><a href="http://www.sqlite.org" target="_blank" rel="external">SQLite</a></p>
-<h4 id="SQLite-shell-command"><a href="#SQLite-shell-command" class="headerlink" title="SQLite shell command"></a>SQLite shell command</h4><p><a href="http://www.sqlite.org/cli.html" target="_blank" rel="external">SQLite shell command</a></p>
-<h4 id="SQLite-usage"><a href="#SQLite-usage" class="headerlink" title="SQLite usage"></a>SQLite usage</h4><p>创建数据库连接对象: sqlite3</p>
-<p>创建预编译语句对象:sqlite3_stmt</p>
-<ol>
-<li><p>打开数据</p>
-<p> <strong>sqlite3_open()</strong></p>
-</li>
-<li><p>将SQL语句转换为预编译语句对象</p>
-<p> <strong>sqlite3_prepare_v2()</strong></p>
-</li>
-<li><p>执行预编译语句，每次处理一次，不需要返回值的语句（如INSERT,UPDATE,DELETE）,只需要执行该函数即可</p>
-<p> <strong>sqlite3_step()</strong></p>
-</li>
-<li><p>获取数据库中得不同类型的值</p>
-<ul>
-<li>sqlite3_column_blob()</li>
-<li>sqlite3_column_bytes()</li>
-<li>sqlite3_column_bytes16()</li>
-<li>sqlite3_column_count()  </li>
-<li>sqlite3_column_double()  </li>
-<li>sqlite3_column_int()  </li>
-<li>sqlite3_column_int64()  </li>
-<li>sqlite3_column_text()        </li>
-<li>sqlite3_column_text16()</li>
-<li>sqlite3_column_type()            </li>
-<li>sqlite3_column_value()</li>
-</ul>
-</li>
-<li><p>销毁有sqlite3_prepare_v2()函数创建的预处理语句对象</p>
-<p> <strong>sqlite3_finalize()</strong></p>
-</li>
-<li><p>关闭数据库(即销毁数据库连接对象)</p>
-<p> <strong>sqlite3_close()</strong></p>
-<h3 id="FMDB"><a href="#FMDB" class="headerlink" title="FMDB"></a>FMDB</h3><p>&gt;</p>
-</li>
-</ol>
-<p><a href="https://github.com/ccgus/fmdb">FMDB Document</a></p>
-<p><a href="http://ccgus.github.io/fmdb/html/index.html" target="_blank" rel="external">Download FMDB</a></p>
-<p>FMDB数据库操作类对sqlite3的操作进行了便利的封装并保证了多线程下的安全地操作数据库</p>
-<h5 id="FEMDB有三个主要的类"><a href="#FEMDB有三个主要的类" class="headerlink" title="FEMDB有三个主要的类"></a>FEMDB有三个主要的类</h5><ol>
-<li>FMDatabase - 表示一分单独的SQLite数据库，用来执行SQLite的命令</li>
-<li>FMResultSet - 表示FMDatabase执行查询结果集</li>
-<li>FMDatabaseQueue - 在多线程中执行多个查询或更新使用该类是线程安全的</li>
-</ol>
-<h4 id="数据库的创建"><a href="#数据库的创建" class="headerlink" title="数据库的创建"></a>数据库的创建</h4><p>#define kDBFileName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@”database.sqlite”</p>
-<pre><code>NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,￼NSUserDomainMask, YES)[0];
-NSString *DBPath = [docPath stringByAppendingPathComponent:kDBFileName];
-FMDatabase *database = [FMDatabase databaseWithPath:DBPath];
-</code></pre><h4 id="打开数据库"><a href="#打开数据库" class="headerlink" title="打开数据库"></a>打开数据库</h4><pre><code>if(![database open]){
-    NSLog(@&quot;Open database failed !&quot;);
-    return;
-}
-</code></pre><h4 id="执行更新"><a href="#执行更新" class="headerlink" title="执行更新"></a>执行更新</h4><ul>
-<li><strong>executeUpdate</strong></li>
-</ul>
-<p>一切不是SELECT命令的命令都是为更新。包括CREATE，UPDATE，INSERT，ALTER等。</p>
-<p>执行结果返回一个BOOL值。YES表示成功，NO表示失败。可以调用 -lastErrorMessage和 -lastErrorCode方法获取更多的信息。</p>
-<h4 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h4><ul>
-<li><strong>executeQuery</strong></li>
-</ul>
-<p>执行结果返回FMResultSet对象，失败返回nil。同样可以调用-lastErrorMessage和 -lastErrorCode方法获取更多的信息。获得的FMResultSet对象rs后，既是只有一条记录，一样使用[rs next];</p>
-<pre><code>eg: FMResultSet *rs = [db executeQuery:@&quot;SELECT Name, Age, FROM PersonList&quot;];
-while ([rs next]) {
-    ￼NSString *name = [rs stringForColumn:@&quot;Name&quot;];
-    ￼int age = [rs intForColumn:@&quot;Age&quot;];
-}
-</code></pre><h5 id="FMResultSet根据类型提取数据"><a href="#FMResultSet根据类型提取数据" class="headerlink" title="FMResultSet根据类型提取数据"></a>FMResultSet根据类型提取数据</h5><pre><code>- objectForColumnName:
-￼- longForColumn:
-￼- nlongLongIntForColumn:
-￼- boolForColumn:
-￼- doubleForColumn:
-￼- stringForColumn:
-￼- dateForColumn:
-￼- dataForColumn:
-￼- dataNoCopyForColumn:
-￼- UTF8StringForColumnName:
-￼
-</code></pre><p><code>以上方法，都有个{type}ForColumnIndex:版本，根据column的位置提取数据</code></p>
-<p>有些时候,只是需要query某一个row里特定的一个数值(比如只是要找John的年龄),FMDB 提供了几个比较简便的方法。这些方法定义在FMDatabaseAdditions.h,如果要使用,记得先 import进来</p>
-<pre><code>//找地址
-NSString *address = [db stringForQuery:@&quot;SELECT Address FROM PersonList ￼WHERE Name = ?&quot;,@&quot;John”];
-￼NSString *address = [db stringForQuery:@&quot;SELECT Address FROM PersonList WHERE Name = ?&quot;,@&quot;John”];
-￼//找年齡
-￼int age = [db intForQuery:@&quot;SELECT Age FROM PersonList WHERE Name     = ?&quot;,@&quot;John”];
-</code></pre><h4 id="关闭数据库"><a href="#关闭数据库" class="headerlink" title="关闭数据库"></a>关闭数据库</h4><ul>
-<li><strong>[FMDatabase close];</strong></li>
-</ul>
-<h4 id="数据库的批量操作"><a href="#数据库的批量操作" class="headerlink" title="数据库的批量操作"></a>数据库的批量操作</h4><p><strong>使用FMDatabase 的executeStatements:或者executeStatements:withResultBlock:(是否需 要返回结果)</strong></p>
-<pre><code>NSString *sql = @&quot;create table bulktest1 (id integer primary key ￼autoincrement, x text);&quot;
-&quot;create table bulktest2 (id integer primary key autoincrement, y text);&quot;
-&quot;create table bulktest3 (id integer primary key autoincrement, z text);&quot;
-&quot;insert into bulktest1 (x) values (&apos;XXX&apos;);&quot;
-&quot;insert into bulktest2 (y) values (&apos;YYY&apos;);&quot;
-&quot;insert into bulktest3 (z) values (&apos;ZZZ&apos;);&quot;;
-￼success = [database executeStatements:sql];
-</code></pre><p>或者</p>
-<pre><code>sql = @&quot;select count(*) as count from bulktest1;&quot;
-}];
-￼&quot;select count(*) as count from bulktest2;&quot;
-￼&quot;select count(*) as count from bulktest3;&quot;;
-￼success = [self.db executeStatements:sql withResultBlock:^int(NSDictionary ￼*dictionary) {
-￼NSInteger count = [dictionary[@&quot;count&quot;] integerValue];
-￼XCTAssertEqual(count, 1, @&quot;expected one record for dictionary %@&quot;,
-￼dictionary);
-￼return 0;
-}];
-</code></pre><h4 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h4><pre><code>**INSERT INTO myTable VALUES (?, ?, ?)**    
-</code></pre><p>问号只是占位,执行操作可以使用NSArray, NSDictionary, or a va_list来匹配参数<br>你也可以选择使用命名参数语法:INSERT INTO myTable VALUES (:id, :name, :value)<br>参数名必须以冒名开头。SQLite本身支持其他字符($,@),Dictionary key的内部实现是冒号 开头。注意你的NSDictionary key不要包含冒号</p>
-<pre><code>NSDictionary *argsDict = @{@&quot;name&quot;:@&quot;Jason&quot;};
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (:name)&quot;withParameterDictionary:argsDict];
-</code></pre><h4 id="FMDatabaseQueue-及线程安全"><a href="#FMDatabaseQueue-及线程安全" class="headerlink" title="FMDatabaseQueue 及线程安全"></a>FMDatabaseQueue 及线程安全</h4><p><code>不能使⽤用同⼀个FMDatabase在不同线程中操作,多线程的操作是通过FMDatabaseQueue实现</code></p>
-<p><strong>首先创建队列,然后把单任务包装到事务里,串行执行</strong></p>
-<pre><code>FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath];
-[queue inDatabase:^(FMDatabase *db) {
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];
-FMResultSet *rs = [db executeQuery:@&quot;select * from foo&quot;];
-while([rs next]) {
-...
-}
-</code></pre><p><strong>事务的回滚:(当前的队列的操作的取消）</strong></p>
-<pre><code>[queue inTransaction:^(FMDatabase *db, BOOL *rollback) { 
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];
-if (whoopsSomethingWrongHappened) {
-}
-*rollback = YES;
-return;
-// etc...
-[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber
-numberWithInt:4]];
-￼}];
-</code></pre><p>￼<strong>FMDatabaseQueue会在同一个队列里 <code>同步</code>执行任务, GCD也会按它接收的块的顺序来执行</strong></p>
-<h2 id="关于Setting-Bundles"><a href="#关于Setting-Bundles" class="headerlink" title="关于Setting Bundles"></a>关于Setting Bundles</h2><p>&gt;</p>
-<ul>
-<li>Setting Bundle的概念更多地应该是在App的配置选择上</li>
-<li>Setting Bundle可以给用户提供一个从《设置》应用里去配置应用程序的方式 </li>
-<li>从开发者的角度来看,一般需要频繁修改的配置选项,如游戏的音量和控制选项等最好 放到app内部的设置页里,而类似于邮箱应用中的邮件地址和服务器的设置等不需要频 繁更改的配置项可以放到Setting Bundle里 </li>
-<li>从《设置》应用中进行设置,实际上是操作iOS配置系统中的应用程序域(Application Domain),是持久的</li>
-</ul>
-<p><strong>iOS的配置系统中存在如下一些域,将来查询时严格按照如下列出域的顺序进行查找</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left"><strong>Domain</strong></th>
-<th style="text-align:left"><strong>State</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left">NSArgumentDomain</td>
-<td style="text-align:left">volatile(易失的)</td>
-</tr>
-<tr>
-<td style="text-align:left">Application（Identified by the app’s identifier）</td>
-<td style="text-align:left">persistent(持久的)</td>
-</tr>
-<tr>
-<td style="text-align:left">NSGlobalDomain</td>
-<td style="text-align:left">persistent</td>
-</tr>
-<tr>
-<td style="text-align:left">Languages(Identified by the language names)</td>
-<td style="text-align:left">volatile</td>
-</tr>
-<tr>
-<td style="text-align:left">NSRegisterationDomain</td>
-<td style="text-align:left">volatile</td>
-</tr>
-</tbody>
-</table>
-<p><strong>registerDefaults:方法是在NSRegistrationDomain域上进行配置的,所以仅仅是存在于 内存中的,易失的</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Persistence/">Data Persistence</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/12/02/iOS数据持久化/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1570,19 +1270,7 @@ numberWithInt:4]];
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">AFNetworking</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Block</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Foundation Kit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">KVC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1590,7 +1278,27 @@ numberWithInt:4]];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">AFNetworking</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Foundation Kit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Git 操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Xcode调试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">KVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UINavigationController</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1602,11 +1310,7 @@ numberWithInt:4]];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">内存管理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Xcode调试</a>
+                <a href="javascript:void(0)">oc</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1614,19 +1318,15 @@ numberWithInt:4]];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">accelerator-key</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hello World</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">oc</a>
+                <a href="javascript:void(0)">内存管理</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hello World</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1642,19 +1342,11 @@ numberWithInt:4]];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">UINavigationController</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">kinds of viewControllers</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">VIM_Sed</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Local/Romote Notification</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1666,7 +1358,19 @@ numberWithInt:4]];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Local/Romote Notification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">certificate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">accelerator-key</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">standards</a>
               </li>
             
             <div class="clearfix"></div>

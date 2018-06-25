@@ -132,6 +132,168 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-cocoa内存管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/10/20/cocoa内存管理/">cocoa内存管理</a>
+    </h1>
+  
+
+        <a href="/2014/10/20/cocoa内存管理/" class="archive-article-date">
+  	<time datetime="2014-10-20T14:02:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-10-20</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##引用计数的概念<br><code>以办公室开灯关灯举例</code></p>
+<p>##内存管理的思考方式</p>
+<p>###自己⽣成的对象,自己持有 </p>
+<pre><code>    * alloc
+    * mutableCopy
+    ￼* new
+    ￼* copy
+
+自⼰生成并持有对象
+id obj = [[NSObject alloc] init];
+￼￼
+</code></pre><p>###非自己生成的对象,自己也能持有<br>￼￼</p>
+<pre><code>取得非⾃⼰⽣成的对象但⾃⼰不持有对象 id obj =  [NSMutableArray array];
+￼￼
+取得⾮自⼰⽣成的对象但⾃己持有对象 id obj = [NSMutableArray array];
+⾃己持有对象 [obj retain];
+</code></pre><p>￼￼<br>￼</p>
+<p>###不再需要自己持有的对象时释放<br>            ￼￼￼ ⾃⼰⽣成并持有对象<br>            id obj = [[NSObject alloc] init];</p>
+<pre><code>⼀一般会在release之后,将对象指针赋为nil,以避免指针悬空的情况       obj = nil;
+
+
+￼释放对象
+￼[obj release];
+
+取得非⾃己⽣成的对象但⾃⼰持有对象 
+
+id obj = [NSMutableArray array];
+
+
+￼￼⾃⼰持有对象
+￼[obj retain];
+
+
+￼释放对象
+￼[obj release];
+￼obj = nil;
+￼
+</code></pre><p>###非自己持有的对象无法释放<br>￼￼<br>            ￼自己生成并持有对象<br>            id obj = [[NSObject alloc] init];</p>
+<pre><code>/释放之后再次释放已⾮自己持有的对象,应⽤用程序会崩溃 [obj release];
+
+
+￼ 释放对象
+￼[j release];
+
+
+￼⼀一般会在release之后,将对象指针赋为nil,以避免指针悬空的情况
+￼ obj = nil;
+￼
+￼ 取得非自己生成的对象且自己不持有该对象 
+
+id obj = [NSMutableArray array];
+
+
+ 释放了⾮⾃己持有的对象,会导致应用程序崩溃 
+
+ [obj release];
+</code></pre><p>￼<br>￼<br>￼<br>            ￼ ⾃⼰生成并持有对象<br>            id obj = [[NSObject alloc] init];</p>
+<pre><code> ⼀一般会在release之后,将对象指针赋为nil,以避免指针悬空的情况 
+
+ obj = nil;
+
+
+￼释放对象
+￼[obj release];
+</code></pre><p>￼</p>
+<p>##ARC规则 </p>
+<p>###所有权修饰符</p>
+<pre><code>__strong修饰符    
+￼__weak 修饰符
+￼__unsafe_unretained修饰符
+__autoreleasing
+</code></pre><p><strong>__strong 修饰符</strong></p>
+<blockquote>
+<p>__strong修饰符表示对象的“强引用”。持有强引用的变量在超出其作用域时被废弃,随着强引用的失效,引⽤的对象会随之释放。 <code>Demo</code></p>
+</blockquote>
+<p><em>__strong修饰符修饰的变量,不仅只在变量作⽤域中,在赋值上也能正确地管理其对象的所有者。 <code>Demo</code></em></p>
+<p><em><strong>strong修饰符同后面要讲的_weak修饰符和</strong>autoreleasing修饰符⼀一起,可以保证将附有这些修饰符的自动变量初始化为nil。 <code>Demo</code></em></p>
+<blockquote>
+<p>__weak 修饰符</p>
+</blockquote>
+<p><em>循环引用容易发⽣内存泄露。所谓内存泄露就是应当废弃的对象在超出其生存周期后继续存在。 Demo __weak修饰符在持有某对象的弱引用时,若该对象被废弃,则此弱引用将⾃动失效且处于nil被赋值的状态(空弱引用) <code>Demo</code>
+</em></p>
+<blockquote>
+<p>__unsafe_unretained 修饰符</p>
+</blockquote>
+<p><em>附有<strong>unsafe_unretained 修饰符的变量不属于编译器的内存管理对象 <code>Demo</code> 赋值给附有</strong>unsafe_unretained修饰符变量的对象在通过该变量使用时,如果没 有确保其确实存在,那么应用程序就会崩溃 <code>Demo</code>
+</em></p>
+<blockquote>
+<p>__autoreleasing 修饰符</p>
+</blockquote>
+<p>￼￼*在使⽤ARC时,不能使用autorelease⽅方法,也不能使用NSAutoreleasePool类 </p>
+<p>指定”@autoreleasepool块”来替代”NSAutoreleasePool”类对象生成、持有以及废弃这⼀范围 </p>
+<p>另外,要通过将对象赋值给附加了__autoreleasing修饰符的变量来替代调用autorelease⽅方法 <code>Demo</code>*</p>
+<p>#####显式的附加autoreleasing修饰符同显式地附加strong修饰符一样罕见,原因如下: </p>
+<p>( <code>考虑两种使用autoreleasepool的场景</code> )</p>
+<p><strong>非自己生成并持有的对象</strong>:</p>
+<pre><code>编译器会检查方法名是否以alloc/new/copy/mytableCopy开始,
+
+如果不是就说明是⾮自己生成并持有的对象,
+
+编译器会自动将返回的对象注册到autoreleasepool中
+</code></pre><p><strong>￼￼自己生成并持有的对象,在函数中返回时:</strong></p>
+<pre><code>由于return使得对象变量超出其作用域,
+
+所以强引⽤对应的⾃己⽣成并持有的对象会被自动释放,
+
+但该对象如果作为函数的返回值,
+
+编译器会自动将其注册到autoreleasepool中
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存管理/">内存管理</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2014/10/20/cocoa内存管理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-hexo搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -974,19 +1136,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">AFNetworking</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Block</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Foundation Kit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">KVC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -994,7 +1144,27 @@ dispatch_async(dispatch_get_main_queue(), ^{
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">AFNetworking</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Foundation Kit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Git 操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Xcode调试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">KVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UINavigationController</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1006,11 +1176,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">内存管理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Xcode调试</a>
+                <a href="javascript:void(0)">oc</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1018,19 +1184,15 @@ dispatch_async(dispatch_get_main_queue(), ^{
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">accelerator-key</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hello World</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">oc</a>
+                <a href="javascript:void(0)">内存管理</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Mac上搭建hexo极简指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hello World</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1046,19 +1208,11 @@ dispatch_async(dispatch_get_main_queue(), ^{
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">UINavigationController</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">kinds of viewControllers</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">VIM_Sed</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Local/Romote Notification</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1070,7 +1224,19 @@ dispatch_async(dispatch_get_main_queue(), ^{
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Local/Romote Notification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">certificate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">accelerator-key</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">standards</a>
               </li>
             
             <div class="clearfix"></div>
