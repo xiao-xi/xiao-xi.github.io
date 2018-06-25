@@ -8,22 +8,20 @@
   <link rel="dns-prefetch" href="https://github.com/xiao-xi">
   <title>pod私有仓库 | chenxiaoxiang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="pod私有库的创建和使用###pod工具的使用
-cocoapods的原理
+  <meta name="description" content="pod工具的使用cocoapods的原理
 
 Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。
 对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。
-CocoaPods 通过一个名为">
+CocoaPods 通过一个名为 Pods.xcconfig 的文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pod私有仓库">
 <meta property="og:url" content="https://github.com/xiao-xi/2017/08/25/pod私有仓库/index.html">
 <meta property="og:site_name" content="chenxiaoxiang">
-<meta property="og:description" content="pod私有库的创建和使用###pod工具的使用
-cocoapods的原理
+<meta property="og:description" content="pod工具的使用cocoapods的原理
 
 Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。
 对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。
-CocoaPods 通过一个名为">
+CocoaPods 通过一个名为 Pods.xcconfig 的文">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-62c0fe205f8f39a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-6ea3470914017a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-59b13b0523c7226c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -31,15 +29,14 @@ CocoaPods 通过一个名为">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-13d66bc09d25a0dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-f9b3993f00f2ef36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2926528-df38ca0d4307291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-06-25T12:03:24.413Z">
+<meta property="og:updated_time" content="2018-06-25T12:12:54.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pod私有仓库">
-<meta name="twitter:description" content="pod私有库的创建和使用###pod工具的使用
-cocoapods的原理
+<meta name="twitter:description" content="pod工具的使用cocoapods的原理
 
 Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。
 对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。
-CocoaPods 通过一个名为">
+CocoaPods 通过一个名为 Pods.xcconfig 的文">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2926528-62c0fe205f8f39a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720">
   
     <link rel="alternative" href="/atom.xml" title="chenxiaoxiang" type="application/atom+xml">
@@ -175,23 +172,21 @@ CocoaPods 通过一个名为">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="pod私有库的创建和使用"><a href="#pod私有库的创建和使用" class="headerlink" title="pod私有库的创建和使用"></a>pod私有库的创建和使用</h1><p>###pod工具的使用</p>
-<h4 id="cocoapods的原理"><a href="#cocoapods的原理" class="headerlink" title="cocoapods的原理"></a>cocoapods的原理</h4><blockquote>
+        <h3 id="pod工具的使用"><a href="#pod工具的使用" class="headerlink" title="pod工具的使用"></a>pod工具的使用</h3><h4 id="cocoapods的原理"><a href="#cocoapods的原理" class="headerlink" title="cocoapods的原理"></a>cocoapods的原理</h4><blockquote>
 <ol>
 <li>Pods 项目最终会编译成一个名为 libPods.a 的文件，主项目只需要依赖这个 .a 文件即可。</li>
 <li>对于资源文件，CocoaPods 提供了一个名为 Pods-resources.sh 的 bash 脚本，该脚本在每次项目编译的时候都会执行，将第三方库的各种资源文件复制到目标目录中。</li>
 <li>CocoaPods 通过一个名为 Pods.xcconfig 的文件来在编译时设置所有的依赖和参数。</li>
 </ol>
 </blockquote>
-<p>####工具依赖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">➜  ~ nvm --version</div><div class="line">0.31.3</div><div class="line"></div><div class="line">➜  ~ ruby --version</div><div class="line">ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-darwin15]</div><div class="line"></div><div class="line">➜  ~ pod --version</div><div class="line">1.2.1</div><div class="line"></div><div class="line">➜  ~ git --version</div><div class="line">git version 2.11.0 (Apple Git-81)</div></pre></td></tr></table></figure>
+<h4 id="工具依赖"><a href="#工具依赖" class="headerlink" title="工具依赖"></a>工具依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">➜  ~ nvm --version</div><div class="line">0.31.3</div><div class="line"></div><div class="line">➜  ~ ruby --version</div><div class="line">ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-darwin15]</div><div class="line"></div><div class="line">➜  ~ pod --version</div><div class="line">1.2.1</div><div class="line"></div><div class="line">➜  ~ git --version</div><div class="line">git version 2.11.0 (Apple Git-81)</div></pre></td></tr></table></figure>
 <p>tip：本文跳过cocoapods安装</p>
-<p>####查看本地pod 仓库<br>本地已经有一个master库（安装pod后自动就会存在，官方的目录）<br>OFToolSpec是后来创建的一个私有库</p>
+<h4 id="查看本地pod-仓库"><a href="#查看本地pod-仓库" class="headerlink" title="查看本地pod 仓库"></a>查看本地pod 仓库</h4><p>本地已经有一个master库（安装pod后自动就会存在，官方的目录）<br>OFToolSpec是后来创建的一个私有库</p>
 <blockquote>
 <p>Type：版本管理工具类型及分枝名<br>URL：git仓库地址<br>Path：本地仓库地址（在根目录下.cocoapods下）</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">➜  ~ pod repo</div><div class="line"></div><div class="line">master</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://github.com/CocoaPods/Specs.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/master</div><div class="line"></div><div class="line">OFToolSpec</div><div class="line">- Type: git (master)</div><div class="line">- URL:  https://git.coding.net/one_fools/OFToolRepo.git</div><div class="line">- Path: /Users/xiaodou_chenxiaoxiang/.cocoapods/repos/OFToolSpec</div><div class="line"></div><div class="line">2 repos</div></pre></td></tr></table></figure>
-<p>####创建pod lib<br>在桌面创建PodPrivate文件，然后在终端进入PodPrivate文件并运行命令 <code>pod lib create OFPublicTool</code>创建私有库模版</p>
+<h4 id="创建pod-lib"><a href="#创建pod-lib" class="headerlink" title="创建pod lib"></a>创建pod lib</h4><p>在桌面创建PodPrivate文件，然后在终端进入PodPrivate文件并运行命令 <code>pod lib create OFPublicTool</code>创建私有库模版</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➜  ~ cd Desktop </div><div class="line">➜  Desktop mkdir PodPrivate</div><div class="line">➜  Desktop cd PodPrivate </div><div class="line">➜  PodPrivate ls</div><div class="line">➜  PodPrivate pod lib create OFPublicTool</div></pre></td></tr></table></figure>
 <p>以下是配置选择，可以使用默认选项（带有下划线的选项，并且除了Prefix前缀设置，其他的不区分大小写）</p>
 <blockquote>
@@ -206,7 +201,7 @@ CocoaPods 通过一个名为">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//设置使用的语言</div><div class="line">What language do you want to use?? [ Swift / ObjC ]</div><div class="line"> &gt; ObjC</div><div class="line">//是否为library创建一个demo工程</div><div class="line">Would you like to include a demo application with your library? [ Yes / No ]</div><div class="line"> &gt; </div><div class="line">yes</div><div class="line">//使用的单元测试框架（具体请参看下方`单元测试`链接）</div><div class="line">Which testing frameworks will you use? [ Specta / Kiwi / None ]</div><div class="line"> &gt; None</div><div class="line">//使用UITest</div><div class="line">Would you like to do view based testing? [ Yes / No ]</div><div class="line"> &gt; no</div><div class="line">//你的项目中类的前缀</div><div class="line">What is your class prefix?</div><div class="line"> &gt; OF</div></pre></td></tr></table></figure>
 <p><a href="http://www.infoq.com/cn/news/2015/04/ios-testing-ci/" target="_blank" rel="external">单元测试</a><br>然后会在当前目录生成 <code>OFPublicTool</code> 文件夹，并且会在Xcode中自动打开这个项目<br>注意可能会有一个警告提示<br><img src="http://upload-images.jianshu.io/upload_images/2926528-62c0fe205f8f39a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="A86EECEC-4BF2-4789-BC58-558ADD701F17.png"><br>打开<code>OFPublicTool/Example/OFPublicTool.xcworkspace</code> 工程<br>删除此处的 <code>ReplaceMe.m</code>文件，在这里创建将要使用私有库管理的文件<br><img src="http://upload-images.jianshu.io/upload_images/2926528-6ea3470914017a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="C07AFF42-4781-4443-A45A-C4D1F016B948.png"><br> 如下：<br><img src="http://upload-images.jianshu.io/upload_images/2926528-59b13b0523c7226c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="F86C3A58-429A-4B39-9C7E-F05C8AAFB23B.png"></p>
 <p>然后修改此处的 <code>OFPublicTool.podspec</code>文件，下面标注必须修改的地方<br><img src="http://upload-images.jianshu.io/upload_images/2926528-2e77d2127d1ad9a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="05A1876C-4EE2-4B2B-B241-C39AD98AD3F4.png"></p>
-<p>###创建git私有仓库（使用<a href="https://coding.net" target="_blank" rel="external">coding</a>）<br>申请账号后创建Git私有仓库项目<br><img src="http://upload-images.jianshu.io/upload_images/2926528-13d66bc09d25a0dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="BACDCF36-B34C-4F97-B7F2-86DFFB1ED4F2.png"><br>之后需要在页面上获取的信息有<br><img src="http://upload-images.jianshu.io/upload_images/2926528-f9b3993f00f2ef36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="9C15D4BB-9BE8-4204-B8F2-559A344ACEEE.png"></p>
+<h3 id="创建git私有仓库（使用coding）"><a href="#创建git私有仓库（使用coding）" class="headerlink" title="创建git私有仓库（使用coding）"></a>创建git私有仓库（使用<a href="https://coding.net" target="_blank" rel="external">coding</a>）</h3><p>申请账号后创建Git私有仓库项目<br><img src="http://upload-images.jianshu.io/upload_images/2926528-13d66bc09d25a0dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="BACDCF36-B34C-4F97-B7F2-86DFFB1ED4F2.png"><br>之后需要在页面上获取的信息有<br><img src="http://upload-images.jianshu.io/upload_images/2926528-f9b3993f00f2ef36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="9C15D4BB-9BE8-4204-B8F2-559A344ACEEE.png"></p>
 <p>把相关的信息修改到 <code>OFPublicTool.podspec</code>中<br>以下是我的修改</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s.summary          = &apos;My PublicTool.&apos;</div><div class="line">s.homepage         = &apos;https://coding.net/u/one_fools/p/OFPublicTool&apos;</div><div class="line">s.source           = &#123; :git =&gt; &apos;https://git.coding.net/one_fools/OFPublicTool.git&apos;, :tag =&gt; s.version.to_s &#125;</div></pre></td></tr></table></figure>
 <p>之后进入 <code>Example</code>目录使用 <code>pod update</code>命令</p>
@@ -238,7 +233,7 @@ CocoaPods 通过一个名为">
 <p>发现报错，这是因为search index中缓存没有清理，再次搜索会等待一段时间</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  OFPublicTool git:(master) rm ~/Library/Caches/CocoaPods/search_index.json</div><div class="line">➜  OFPublicTool git:(master) pod search OFPublicTool</div></pre></td></tr></table></figure>
 <p>最后在一个新项目里引入使用，测试是否ok</p>
-<p>###注意事项<br>Asserts报错：（更改文件目录，注意要使用仓库指定文件名）</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>Asserts报错：（更改文件目录，注意要使用仓库指定文件名）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">--sources参数 制定数据源</div><div class="line">--use-libraries参数 使用libraries（报错时，error: include of non-modular header inside framework module &apos;xxx&apos;, [-Werror,-Wnon-modular-include-in-framework-module]）</div><div class="line">--allow-warnings 参数 忽略警告</div><div class="line">pod lib lint --sources=http://git.51xiaodou.com/XD_App_dev/XDBasePublicUtil.git,https://github.com/CocoaPods/Specs.git --use-libraries --allow-warnings</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">--sources参数 制定数据源</div><div class="line">--use-libraries参数 使用libraries（报错时，error: include of non-modular header inside framework module &apos;xxx&apos;, [-Werror,-Wnon-modular-include-in-framework-module]）</div><div class="line">--allow-warnings 参数 忽略警告</div><div class="line">pod repo push XDBaseFramework XDBaseFramework.podspec --sources=http://git.51xiaodou.com/XD_App_dev/XDBasePublicUtil.git,https://github.com/CocoaPods/Specs.git --use-libraries --allow-warnings --verbose</div></pre></td></tr></table></figure>
 
@@ -280,6 +275,11 @@ CocoaPods 通过一个名为">
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cocoapods/">cocoapods</a></li></ul>
+	</div>
+
       
 
       
@@ -420,15 +420,15 @@ CocoaPods 通过一个名为">
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">AFNetworking</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Block</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">c</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">AFNetworking</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,11 +464,11 @@ CocoaPods 通过一个名为">
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">UI_Notes</a>
+                <a href="javascript:void(0)">accelerator-key</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">accelerator-key</a>
+                <a href="javascript:void(0)">UI_Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -492,15 +492,19 @@ CocoaPods 通过一个名为">
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">cocoapods</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">kinds of viewControllers</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">VIM_Sed</a>
+                <a href="javascript:void(0)">vim的使用</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">vim的使用</a>
+                <a href="javascript:void(0)">VIM_Sed</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -513,6 +517,10 @@ CocoaPods 通过一个名为">
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Local/Romote Notification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">ci</a>
               </li>
              
               <li class="article-tag-list-item">
