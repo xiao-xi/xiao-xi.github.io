@@ -8,25 +8,19 @@
   <link rel="dns-prefetch" href="xiao-xi.cc">
   <title>create_certificate | chenxiaoxiang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="others’ blog
-生成certSigningRequest文件该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。
-打开应“钥匙串访问”软件，菜单-&amp;gt;钥匙串访问-&amp;gt;证书助理-&amp;gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
-注册一个">
+  <meta name="description" content="生成certSigningRequest文件该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。打开应钥匙串访问软件，菜单-&amp;gt;钥匙串访问-&amp;gt;证书助理-&amp;gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
+注册一个支持Push的app id进入d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="create_certificate">
 <meta property="og:url" content="xiao-xi.cc/2015/02/01/证书相关/index.html">
 <meta property="og:site_name" content="chenxiaoxiang">
-<meta property="og:description" content="others’ blog
-生成certSigningRequest文件该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。
-打开应“钥匙串访问”软件，菜单-&amp;gt;钥匙串访问-&amp;gt;证书助理-&amp;gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
-注册一个">
-<meta property="og:updated_time" content="2015-02-01T14:34:32.000Z">
+<meta property="og:description" content="生成certSigningRequest文件该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。打开应钥匙串访问软件，菜单-&amp;gt;钥匙串访问-&amp;gt;证书助理-&amp;gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
+注册一个支持Push的app id进入d">
+<meta property="og:updated_time" content="2018-06-26T07:11:16.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="create_certificate">
-<meta name="twitter:description" content="others’ blog
-生成certSigningRequest文件该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。
-打开应“钥匙串访问”软件，菜单-&amp;gt;钥匙串访问-&amp;gt;证书助理-&amp;gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
-注册一个">
+<meta name="twitter:description" content="生成certSigningRequest文件该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。打开应钥匙串访问软件，菜单-&amp;gt;钥匙串访问-&amp;gt;证书助理-&amp;gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
+注册一个支持Push的app id进入d">
   
     <link rel="alternative" href="/atom.xml" title="chenxiaoxiang" type="application/atom+xml">
   
@@ -161,51 +155,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="http://zxs19861202.iteye.com/blog/1532460" target="_blank" rel="external">others’ blog</a></p>
-<h3 id="生成certSigningRequest文件"><a href="#生成certSigningRequest文件" class="headerlink" title="生成certSigningRequest文件"></a>生成certSigningRequest文件</h3><p>该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。</p>
-<pre><code>打开应“钥匙串访问”软件，菜单-&gt;钥匙串访问-&gt;证书助理-&gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个CertificateSigningRequest.certSigningRequest文件。
-</code></pre><h3 id="注册一个支持Push的app-id"><a href="#注册一个支持Push的app-id" class="headerlink" title="注册一个支持Push的app id"></a>注册一个支持Push的app id</h3><p>进入developer.apple.com，选择member center-certificates，Identifier &amp; profiles-identifiers-App ids，注册app id，设置app id名称。同时qpp id suffix一栏选择explicit app id，设置bundle id。勾选App Services中得Push Notifications，这样就可以注册一个支持push app id。</p>
+        <h3 id="生成certSigningRequest文件"><a href="#生成certSigningRequest文件" class="headerlink" title="生成certSigningRequest文件"></a>生成certSigningRequest文件</h3><p>该文件是MAC系统生成的，用于在Apple网站上申请推送证书文件。<br>打开应<code>钥匙串访问</code>软件，菜单-&gt;钥匙串访问-&gt;证书助理-&gt;从证书颁发机构请求证书，填写邮箱和名称（随便写）,选择保存到磁盘，此时会生成一个<code>CertificateSigningRequest.certSigningRequest</code>文件。</p>
+<h3 id="注册一个支持Push的app-id"><a href="#注册一个支持Push的app-id" class="headerlink" title="注册一个支持Push的app id"></a>注册一个支持Push的app id</h3><p>进入<code>developer.apple.com</code>，选择member center-certificates，Identifier &amp; profiles-identifiers-App ids，注册app id，设置app id名称。同时qpp id suffix一栏选择explicit app id，设置bundle id。勾选App Services中得Push Notifications，这样就可以注册一个支持push app id。</p>
 <h3 id="生成cer文件"><a href="#生成cer文件" class="headerlink" title="生成cer文件"></a>生成cer文件</h3><p>该文件用于生成服务端需要的文件。</p>
 <p>生成过程：进入developer.apple.com，选择member center-certificates，Identifier &amp; profiles-certificates，然后创建certificate，类型分为Development 和 Product。eg：Development，选择Apple Push Notification service SSL (Sandbox) ，选择之前生成的支持push的Appid，然后提交之前创建的CSR文件,生成cer文件，保存到本地。</p>
 <h3 id="生成服务器端的证书文件"><a href="#生成服务器端的证书文件" class="headerlink" title="生成服务器端的证书文件"></a>生成服务器端的证书文件</h3><p>如果使用网上的mac版PushMeBaby工具，在Mac机器上进行推送使用上面的cer就可以了，如果使用PHP、java/c#开发服务端，需要将cer转换生成pem或p12文件。</p>
 <p>在应用服务器采用php的方式将消息推送给APNS，</p>
-<pre><code>php连接APNS也是需要证书的，打开终端，对上面的证书做如下处理，
-
-cd  进入证书所在目录
-
-把.cer文件转换成.pem文件:
-
-$ openssl x509 -in aps_developer_identity.cer -inform der
--out PushCert.pem
-把私钥Push.p12文件转换成.pem文件：
-
-$ openssl pkcs12 -nocerts -out PushKey.pem -in Push.p12
-Enter Import Password:
-MAC verified OK
-Enter PEM pass phrase:
-Verifying – Enter PEM pass phrase:
-你首先需要为.p12文件输入passphrase密码短语，这样OpenSSL可以读它。然后你需要键入一个新的密码短语来加密PEM文件。还是使用”pushchat”来作为PEM的密码短语。你需要选择一些更安全的密码短语。
-</code></pre><p><code>注意</code></p>
+<p>php连接APNS也是需要证书的，打开终端，对上面的证书做如下处理，</p>
+<p>cd  进入证书所在目录</p>
+<p>把.cer文件转换成.pem文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ openssl x509 -in aps_developer_identity.cer -inform der</div><div class="line">-out PushCert.pem</div><div class="line">把私钥Push.p12文件转换成.pem文件：</div><div class="line">    </div><div class="line">$ openssl pkcs12 -nocerts -out PushKey.pem -in Push.p12</div><div class="line">Enter Import Password:</div><div class="line">MAC verified OK</div><div class="line">Enter PEM pass phrase:</div><div class="line">Verifying – Enter PEM pass phrase:</div></pre></td></tr></table></figure>
+<p>你首先需要为.p12文件输入passphrase密码短语，这样OpenSSL可以读它。然后你需要键入一个新的密码短语来加密PEM文件。还是使用”pushchat”来作为PEM的密码短语。你需要选择一些更安全的密码短语。</p>
+<p><code>注意</code></p>
 <p>如果你没有键入一个PEM passphrase，OpenSSL将不会返回一个错误信息，但是产生的.pem文件里面将不会含有私钥。</p>
 <p>最后。把私钥和证书整合到一个.pem文件里：</p>
-<pre><code>$ cat PushCert.pem PushKey.pem &gt; ck.pem
-为了测试证书是否工作，执行下面的命令：
-
-$ telnet gateway.sandbox.push.apple.com 2195
-Trying 17.172.232.226…
-Connected to gateway.sandbox.push-apple.com.akadns.net.
-Escape character is ‘^]’.
-它将尝试发送一个规则的，不加密的连接到APNS服务。如果你看到上面的反馈，那说明你的MAC能够到达APNS。按下Ctrl+C 关闭连接。如果得到一个错误信息，那么你需要确保你的防火墙允许2195端口。
-
-然后再次连接，这次用我们的SSL证书和私钥来设置一个安全的连接：
-
-$ openssl s_client -connect gateway.sandbox.push.apple.com:2195
--cert PushChatCert.pem -key PushChatKey.pem
-Enter pass phrase for PushChatKey.pem:
-你会看到一个完整的输出，让你明白OpenSSL在后台做什么。如果连接是成功的，你可以键入一些字符。当你按下回车后，服务就会断开连接。如果在建立连接时有问题，OpenSSL将会给你一个错误消息，
-
-ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.php放入同一目录上传到服务器。
-</code></pre><h3 id="生成Xcode使用的provisioning文件"><a href="#生成Xcode使用的provisioning文件" class="headerlink" title="生成Xcode使用的provisioning文件"></a>生成Xcode使用的provisioning文件</h3><p>该文件用于真机调试。</p>
+<p>$ cat PushCert.pem PushKey.pem &gt; ck.pem<br>为了测试证书是否工作，执行下面的命令：</p>
+<p>$ telnet gateway.sandbox.push.apple.com 2195<br>Trying 17.172.232.226…<br>Connected to gateway.sandbox.push-apple.com.akadns.net.<br>Escape character is ‘^]’.<br>它将尝试发送一个规则的，不加密的连接到APNS服务。如果你看到上面的反馈，那说明你的MAC能够到达APNS。按下Ctrl+C 关闭连接。如果得到一个错误信息，那么你需要确保你的防火墙允许2195端口。</p>
+<p>然后再次连接，这次用我们的SSL证书和私钥来设置一个安全的连接：</p>
+<p>$ openssl s_client -connect gateway.sandbox.push.apple.com:2195<br>-cert PushChatCert.pem -key PushChatKey.pem<br>Enter pass phrase for PushChatKey.pem:<br>你会看到一个完整的输出，让你明白OpenSSL在后台做什么。如果连接是成功的，你可以键入一些字符。当你按下回车后，服务就会断开连接。如果在建立连接时有问题，OpenSSL将会给你一个错误消息，</p>
+<p>ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.php放入同一目录上传到服务器。</p>
+<h3 id="生成Xcode使用的provisioning文件"><a href="#生成Xcode使用的provisioning文件" class="headerlink" title="生成Xcode使用的provisioning文件"></a>生成Xcode使用的provisioning文件</h3><p>该文件用于真机调试。</p>
 <p>生成过程：进入developer.apple.com，选择member center-certificates，Identifier &amp; profiles-provisioning profiles，然后创建provi file。选择iOS App Development-&gt;AppId-&gt;选中之前生成的支持push的appid-&gt;选中支持的push的certi-&gt;勾选支持的device id-&gt;设置provisioning文件的文件名，即完成provisioning文件的生成。</p>
 
       
@@ -403,15 +372,19 @@ ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.p
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Foundation Kit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Git 操作</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Foundation Kit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">KVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">SVN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -423,10 +396,6 @@ ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.p
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">SVN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">UINavigationController</a>
               </li>
              
@@ -435,23 +404,11 @@ ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.p
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">UI_Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">accelerator-key</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">cocoaPods</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">内存管理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Hello World</a>
+                <a href="javascript:void(0)">UI_Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,11 +416,15 @@ ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.p
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Hello World</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">Data Persistence</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">cocoapods</a>
+                <a href="javascript:void(0)">accelerator-key</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,15 +432,23 @@ ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.p
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">cocoaPods</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">vim的使用</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">VIM_Sed</a>
+                <a href="javascript:void(0)">cocoapods</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">background_task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">VIM_Sed</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -491,7 +460,11 @@ ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.p
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">ci</a>
+                <a href="javascript:void(0)">standards</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">优化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,7 +472,7 @@ ck.pem文件就是我们需要得到php连接APNS 的文件，将ck.pem和push.p
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">standards</a>
+                <a href="javascript:void(0)">ci</a>
               </li>
             
             <div class="clearfix"></div>
